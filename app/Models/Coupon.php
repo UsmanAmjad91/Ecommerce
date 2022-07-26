@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class category extends Model
+class Coupon extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'cat_id',
-        'cat_name',
-        'cat_slug',
-        'status',
+        'coupon_id',
+        'coupon_title',
+        'coupon_code',
+        'coupon_value',
+        'coupon_status',
     ];
 }

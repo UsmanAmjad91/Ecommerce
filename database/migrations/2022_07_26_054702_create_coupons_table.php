@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->increments('cat_id')->length(11);
-            $table->string('cat_name')->nllable(true)->length(191);
-            $table->string('cat_slug')->nllable(true)->length(191);
-            $table->integer('status')->nllable(true)->length(11);
+        Schema::create('coupons', function (Blueprint $table) {
+            $table->increments('coupon_id')->length(11);
+            $table->string('coupon_title')->nllable(true)->length(191);
+            $table->string('coupon_code')->nllable(true)->length(191);
+            $table->integer('coupon_status')->nllable(true)->length(11);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('coupons');
     }
 };

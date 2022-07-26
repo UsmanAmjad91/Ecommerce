@@ -8,19 +8,19 @@
     <div class="menu-sidebar__content js-scrollbar1">
         <nav class="navbar-sidebar">
             <ul class="list-unstyled navbar__list">
-                <li class="has-sub">
+                <li class="@yield('dashboard_select')">
                     <a class="nav_link" href="{{url('/admin/dashboard')}}">
                         <i class="fas fa-tachometer-alt"></i>Dashboard</a>    
                 </li>
-                <li>
+                <li class="@yield('category_select')">
                     <a href="{{url('/admin/category')}}">
-                        <i class="fas fa-chart-bar"></i>Category</a>
+                        <i class="fa fa-list"></i>Category</a>
                 </li>
-                <li>
-                    <a href="table.html">
-                        <i class="fas fa-table"></i>Tables</a>
+                <li class="@yield('coupon_select')">
+                    <a href="{{url('/admin/coupon')}}">
+                        <i class="fa fa-tags"></i>Coupon</a>
                 </li>
-                <li>
+                <li class="@yield('select')">
                     <a href="form.html">
                         <i class="far fa-check-square"></i>Forms</a>
                 </li>

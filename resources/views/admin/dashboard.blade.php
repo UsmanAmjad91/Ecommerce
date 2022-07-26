@@ -1,6 +1,7 @@
 
 @include('admin_component.header')
-
+<title>{{ $title }}</title>
+@section('dashboard_select','active')
 @include('admin_component.sidebar')
 
 
