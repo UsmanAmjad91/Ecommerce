@@ -12,7 +12,7 @@
 
     <!-- Fontfaces CSS-->
     <link href="{{asset('admin_assets/css/font-face.css')}}" rel="stylesheet" media="all">
-    <link href="{{asset('admin_assets/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
+   <link href="{{asset('admin_assets/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('admin_assets/vendor/font-awesome-5/css/fontawesome-all.min.css')}}" rel="stylesheet" media="all">
     <link href="{{asset('admin_assets/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
 
@@ -68,13 +68,13 @@
                             <a href="{{url('/admin/coupon')}}">
                                 <i class="fa fa-tags"></i>Coupon</a>
                         </li>
-                        <li class="@yield('select')">
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Forms</a>
+                        <li class="@yield('size_select')">
+                            <a href="{{url('/admin/size')}}">
+                                <i class="fa fa-user-circle"></i>Size</a>
                         </li>
-                        <li>
-                            <a href="calendar.html">
-                                <i class="fas fa-calendar-alt"></i>Calendar</a>
+                        <li class="@yield('color_select')">
+                            <a href="{{url('/admin/color')}}">
+                                <i class="fa fa-fill-drip"></i>Color</a>
                         </li>
                         <li>
                             <a href="map.html">

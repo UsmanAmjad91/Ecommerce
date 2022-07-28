@@ -112,10 +112,10 @@ class CouponController extends Controller
                  
             ]);
             if ($is_update) {
-                session()->flash('message', 'Succsessfuly Update Category');
-                return json_encode(array('message' => 'Succsessfuly Update Category', 'status' => 200));
+                session()->flash('message', 'Succsessfuly Update Coupons');
+                return json_encode(array('message' => 'Succsessfuly Update Coupons', 'status' => 200));
             } else {
-                return json_encode(array('message' => 'Not Update Category', 'status' => 500));
+                return json_encode(array('message' => 'Not Update Coupons', 'status' => 500));
             }
         }
     }
@@ -142,10 +142,10 @@ class CouponController extends Controller
             // dd($id);
             $isst =  DB::table('coupons')->where('coupon_id', $id)->update(array('coupon_status' => '1'));  
             if (!empty($isst)){
-                session()->flash('message', 'Succsessfuly Deactive Coupon');
-                return json_encode(array('message' => 'Coupon Deactive successfully', 'status' => 200));
+                session()->flash('message', 'Succsessfuly Active Coupon');
+                return json_encode(array('message' => 'Coupon Active successfully', 'status' => 200));
             }else{
-                return json_encode(array('message' => 'Coupon Not Deactive', 'status' => 500));
+                return json_encode(array('message' => 'Coupon Not Active', 'status' => 500));
             }
             }
     }
@@ -156,10 +156,10 @@ class CouponController extends Controller
             // dd($id);
             $isstrt =  DB::table('coupons')->where('coupon_id', $id)->update(array('coupon_status' => '0'));
             if (!empty($isstrt)){
-                session()->flash('message', 'Succsessfuly Active Coupon');
-                return json_encode(array('message' => 'Coupon Active successfully', 'status' => 200));
+                session()->flash('message', 'Succsessfuly Deactive Coupon');
+                return json_encode(array('message' => 'Coupon Deactive successfully', 'status' => 200));
              } else{
-                return json_encode(array('message' => 'Coupon Not Active', 'status' => 500));
+                return json_encode(array('message' => 'Coupon Not Deactive', 'status' => 500));
              }
             }
     }

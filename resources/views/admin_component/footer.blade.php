@@ -38,6 +38,7 @@
 <!-- Main JS-->
 <script src="{{asset('admin_assets/js/main.js')}}"></script>
 <script src="{{asset('admin_assets/jquery/custom.js')}}"></script>
+<script src="{{asset('admin_assets/jquery/product.js')}}"></script>
 </body>
 
 </html>

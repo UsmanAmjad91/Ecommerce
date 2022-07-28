@@ -1,6 +1,6 @@
 @include('admin_component.header')
 <title>{{ $title }}</title>
-@section('coupon_select','active')
+@section('size_select','active')
 @include('admin_component.sidebar')
 
 
@@ -16,7 +16,7 @@
                     </p>
                     <div class="header-button">
                         <div class="noti-wrap">
-                 <p>Coupon</p>
+                 <p>Size</p>
                         </div>
                         <div class="account-wrap">
                             <div class="account-item clearfix js-item-menu">
@@ -59,7 +59,7 @@
                         <!-- DATA TABLE -->
                        
                         <div class="table-data__tool">
-                            <p><a href="{{url('/admin/dashboard')}}">Dashboard</a> <span> > </span> <a href="{{url('/admin/coupon')}}"><span>Coupon List</span></a> </p>
+                            <p><a href="{{url('/admin/dashboard')}}">Dashboard</a> <span> > </span> <a href="{{url('/admin/size')}}"><span>Size List</span></a> </p>
                             <div class="table-data__tool-left">
                                 <div class="rs-select2--light rs-select2--md">
                                     <div class="dropDownSelect2"></div>
@@ -70,28 +70,25 @@
                             </div>
                            
                             <div class="table-data__tool-right">
-                                <a href="{{url('/admin/coupon/add_coupon')}}">
+                                <a href="{{url('/admin/size/add_size')}}">
                                 <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                    <i class="zmdi"></i>Add Coupon</button></a>           
+                                    <i class="zmdi"></i>Add Size</button></a>           
                             </div>
                         </div>
-                        @if (session()->has('message'))
-                        <p class="ml-3 text-sm font-bold text-green-600" id="catmsg">{{ session()->get('message') }}</p>
+                        @if (session()->has('reply'))
+                        <p class="ml-3 text-sm font-bold text-green-600" id="catmsg">{{ session()->get('reply') }}</p>
                         @endif
                         <h6 id="responseeditcheck"></h6>
                         <div class="table-responsive table-responsive-data2">
                             <table class="table table-data2 datatable" id='studentsTable' width="100%">
                                 <thead>
                                     <tr>
-                                        <th>Coupon ID</th>
-                                        <th>Name Coupon</th>
-                                        <th>Code Coupon</th>
-                                        <th>Value Coupon</th>
-                                        {{-- <th>Status Coupon</th> --}}
-                                        <th>Actions</th>
+                                        <th class="col-2">Size ID</th>
+                                        <th class="col-2">Size</th>
+                                        <th class="col-2">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="show_data">
+                                <tbody id="show_data" >
                                    
                                     <tr class="spacer"></tr>
                                    
@@ -106,63 +103,56 @@
     </div>
     <!-- END MAIN CONTENT-->
      <!-- MODAL EDIT -->
-  <form id="editcoupon" name="couponedit" method="POST" action="javascript:void(0);">
+  <form id="editsize" name="editsize" method="POST" action="javascript:void(0);">
     @csrf
     
     <div class="modal fade" id="Modal_Edit" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Coupon</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Edit Size</h5>
             <h6 id="success"></h6>
-            <button type="button" id="close_copo" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" id="close_sz" class="close_sz" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
          <div class="col-2"></div><div class="col-8"><h6 id="responseeditcheck"></h6></div>
           <div class="modal-body">
             <div class="form-group row">
-              <label class="col-md-2 col-form-label">Coupon ID</label>
+              <label class="col-md-2 col-form-label">Size ID</label>
               <div class="col-md-10">
-                <input type="text" name="coupon_id_edit" id="coupon_id_edit" class="form-control" readonly>
+                <input type="text" name="size_id_edit" id="size_id_edit" class="form-control" readonly>
               </div>
-              <h6 id="coupon_id_editcheck"></h6>
+              <h6 id="size_id_editcheck"></h6>
             </div>
             
             <div class="form-group row">
-              <label class="col-md-2 col-form-label">Coupon Name</label>
+              <label class="col-md-2 col-form-label">Size Name</label>
               <div class="col-md-10">
-                <input type="text" name="coupon_name_edit" id="coupon_name_edit" class="form-control" placeholder="Coupon Name">
+                <select class="selectpicker form-control col-4" name="size_edit" id="size_edit">
+                    <option value="S">Small</option>
+                    <option value="M">Medium</option>
+                    <option value="L">Large</option>
+                    <option value="XL">Extra Large</option>
+                    <option value="XXL">Doubal Extra Large</option>
+                    <option value="XXL">Triple Extra Large</option>
+                  </select>
               </div>
-              <h6 id="coupon_name_editcheck"></h6>
+              <h6 id="size_editcheck"></h6>
             </div>
             <div class="form-group row">
-              <label class="col-md-2 col-form-label">Coupon Code</label>
-              <div class="col-md-10">
-                <input type="text" name="coupon_code_edit" id="coupon_code_edit" class="form-control" placeholder="Coupon Code">
-              </div>
-              <h6 id="coupon_code_editcheck"></h6>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-2 col-form-label">Coupon Value</label>
-                <div class="col-md-10">
-                  <input type="text" name="coupon_value_edit" id="coupon_value_edit" class="form-control" placeholder="Coupon Value">
-                </div>
-                <h6 id="coupon_value_editcheck"></h6>
-              </div>
-            <div class="form-group row">
-                <label class="col-md-2 col-form-label">Coupon status</label>
+                <label class="col-md-2 col-form-label">Size status</label>
                 <div class="col-md-8">
-                    <select class="selectpicker form-control col-4" name="coupon_status_edit" id="coupon_status_edit">
+                    <select class="selectpicker form-control col-4" name="size_status_edit" id="size_status_edit">
                         <option value="1">Status On</option>
                         <option value="0">Status Off</option>
                       </select>
                 </div>
-                <h6 id="coupon_status_editcheck"></h6>
+                <h6 id="size_status_editcheck"></h6>
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button" id="close_cop" data-backdrop="false" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="closed_siz" data-backdrop="false" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button  type="submit" id="btn_update" class="btn btn-primary">Update</button>
           </div>
         </div>
@@ -171,14 +161,14 @@
   </form>
   <!--END MODAL EDIT-->
   <!--MODAL DELETE-->
-  <form id="delcop" name="delcop" method="POST" action="javascript:void(0);">
+  <form id="delsize" name="delsize" method="POST" action="javascript:void(0);">
     @csrf
     <div class="modal fade" id="Modal_Delete" data-backdrop="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Delete Category</h5>
-            <button type="button" id="closed_copdel" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" id="closed_sizedel" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -187,8 +177,8 @@
             <strong>Are you sure to delete this record?</strong>
           </div>
           <div class="modal-footer">
-            <input type="hidden" name="coupon_id_delete" id="coupon_id_delete" class="form-control">
-            <button type="button" id="closed_cop_del" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <input type="hidden" name="size_id_delete" id="size_id_delete" class="form-control">
+            <button type="button" id="closed_size_del" class="btn btn-secondary" data-dismiss="modal">No</button>
             <button  type="submit" id="btn_delete" name="btn_delete" class="btn btn-primary">Yes</button>
           </div>
         </div>
@@ -207,13 +197,10 @@
      $('#studentsTable').DataTable({
          processing: true,
          serverSide: true,
-         ajax: "{{route('coupon.list')}}",
+         ajax: "{{route('size.list')}}",
          columns: [
-            { data: 'coupon_id' },
-            { data: 'coupon_title' },
-            { data: 'coupon_code' },
-            { data: 'coupon_value' },
-            // { data: 'coupon_status' },
+            { data: 'size_id' },
+            { data: 'size' },
             {
                 data: 'action', 
                 name: 'action', 

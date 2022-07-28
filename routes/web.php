@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\ColorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +61,39 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('/admin/coupon/status_deactive/{id}',[CouponController::class,'coupon_status_de'])->name('admin/coupon/status_deactive');
 
     Route::post('/admin/coupon/status_active/{id}',[CouponController::class,'coupon_status_ac'])->name('admin/coupon/status_active');
+
+    Route::get('/admin/size',[SizeController::class,'index'])->name('admin/size');
+
+    Route::get('/admin/size/add_size',[SizeController::class,'manage_size'])->name('admin/size/add_size');
+
+    Route::get('/admin/size/list',[SizeController::class,'size_list'])->name('size.list');
+
+    Route::post('/admin/size/insert',[SizeController::class,'insert_size'])->name('admin/size/insert');
+
+    Route::post('/admin/size/edit/{id}',[SizeController::class,'edit_size'])->name('admin/size/edit');
+
+    Route::post('/admin/size/delete/{id}',[SizeController::class,'destroy_size'])->name('admin/size/delete');
+
+    Route::post('/admin/size/status_deactive/{id}',[SizeController::class,'size_status_de'])->name('admin/size/status_deactive');
+
+    Route::post('/admin/size/status_active/{id}',[SizeController::class,'size_status_ac'])->name('admin/size/status_active');
+
+    Route::get('/admin/color',[ColorController::class,'index'])->name('admin/color');
+
+    Route::get('/admin/color/add_color',[ColorController::class,'manage_color'])->name('admin/color/add_color');
+
+    Route::get('/admin/color/list',[ColorController::class,'color_list'])->name('color.list');
+
+    Route::post('/admin/color/insert',[ColorController::class,'insert_color'])->name('admin/color/insert');
+
+    Route::post('/admin/color/edit/{id}',[ColorController::class,'edit_color'])->name('admin/color/edit');
+
+    Route::post('/admin/color/delete/{id}',[ColorController::class,'destroy_color'])->name('admin/color/delete');
+
+    Route::post('/admin/color/status_deactive/{id}',[ColorController::class,'color_status_de'])->name('admin/color/status_deactive');
+
+    Route::post('/admin/color/status_active/{id}',[ColorController::class,'color_status_ac'])->name('admin/color/status_active');
+
 });
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');

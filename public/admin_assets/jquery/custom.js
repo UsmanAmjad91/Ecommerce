@@ -165,8 +165,8 @@ $(document).ready(function() {
     });
    
     });
-    $('.cat_edit').click(function () {
-        $('#Modal_Edit').modal('show');   
+    $('#show_data').on('click', '.cat_edit', function() {
+        $('#Modal_Edit').modal('show');  
     }); 
 
     $("#close").click(function () {
@@ -596,7 +596,7 @@ $(document).ready(function() {
      
  }); 
  
- $("#closed").click(function () {
+ $("#closed_cat").click(function () {
      $('#Modal_Delete').modal('hide');   
  }); 
  $("#closed_cop_del").click(function () {
@@ -769,4 +769,655 @@ $(document).ready(function() {
            });
         }   
     });
+});
+
+/// ADD Size  ///
+$(document).ready(function() {
+    $("#addsize").submit(function(e) {
+        e.preventDefault();
+     
+        var size = $('#size').val();
+        // alert(size);
+        if ((size.length == "") || (size.length == null)) {  
+            $("#sizecheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#sizecheck").html('** Please Select Size').css("color", "red");
+            $('#sizecheck').focus();
+        }else{
+            $('#sizecheck').hide();
+        }  
+       
+        var size_status = $('#size_status').val();
+        if (size_status.length == "") {    
+            $("#sizestatuscheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#sizestatuscheck").html('** Please Select Size Status').css("color", "red");
+            $('#sizestatuscheck').focus();
+        } else {
+            $('#sizestatuscheck').hide();
+        }    
+        if ((size != '') && (size_status != '') ) {
+            // return false;
+            var formData = new FormData(this);
+            $.ajax({
+                url: "/admin/size/insert",
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Size Successfully Added").css("color", "green"); 
+                          window.location.replace("/admin/size");    
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});
+
+/// Size Edit ///
+$(document).ready(function() {
+    
+    ///Show Data On Edit Modal /// 
+    $('#show_data').on('click', '.size_edit', function() {
+    var size_id = $(this).data('size_id');  
+    var size = $(this).data('size');
+    var size_status = $(this).data('size_status');
+    
+    $('[name="size_id_edit"]').val(size_id);
+    $("#size_edit option[value="+size+"]").attr('selected', 'selected');
+    $("#size_status_edit option[value="+size_status+"]").attr('selected', 'selected');
+
+    $('#Modal_Edit').modal('show');
+    
+    });
+   
+    });
+
+    $('#show_data').on('click', '.size_edit', function() {
+        $('#Modal_Edit').modal('show');   
+    });
+    $('#close_sz').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#closed_siz').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+
+    /// Update Size  ///
+$(document).ready(function() {
+    $("#editsize").submit(function(e) {
+        e.preventDefault();
+        
+        var size_id_edit = $('#size_id_edit').val();
+        // alert(size);
+        if ((size_id_edit.length == "") || (size_id_edit.length == null)) {  
+            $("#size_id_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#size_id_editcheck").html('** Please Dont Remove ID').css("color", "red");
+            $('#size_id_editcheck').focus();
+        }else{
+            $('#size_id_editcheck').hide();
+        }  
+
+        var size_edit = $('#size_edit').val();
+        // alert(size);
+        if ((size_edit.length == "") || (size_edit.length == null)) {  
+            $("#size_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#size_editcheck").html('** Please Select Size').css("color", "red");
+            $('#size_editcheck').focus();
+        }else{
+            $('#size_editcheck').hide();
+        }  
+       
+        var size_status_edit = $('#size_status_edit').val();
+        if (size_status_edit.length == "") {    
+            $("#size_status_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#size_status_editcheck").html('** Please Select Size Status').css("color", "red");
+            $('#size_status_editcheck').focus();
+        } else {
+            $('#size_status_editcheck').hide();
+        }    
+        if ((size_edit != '') && (size_status_edit != '') && (size_id_edit !='') ) {
+            // return false;
+            var formData = new FormData(this);
+            var id = $('#size_id_edit').val();
+            $.ajax({
+                url: "/admin/size/edit/" + id,
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Size Successfully Updated").css("color", "green"); 
+                          $('#Modal_Edit').modal('hide'); 
+                          var table= $('#studentsTable').DataTable();
+                               table.ajax.reload(null, false);   
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});
+
+$(document).ready(function() {
+    /// Delete Record Size ///
+    $("#show_data").on('click','.size_delete',function () { 
+        
+     var size_id = $(this).data('size_id');
+     $('#Modal_Delete').modal('show');
+    $('[name="size_id_delete"]').val(size_id);
+    });
+
+    $("#delsize").submit(function(e) {
+     e.preventDefault();
+    var  id = $('#size_id_delete').val();
+    if (!id == "") {
+     var formData = new FormData(this);
+     var id = $('#size_id_delete').val();
+    $.ajax({
+        url: "/admin/size/delete/" + id,
+        type: 'post',
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function(msg) {    
+         if (msg.status == 200) {                    
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.message).css("color", "green"); 
+               $('#Modal_Delete').modal('hide');  
+            var table= $('#studentsTable').DataTable();
+             table.ajax.reload(null, false);
+         } else{    
+         if (msg.error) {  
+             console.log(msg.error); 
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.error).css("color", "red");
+         } else {
+             $('#responseeditcheck').hide();
+         }
+         
+         }
+        }
+    });
+ }
+     
+ }); 
+ /// Model Delete Close Size ///
+ $("#closed_sizedel").click(function () {
+     $('#Modal_Delete').modal('hide');   
+ }); 
+ $("#closed_size_del").click(function () {
+    $('#Modal_Delete').modal('hide');   
+}); 
+
+ });
+
+ /// Status Size Active And Deactive ///
+ $(document).ready(function() {
+    /// Active to deactive ///
+    $('#show_data').on('click', '.size_status_ac', function() {
+        var id = $(this).data('size_id');   
+        if (!id == "") { 
+            // return false;
+           $.ajax({
+               url: "/admin/size/status_active/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+    ///  Deactive To Active  ///
+    $('#show_data').on('click', '.size_status_de', function() {
+        var id = $(this).data('size_id');   
+        if (!id == "") { 
+            // return false;
+           $.ajax({
+               url: "/admin/size/status_deactive/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+});
+
+
+
+/// Status Color Active And Deactive ///
+$(document).ready(function() {
+    /// Active to deactive ///
+    $('#show_data').on('click', '.color_status_ac', function() {
+        var id = $(this).data('color_id');   
+        if (!id == "") { 
+            
+            // return false;
+           $.ajax({
+               url: "/admin/color/status_active/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+    ///  Deactive To Active  ///
+    $('#show_data').on('click', '.color_status_de', function() {
+        var id = $(this).data('color_id');   
+        if (!id == "") { 
+            // return false;
+           $.ajax({
+               url: "/admin/color/status_deactive/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+});
+
+$(document).ready(function() {
+    /// Delete Record Color ///
+    $("#show_data").on('click','.color_delete',function () { 
+        
+     var color_id = $(this).data('color_id');
+     $('#Modal_Delete').modal('show');
+    $('[name="color_id_delete"]').val(color_id);
+    });
+
+    $("#delcolor").submit(function(e) {
+     e.preventDefault();
+    var  id = $('#color_id_delete').val();
+    if (!id == "") {
+     var formData = new FormData(this);
+     var id = $('#color_id_delete').val();
+    $.ajax({
+        url: "/admin/color/delete/" + id,
+        type: 'post',
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function(msg) {    
+         if (msg.status == 200) {                    
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.message).css("color", "green"); 
+               $('#Modal_Delete').modal('hide');  
+            var table= $('#studentsTable').DataTable();
+             table.ajax.reload(null, false);
+         } else{    
+         if (msg.error) {  
+             console.log(msg.error); 
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.error).css("color", "red");
+         } else {
+             $('#responseeditcheck').hide();
+         }
+         
+         }
+        }
+    });
+ }
+     
+ }); 
+ ///Color Delete Model ///
+$("#closed_colordel").click(function () {
+    $('#Modal_Delete').modal('hide');   
+}); 
+$("#closed_color_del").click(function () {
+    $('#Modal_Delete').modal('hide');   
+});
+
+ });
+
+ /// ADD Color  ///
+$(document).ready(function() {
+    $("#addcolor").submit(function(e) {
+        e.preventDefault();
+     
+        var color = $('#color').val();
+        // alert(size);
+        if ((color.length == "") || (color.length == null)) {  
+            $("#colorcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#colorcheck").html('** Please fill Color Field').css("color", "red");
+            $('#colorcheck').focus();
+        }else{
+            $('#colorcheck').hide();
+        }  
+       
+        var color_status = $('#color_status').val();
+        if (color_status.length == "") {    
+            $("#colorstatuscheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#colorstatuscheck").html('** Please Select Color Status').css("color", "red");
+            $('#colorstatuscheck').focus();
+        } else {
+            $('#colorstatuscheck').hide();
+        }    
+        if ((color != '') && (color_status != '') ) {
+            // return false;
+            var formData = new FormData(this);
+            $.ajax({
+                url: "/admin/color/insert",
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Color Successfully Added").css("color", "green"); 
+                          window.location.replace("/admin/color");    
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});
+
+/// Color Edit ///
+$(document).ready(function() {
+    
+    ///Show Data Color On Edit Modal /// 
+    $('#show_data').on('click', '.color_edit', function() {
+    var color_id = $(this).data('color_id');  
+    var color = $(this).data('color');
+    var color_status = $(this).data('color_status');
+    
+    $('[name="color_id_edit"]').val(color_id);
+    $('[name="color_edit"]').val(color);
+    $("#size_color_edit option[value="+color_status+"]").attr('selected', 'selected');
+
+    $('#Modal_Edit').modal('show');
+    
+    });
+   
+    });
+
+    $('#show_data').on('click', '.color_edit', function() {
+        $('#Modal_Edit').modal('show');   
+    });
+    $('#close_cl').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#closed_col').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#show_data').on('click', '.color_edit', function() {
+        $('#Modal_Edit').modal('show');   
+    });
+    /// Update Size  ///
+$(document).ready(function() {
+    $("#editcolor").submit(function(e) {
+        e.preventDefault();
+        
+        var color_id_edit = $('#color_id_edit').val();
+        // alert(size);
+        if ((color_id_edit.length == "") || (color_id_edit.length == null)) {  
+            $("#color_id_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#color_id_editcheck").html('** Please Dont Remove ID').css("color", "red");
+            $('#color_id_editcheck').focus();
+        }else{
+            $('#color_id_editcheck').hide();
+        }  
+
+        var color_edit = $('#color_edit').val();
+        // alert(size);
+        if ((color_edit.length == "") || (color_edit.length == null)) {  
+            $("#color_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#color_editcheck").html('** Please fill color field').css("color", "red");
+            $('#color_editcheck').focus();
+        }else{
+            $('#color_editcheck').hide();
+        }  
+       
+        var color_status_edit = $('#color_status_edit').val();
+        if (color_status_edit.length == "") {    
+            $("#color_status_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#color_status_editcheck").html('** Please Select Color Status').css("color", "red");
+            $('#color_status_editcheck').focus();
+        } else {
+            $('#color_status_editcheck').hide();
+        }    
+        if ((color_edit != '') && (color_status_edit != '') && (color_id_edit !='') ) {
+            // return false;
+            var formData = new FormData(this);
+            var id = $('#color_id_edit').val();
+            $.ajax({
+                url: "/admin/color/edit/" + id,
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Size Successfully Updated").css("color", "green"); 
+                          $('#Modal_Edit').modal('hide'); 
+                          var table= $('#studentsTable').DataTable();
+                               table.ajax.reload(null, false);   
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
 });

@@ -78,6 +78,7 @@
                         @if (session()->has('message'))
                         <p class="ml-3 text-sm font-bold text-green-600" id="catmsg">{{ session()->get('message') }}</p>
                         @endif
+                        <h6 id="responseeditcheck"></h6>
                         <div class="table-responsive table-responsive-data2">
                             <table class="table table-data2 datatable" id='studentsTable' width="100%">
                                 <thead>
@@ -85,7 +86,7 @@
                                         <th>Category ID</th>
                                         <th>Name Category</th>
                                         <th>Slug Category</th>
-                                        <th>Status Category</th>
+                                        {{-- <th>Status Category</th> --}}
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -179,7 +180,7 @@
           </div>
           <div class="modal-footer">
             <input type="hidden" name="cat_id_delete" id="cat_id_delete" class="form-control">
-            <button type="button" id="closed" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="button" id="closed_cat" class="btn btn-secondary" data-dismiss="modal">No</button>
             <button  type="submit" id="btn_delete" name="btn_delete" class="btn btn-primary">Yes</button>
           </div>
         </div>
@@ -203,7 +204,7 @@
             { data: 'cat_id' },
             { data: 'cat_name' },
             { data: 'cat_slug' },
-            { data: 'status' },
+            // { data: 'status' },
             {
                 data: 'action', 
                 name: 'action', 

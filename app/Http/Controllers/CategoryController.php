@@ -104,14 +104,17 @@ class CategoryController extends Controller
             foreach ($data as $row) {
              return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-info btn-sm item cat_edit" data-cat_id="' . $row->cat_id . '" data-cat_name="' . $row->cat_name . '" data-cat_slug="' . $row->cat_slug . '" data-cat_status="' . $row->status . '">Edit</a>'; 
-                    $actionBtn .=  '<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm item ml-3 cat_delete" data-toggle="modal" data-target="#Modal_Delete"  data-cat_id="' . $row->cat_id . '" >Delete</a>';
+                    $actionBtn='';
                     if($row->status == 1){
-                        $actionBtn .= '<a href="javascript:void(0)"  class="status_ac btn btn-success btn-sm item ml-3 cat_status"  data-cat_id="' . $row->cat_id . '" >Active</a>';
+                        $actionBtn = '<a href="javascript:void(0)"  class="status_ac btn btn-success btn-sm item mr-3 cat_status"  data-cat_id="' . $row->cat_id . '" >Active</a>';
                     }
                     if($row->status == 0){
-                 $actionBtn .= ' <a href="javascript:void(0)"  class="status_de btn btn-warning btn-sm item ml-3 cat_status"  data-cat_id="' . $row->cat_id . '" >DeActive</a>';
+                 $actionBtn .= ' <a href="javascript:void(0)"  class="status_de btn btn-warning btn-sm item mr-3 cat_status"  data-cat_id="' . $row->cat_id . '" >DeActive</a>';
                      }
+
+                    $actionBtn .= '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-info btn-sm item cat_edit" data-cat_id="' . $row->cat_id . '" data-cat_name="' . $row->cat_name . '" data-cat_slug="' . $row->cat_slug . '" data-cat_status="' . $row->status . '">Edit</a>'; 
+                    $actionBtn .=  '<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm item ml-3 cat_delete" data-toggle="modal" data-target="#Modal_Delete"  data-cat_id="' . $row->cat_id . '" >Delete</a>';
+                    
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])->make(true);
