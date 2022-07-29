@@ -92,7 +92,7 @@ class ColorController extends Controller
                 'color_status' => $request->color_status_edit,         
             ]);
             if ($is_update) {
-                session()->flash('reply', 'Succsessfuly Update color');
+                session()->flash('msg', 'Succsessfuly Update color');
                 return json_encode(array('message' => 'Succsessfuly Update color', 'status' => 200));
             } else {
                 return json_encode(array('message' => 'Not Update color', 'status' => 500));
