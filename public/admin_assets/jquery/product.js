@@ -19,7 +19,7 @@ $(document).ready(function() {
                processData: false,
                success: function(msg) {    
                 if (msg.status == 200) {                    
-                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                    $("#responseeditcheck").show().delay(8000).queue(function(n) {
                         $(this).hide(); n();
                       });
                       $('#responseeditcheck').html(msg.message).css("color", "green");  
@@ -27,7 +27,7 @@ $(document).ready(function() {
                     table.ajax.reload(null, false);
                 } else{    
                 if (msg.error) {  
-                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                    $("#responseeditcheck").show().delay(8000).queue(function(n) {
                         $(this).hide(); n();
                       });
                       $('#responseeditcheck').html(msg.error).css("color", "red");
@@ -57,7 +57,7 @@ $(document).ready(function() {
                processData: false,
                success: function(msg) {    
                 if (msg.status == 200) {                    
-                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                    $("#responseeditcheck").show().delay(8000).queue(function(n) {
                         $(this).hide(); n();
                       });
                       $('#responseeditcheck').html(msg.message).css("color", "green");  
@@ -65,7 +65,7 @@ $(document).ready(function() {
                     table.ajax.reload(null, false);
                 } else{    
                 if (msg.error) {  
-                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                    $("#responseeditcheck").show().delay(8000).queue(function(n) {
                         $(this).hide(); n();
                       });
                       $('#responseeditcheck').html(msg.error).css("color", "red");
@@ -107,7 +107,7 @@ $(document).ready(function() {
         processData: false,
         success: function(msg) {    
          if (msg.status == 200) {                    
-             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+             $("#responseeditcheck").show().delay(8000).queue(function(n) {
                  $(this).hide(); n();
                });
                $('#responseeditcheck').html(msg.message).css("color", "green"); 
@@ -117,7 +117,7 @@ $(document).ready(function() {
          } else{    
          if (msg.error) {  
              console.log(msg.error); 
-             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+             $("#responseeditcheck").show().delay(8000).queue(function(n) {
                  $(this).hide(); n();
                });
                $('#responseeditcheck').html(msg.error).css("color", "red");
@@ -147,47 +147,55 @@ $(document).ready(function() {
         e.preventDefault();
         var cat_id = $('#cat_id').val();
         if ((cat_id.length == "") || (cat_id.length == null)) {  
-            $("#catidcheck").show().delay(5000).queue(function(n) {
+            $("#catidcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#catidcheck").html('** Please Select Category ').css("color", "red");
             $('#catidcheck').focus();
         }else{
             $('#catidcheck').hide();
-        }  
-        var color_id = $('#color_id').val();
-        if ((color_id.length == "") || (color_id.length == null)) {  
-            $("#coloridcheck").show().delay(5000).queue(function(n) {
-                $(this).hide(); n();
-              });
-            $("#coloridcheck").html('** Please Select Color ').css("color", "red");
-            $('#coloridcheck').focus();
-        }else{
-            $('#coloridcheck').hide();
-        }  
+        } 
+        // var color_id = [];
+        // $.each($("#color_id option:selected"), function(){
+        //     color_id.push($(this).val());
+        // }); 
+        // var color_id = $('#color_id').val();
+        // if ((color_id.length == "") || (color_id.length == null)) {  
+        //     $("#coloridcheck").show().delay(8000).queue(function(n) {
+        //         $(this).hide(); n();
+        //       });
+        //     $("#coloridcheck").html('** Please Select Color ').css("color", "red");
+        //     $('#coloridcheck').focus();
+        // }else{
+        //     $('#coloridcheck').hide();
+        // }  
         var coupon_id = $('#coupon_id').val();
-        if ((coupon_id.length == "") || (coupon_id.length == null)) {  
-            $("#couponidcheck").show().delay(5000).queue(function(n) {
-                $(this).hide(); n();
-              });
-            $("#couponidcheck").html('** Please Select Coupon ').css("color", "red");
-            $('#couponidcheck').focus();
-        }else{
-            $('#couponidcheck').hide();
-        }  
-        var size_id = $('#size_id').val();
-        if ((size_id.length == "") || (size_id.length == null)) {  
-            $("#sizeidcheck").show().delay(5000).queue(function(n) {
-                $(this).hide(); n();
-              });
-            $("#sizeidcheck").html('** Please Select Size ').css("color", "red");
-            $('#sizeidcheck').focus();
-        }else{
-            $('#sizeidcheck').hide();
-        }  
+        // if ((coupon_id.length == "") || (coupon_id.length == null)) {  
+        //     $("#couponidcheck").show().delay(8000).queue(function(n) {
+        //         $(this).hide(); n();
+        //       });
+        //     $("#couponidcheck").html('** Please Select Coupon ').css("color", "red");
+        //     $('#couponidcheck').focus();
+        // }else{
+        //     $('#couponidcheck').hide();
+        // } 
+        // var size_id = [];
+        // $.each($("#size_id option:selected"), function(){
+        //     size_id.push($(this).val());
+        // });  
+        // var size_id = $('#size_id').val();
+        // if ((size_id.length == "") || (size_id.length == null)) {  
+        //     $("#sizeidcheck").show().delay(8000).queue(function(n) {
+        //         $(this).hide(); n();
+        //       });
+        //     $("#sizeidcheck").html('** Please Select Size ').css("color", "red");
+        //     $('#sizeidcheck').focus();
+        // }else{
+        //     $('#sizeidcheck').hide();
+        // }  
         var product_slug = $('#product_slug').val();
         if ((product_slug.length == "") || (product_slug.length == null)) {  
-            $("#productslugcheck").show().delay(5000).queue(function(n) {
+            $("#productslugcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#productslugcheck").html('** Please fill Product Slug ').css("color", "red");
@@ -198,7 +206,7 @@ $(document).ready(function() {
 
         var product = $('#product').val();
         if ((product.length == "") || (product.length == null)) {  
-            $("#productcheck").show().delay(5000).queue(function(n) {
+            $("#productcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#productcheck").html('** Please fill product Field').css("color", "red");
@@ -208,7 +216,7 @@ $(document).ready(function() {
         }  
         var brand_id = $('#brand_id').val();
         if ((brand_id.length == "") || (brand_id.length == null)) {  
-            $("#brandidcheck").show().delay(5000).queue(function(n) {
+            $("#brandidcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#brandidcheck").html('** Please Select Brand ').css("color", "red");
@@ -218,7 +226,7 @@ $(document).ready(function() {
         } 
         var year_id = $('#year_id').val();
         if ((year_id.length == "") || (year_id.length == null)) {  
-            $("#yearidcheck").show().delay(5000).queue(function(n) {
+            $("#yearidcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#yearidcheck").html('** Please Select Year ').css("color", "red");
@@ -228,7 +236,7 @@ $(document).ready(function() {
         } 
         var warranty = $('#warranty').val();
         if ((warranty.length == "") || (warranty.length == null)) {  
-            $("#warrantycheck").show().delay(5000).queue(function(n) {
+            $("#warrantycheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#warrantycheck").html('** Please Enter warranty ').css("color", "red");
@@ -238,7 +246,7 @@ $(document).ready(function() {
         } 
         var uses = $('#uses').val();
         if ((uses.length == "") || (uses.length == null)) {  
-            $("#usescheck").show().delay(5000).queue(function(n) {
+            $("#usescheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#usescheck").html('** Please Enter Uses ').css("color", "red");
@@ -248,7 +256,7 @@ $(document).ready(function() {
         }
         var keyword = $('#keyword').val();
         if ((keyword.length == "") || (keyword.length == null)) {  
-            $("#keywordcheck").show().delay(5000).queue(function(n) {
+            $("#keywordcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#keywordcheck").html('** Please Enter Keywords ').css("color", "red");
@@ -258,7 +266,7 @@ $(document).ready(function() {
         } 
         var short_desc = $('#short_desc').val();
         if ((short_desc.length == "") || (short_desc.length == null)) {  
-            $("#shortdesccheck").show().delay(5000).queue(function(n) {
+            $("#shortdesccheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#shortdesccheck").html('** Please Enter Short Description ').css("color", "red");
@@ -267,12 +275,10 @@ $(document).ready(function() {
             $('#shortdesccheck').hide();
         } 
 
-       
-  
-        // var desc = $('#desc').val();
+       var desc = $('#desc').val();
       
         // if ((desc.length == "") || (desc.length == null)) {  
-        //     $("#desccheck").show().delay(5000).queue(function(n) {
+        //     $("#desccheck").show().delay(8000).queue(function(n) {
         //         $(this).hide(); n();
         //       });
         //     $("#desccheck").html('** Please Enter  Description ').css("color", "red");
@@ -280,9 +286,9 @@ $(document).ready(function() {
         // }else{
         //     $('#desccheck').hide();
         // } 
-        // var technical_specification = $('#technical_specification').val();
+        var technical_specification = $('#technical_specification').val();
         // if ((technical_specification.length == "") || (technical_specification.length == null)) {  
-        //     $("#technical_specificationcheck").show().delay(5000).queue(function(n) {
+        //     $("#technical_specificationcheck").show().delay(8000).queue(function(n) {
         //         $(this).hide(); n();
         //       });
         //     $("#technical_specificationcheck").html('** Please Enter  Technical Specificationcheck ').css("color", "red");
@@ -292,7 +298,7 @@ $(document).ready(function() {
         // } 
         var image1 = $('#image1').val();
         if ((image1.length == "") || (image1.length == null)) {  
-            $("#img1check").show().delay(5000).queue(function(n) {
+            $("#img1check").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#img1check").html('** Please Enter  Select Image').css("color", "red");
@@ -302,7 +308,7 @@ $(document).ready(function() {
         }
         var image2 = $('#image2').val();
         if ((image2.length == "") || (image2.length == null)) {  
-            $("#img2check").show().delay(5000).queue(function(n) {
+            $("#img2check").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#img2check").html('** Please Enter  Select Image').css("color", "red");
@@ -312,7 +318,7 @@ $(document).ready(function() {
         }
         var image3 = $('#image3').val();
         if ((image3.length == "") || (image3.length == null)) {  
-            $("#img3check").show().delay(5000).queue(function(n) {
+            $("#img3check").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#img3check").html('** Please Enter  Select Image').css("color", "red");
@@ -322,7 +328,7 @@ $(document).ready(function() {
         }
         var image4 = $('#image4').val();
         if ((image4.length == "") || (image4.length == null)) {  
-            $("#img4check").show().delay(5000).queue(function(n) {
+            $("#img4check").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#img4check").html('** Please Enter Select Image').css("color", "red");
@@ -332,18 +338,92 @@ $(document).ready(function() {
         }
         var product_status = $('#product_status').val();
         if (product_status.length == "") {    
-            $("#productstatuscheck").show().delay(5000).queue(function(n) {
+            $("#productstatuscheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#productstatuscheck").html('** Please Select product Status').css("color", "red");
             $('#productstatuscheck').focus();
         } else {
             $('#productstatuscheck').hide();
+        } 
+        // var sku = [];
+        // $.each($("#sku"), function(){
+        //     sku.push($(this).val());
+        // });   
+        var sku = $('#sku').val();
+        if (sku.length == "") {    
+            $("#skucheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#skucheck").html('** Please Select product SKU').css("color", "red");
+            $('#skucheck').focus();
+        } else {
+            $('#skucheck').hide();
+        }  
+        
+        // var mrp = [];
+        // $.each($("#mrp"), function(){
+        //     mrp.push($(this).val());
+        // });
+        var mrp = $('#mrp').val();
+        if (mrp.length == "") {    
+            $("#mrpcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#mrpcheck").html('** Please Select product MRP').css("color", "red");
+            $('#mrpcheck').focus();
+        } else {
+            $('#mrpcheck').hide();
+        } 
+
+        // var price = [];
+        // $.each($("#price"), function(){
+        //     price.push($(this).val());
+        // });
+        var price = $('#price').val();
+        if (price.length == "") {    
+            $("#pricecheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#pricecheck").html('** Please Select product Price').css("color", "red");
+            $('#pricecheck').focus();
+        } else {
+            $('#pricecheck').hide();
+        }  
+          
+        
+        var imageatrr = $('#imageatrr').val();
+        if (imageatrr.length == "") {    
+            $("#imageatrrcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#imageatrrcheck").html('** Please Select product Image Atrr').css("color", "red");
+            $('#imageatrrcheck').focus();
+        } else {
+            $('#imageatrrcheck').hide();
         }    
+
+        // var qty = [];
+        // $.each($("#qty"), function(){
+        //     qty.push($(this).val());
+        // });
+        var qty = $('#qty').val();
+        if (qty.length == "") {    
+            $("#productqtycheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#productqtycheck").html('** Please Select product Quantity').css("color", "red");
+            $('#productqtycheck').focus();
+        } else {
+            $('#productqtycheck').hide();
+        }  
+       
         // return false;
-        if ((product != '') && (product_status != '') && (cat_id != '')  && (color_id != '') && (size_id != '') && (coupon_id != '') && (product_slug != '') && (brand_id != '') && (year_id != '') && (warranty != '') && (uses != '') && (keyword != '') && (short_desc != '')  && (image1 != '') && (image2 != '') && (image3 != '') && (image4 != '') ) {
-           
-            var formData = new FormData(this);
+        if ((qty != '') && (imageatrr != '') && (price != '') && (mrp != '') && (sku != '') && (product != '') && (product_status != '') && (cat_id != '')   && (product_slug != '') && (brand_id != '') && (year_id != '') && (warranty != '') && (uses != '') && (keyword != '') && (short_desc != '')  && (image1 != '') && (image2 != '') && (image3 != '') && (image4 != '') ) {
+            // console.log(cat_id,color_id,coupon_id,size_id,product_slug,product,brand_id,year_id,warranty,uses,keyword,short_desc,desc,technical_specification,image1,image2,image3,image4,product_status,sku,mrp,price,imageatrr,qty);
+        //   var data =JSON.stringify(cat_id,color_id,coupon_id,size_id,product_slug,product,brand_id,year_id,warranty,uses,keyword,short_desc,desc,technical_specification,image1,image2,image3,image4,product_status,sku,mrp,price,imageatrr,qty);
+        //   console.log(data);
+          var formData = new FormData(this);
             $.ajax({
                 url: "/admin/product/insert",
                 type: 'post',
@@ -358,7 +438,7 @@ $(document).ready(function() {
                 processData: false,
                 success: function(msg) {
                     if (msg.status == 200) {                    
-                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                        $("#responsecheck").show().delay(8000).queue(function(n) {
                             $(this).hide(); n();
                           });
                           $('#responsecheck').html("product Successfully Added").css("color", "green"); 
@@ -366,7 +446,7 @@ $(document).ready(function() {
                     } else{
                        
                     if (msg.error) {    
-                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                        $("#responsecheck").show().delay(8000).queue(function(n) {
                             $(this).hide(); n();
                           });
                           $('#responsecheck').html(msg.error).css("color", "red");
@@ -391,11 +471,11 @@ $(document).ready(function() {
     $('#show_data').on('click', '.product_edit', function() {
     var product_id = $(this).data('product_id');  
     var product = $(this).data('product');
-    var product_status = $(this).data('product_status');
-    
+    // var cat_name = $(this).data('cat_name');
+    // alert(cat_name);
     $('[name="product_id_edit"]').val(product_id);
-    $('[name="product_edit"]').val(product);
-    $("#size_product_edit option[value="+product_status+"]").attr('selected', 'selected');
+    $('[name="product_name_edit"]').val(product);
+    // $("#cat_id option[value=" + cat_name +"]").attr('selected', 'selected');
 
     $('#Modal_Edit').modal('show');
     
@@ -423,7 +503,7 @@ $(document).ready(function() {
         var product_id_edit = $('#product_id_edit').val();
         // alert(size);
         if ((product_id_edit.length == "") || (product_id_edit.length == null)) {  
-            $("#product_id_editcheck").show().delay(5000).queue(function(n) {
+            $("#product_id_editcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#product_id_editcheck").html('** Please Dont Remove ID').css("color", "red");
@@ -435,7 +515,7 @@ $(document).ready(function() {
         var product_edit = $('#product_edit').val();
         // alert(size);
         if ((product_edit.length == "") || (product_edit.length == null)) {  
-            $("#product_editcheck").show().delay(5000).queue(function(n) {
+            $("#product_editcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#product_editcheck").html('** Please fill product field').css("color", "red");
@@ -446,7 +526,7 @@ $(document).ready(function() {
        
         var product_status_edit = $('#product_status_edit').val();
         if (product_status_edit.length == "") {    
-            $("#product_status_editcheck").show().delay(5000).queue(function(n) {
+            $("#product_status_editcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
             $("#product_status_editcheck").html('** Please Select product Status').css("color", "red");
@@ -471,7 +551,7 @@ $(document).ready(function() {
                 processData: false,
                 success: function(msg) {
                     if (msg.status == 200) {                    
-                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                        $("#responsecheck").show().delay(8000).queue(function(n) {
                             $(this).hide(); n();
                           });
                           $('#responsecheck').html("Size Successfully Updated").css("color", "green"); 
@@ -481,7 +561,7 @@ $(document).ready(function() {
                     } else{
                        
                     if (msg.error) {    
-                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                        $("#responsecheck").show().delay(8000).queue(function(n) {
                             $(this).hide(); n();
                           });
                           $('#responsecheck').html(msg.error).css("color", "red");

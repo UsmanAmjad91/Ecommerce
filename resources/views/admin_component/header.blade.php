@@ -32,7 +32,7 @@
     <link href="{{asset('admin_assets/css/theme.css')}}" rel="stylesheet" media="all">
  <!-- Datatables CSS CDN -->
  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+ {{-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script> --}}
 
 
 </head>

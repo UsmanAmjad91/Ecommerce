@@ -153,6 +153,8 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::post('/admin/product/status_active/{id}',[ProductController::class,'product_status_ac'])->name('admin/product/status_active');
 
+    Route::post('/admin/product/add',[ProductController::class,'insert_product'])->name('product.add');
+
 });
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');
