@@ -465,23 +465,6 @@ $(document).ready(function() {
 });
 
 /// product Edit ///
-$(document).ready(function() {
-    
-    ///Show Data product On Edit Modal /// 
-    $('#show_data').on('click', '.product_edit', function() {
-    var product_id = $(this).data('product_id');  
-    var product = $(this).data('product');
-    // var cat_name = $(this).data('cat_name');
-    // alert(cat_name);
-    $('[name="product_id_edit"]').val(product_id);
-    $('[name="product_name_edit"]').val(product);
-    // $("#cat_id option[value=" + cat_name +"]").attr('selected', 'selected');
-
-    $('#Modal_Edit').modal('show');
-    
-    });
-   
-    });
 
     $('#show_data').on('click', '.product_edit', function() {
         $('#Modal_Edit').modal('show');   
@@ -512,29 +495,115 @@ $(document).ready(function() {
             $('#product_id_editcheck').hide();
         }  
 
-        var product_edit = $('#product_edit').val();
-        // alert(size);
+        var product_edit = $('#product_name_edit').val();
         if ((product_edit.length == "") || (product_edit.length == null)) {  
-            $("#product_editcheck").show().delay(8000).queue(function(n) {
+            $("#product_name_editcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
-            $("#product_editcheck").html('** Please fill product field').css("color", "red");
-            $('#product_editcheck').focus();
+            $("#product_name_editcheck").html('** Please fill Product Name field').css("color", "red");
+            $('#product_name_editcheck').focus();
         }else{
-            $('#product_editcheck').hide();
+            $('#product_name_editcheck').hide();
+        }  
+
+        var cat_id = $('#cat_id').val();
+        if ((cat_id.length == "") || (cat_id.length == null)) {  
+            $("#catideditcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#catideditcheck").html('** Please Select Category').css("color", "red");
+            $('#catideditcheck').focus();
+        }else{
+            $('#catideditcheck').hide();
+        }  
+
+        var brand_id = $('#brand_id').val();
+        if ((brand_id.length == "") || (brand_id.length == null)) {  
+            $("#product_brand_editcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#product_brand_editcheck").html('** Please Select Brand').css("color", "red");
+            $('#product_brand_editcheck').focus();
+        }else{
+            $('#product_brand_editcheck').hide();
+        }  
+        // var year_id = $('#year_id').val();
+        // if ((year_id.length == "") || (year_id.length == null)) {  
+        //     $("#product_year_editcheck").show().delay(8000).queue(function(n) {
+        //         $(this).hide(); n();
+        //       });
+        //     $("#product_year_editcheck").html('** Please Select Year').css("color", "red");
+        //     $('#product_year_editcheck').focus();
+        // }else{
+        //     $('#product_year_editcheck').hide();
+        // }  
+
+        var slug_edit = $('#slug_edit').val();
+        if ((slug_edit.length == "") || (slug_edit.length == null)) {  
+            $("#slug_editcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#slug_editcheck").html('** Please Enter Slug').css("color", "red");
+            $('#slug_editcheck').focus();
+        }else{
+            $('#slug_editcheck').hide();
+        }  
+
+        var keyword_edit = $('#keyword_edit').val();
+        if ((keyword_edit.length == "") || (keyword_edit.length == null)) {  
+            $("#keyword_editcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#keyword_editcheck").html('** Please Enter Keyword').css("color", "red");
+            $('#keyword_editcheck').focus();
+        }else{
+            $('#keyword_editcheck').hide();
         }  
        
-        var product_status_edit = $('#product_status_edit').val();
-        if (product_status_edit.length == "") {    
-            $("#product_status_editcheck").show().delay(8000).queue(function(n) {
+        var  warranty_edit = $('#warranty_edit').val();
+        if ((warranty_edit.length == "") || (warranty_edit.length == null)) {  
+            $("#warranty_editcheck").show().delay(8000).queue(function(n) {
                 $(this).hide(); n();
               });
-            $("#product_status_editcheck").html('** Please Select product Status').css("color", "red");
-            $('#product_status_editcheck').focus();
+            $("#warranty_editcheck").html('** Please Enter Warranty').css("color", "red");
+            $('#warranty_editcheck').focus();
+        }else{
+            $('#warranty_editcheck').hide();
+        }  
+        var status_edit = $('#status_edit').val();
+        if (status_edit.length == "") {    
+            $("#status_editcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#status_editcheck").html('** Please Select product Status').css("color", "red");
+            $('#status_editcheck').focus();
         } else {
-            $('#product_status_editcheck').hide();
-        }    
-        if ((product_edit != '') && (product_status_edit != '') && (product_id_edit !='') ) {
+            $('#status_editcheck').hide();
+        }  
+         
+        var uses_edit = $('#uses_edit').val();
+        if (uses_edit.length == "") {    
+            $("#uses_editcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#uses_editcheck").html('** Please Write Product Uses').css("color", "red");
+            $('#uses_editcheck').focus();
+        } else {
+            $('#uses_editcheck').hide();
+        }  
+
+        var shortdesc = $('#shortdesc').val();
+        if (shortdesc.length == "") {    
+            $("#shortdesc_editcheck").show().delay(8000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#shortdesc_editcheck").html('** Please fill Short Desc').css("color", "red");
+            $('#shortdesc_editcheck').focus();
+        } else {
+            $('#shortdesc_editcheck').hide();
+        }  
+        
+        if ((uses_edit != '')  && (shortdesc != '') && (product_edit != '') && (status_edit != '') && (product_id_edit !='') && (warranty_edit !='') && (keyword_edit !='') && (slug_edit !='') && (brand_id !='') && (cat_id !='')) {
             // return false;
             var formData = new FormData(this);
             var id = $('#product_id_edit').val();
@@ -551,22 +620,22 @@ $(document).ready(function() {
                 processData: false,
                 success: function(msg) {
                     if (msg.status == 200) {                    
-                        $("#responsecheck").show().delay(8000).queue(function(n) {
+                        $("#responseeditcheck").show().delay(8000).queue(function(n) {
                             $(this).hide(); n();
                           });
-                          $('#responsecheck').html("Size Successfully Updated").css("color", "green"); 
+                          $('#responseeditcheck').html("Product Successfully Updated").css("color", "green"); 
                           $('#Modal_Edit').modal('hide'); 
                           var table= $('#studentsTable').DataTable();
                                table.ajax.reload(null, false);   
                     } else{
                        
                     if (msg.error) {    
-                        $("#responsecheck").show().delay(8000).queue(function(n) {
+                        $("#responseeditcheck").show().delay(8000).queue(function(n) {
                             $(this).hide(); n();
                           });
-                          $('#responsecheck').html(msg.error).css("color", "red");
+                          $('#responseeditcheck').html(msg.error).css("color", "red");
                     } else {
-                        $('#responsecheck').hide();
+                        $('#responseeditcheck').hide();
                     }
                     
                     }    
@@ -577,4 +646,228 @@ $(document).ready(function() {
 
     });
 
+    
+
 });
+$(document).ready(function(){
+    show_coupon();
+    function show_coupon() {
+        $.ajax({
+            url: "/admin/product/getcoupon",
+            type: 'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+        success: function(html) {
+            var items = html;
+            // console.log(html);
+            var i;
+            var html = '';
+            for (i = 0; i < items.length; i++) {   
+              html += '<option value="'+ items[i].coupon_id + '">' +
+               '<td>' + items[i].coupon_title + '</td>' +
+                '</option>';
+            }
+          $('#coupon_id').append(html);
+           
+        //   console.log(html);
+        }
+
+      });
+    }
+
+    show_size();
+    function show_size() {
+        $.ajax({
+            url: "/admin/product/getsize",
+            type: 'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+        success: function(html) {
+            var items = html;
+            // console.log(html);
+            var i;
+            var html = '';
+            for (i = 0; i < items.length; i++) {   
+              html += '<option value="'+ items[i].size_id + '">' +
+               '<td>' + items[i].size + '</td>' +
+                '</option>';
+            }
+          $('#size_id').append(html);
+           
+        //   console.log(html);
+        }
+
+      });
+    }
+
+    show_color();
+    function show_color() {
+        $.ajax({
+            url: "/admin/product/getcolor",
+            type: 'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+        success: function(html) {
+            var items = html;
+            // console.log(html);
+            var i;
+            var html = '';
+            for (i = 0; i < items.length; i++) {   
+              html += '<option value="'+ items[i].color_id + '">' +
+               '<td>' + items[i].color + '</td>' +
+                '</option>';
+            }
+          $('#color_id').append(html);
+           
+        //   console.log(html);
+        }
+
+      });
+    }
+    show_cat();
+    function show_cat() {
+        $.ajax({
+            url: "/admin/product/getcat",
+            type: 'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+        success: function(html) {
+            var items = html;
+            // console.log(html);
+            var i;
+            var html = '';
+            for (i = 0; i < items.length; i++) {   
+              html += '<option value="'+ items[i].cat_id + '">' +
+               '<td>' + items[i].cat_name + '</td>' +
+                '</option>';
+            }
+          $('#cat_id').append(html);
+           
+        //   console.log(html);
+        }
+
+      });
+    }
+    show_brand();
+    function show_brand() {
+        $.ajax({
+            url: "/admin/product/getbrand",
+            type: 'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+        success: function(html) {
+            var items = html;
+            // console.log(html);
+            var i;
+            var html = '';
+            for (i = 0; i < items.length; i++) {   
+              html += '<option value="'+ items[i].brand_id + '">' +
+               '<td>' + items[i].brand + '</td>' +
+                '</option>';
+            }
+          $('#brand_id').append(html);
+           
+        //   console.log(html);
+        }
+
+      });
+    }
+    show_year();
+    function show_year() {
+        $.ajax({
+            url: "/admin/product/getyear",
+            type: 'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+        success: function(html) {
+            var items = html;
+            // console.log(html);
+            var i;
+            var html = '';
+            for (i = 0; i < items.length; i++) {   
+              html += '<option value="'+ items[i].model_id + '">' +
+               '<td>' + items[i].year + '</td>' +
+                '</option>';
+            }
+          $('#year_id').append(html);
+           
+        //   console.log(html);
+        }
+
+      });
+    }
+});
+
+$(document).ready(function() {
+    
+    ///Show Data product On Edit Modal /// 
+    $('#show_data').on('click', '.product_edit', function() {
+    var product_id = $(this).data('product_id');  
+    var product = $(this).data('product');
+    var product_slug = $(this).data('product_slug');
+    var keyword = $(this).data('keywords');
+    var warranty = $(this).data('warranty');
+    var status =$(this).data('product_status');
+    var size =$(this).data('size_name');
+    var color =$(this).data('color_name');
+    var cat_id =$(this).data('cat_name');
+    var brand =$(this).data('brand_name');
+    var model =$(this).data('year_name');
+    var coupon =$(this).data('coupon_name');
+    var uses =$(this).data('uses');
+    var short_desc =$(this).data('short_desc');
+    // alert(short_desc);
+
+    $('[name="product_id_edit"]').val(product_id);
+    $('[name="product_name_edit"]').val(product);
+    $('[name="slug_edit"]').val(product_slug);
+    $('[name="keyword_edit"]').val(keyword);
+    $('[name="warranty_edit"]').val(warranty);
+    $("#status_edit option[value=" + status +"]").attr('selected', 'selected');
+
+    $("#coupon_id option[value=" + coupon +"]").attr('selected', 'selected');
+
+    $('[name="uses_edit"]').val(uses);
+
+    $("#cat_id  option[value=" + cat_id +"]").attr('selected', 'selected');
+    
+
+    $('[name="shortdesc"]').val(short_desc);
+
+    $("#brand_id option[value=" + brand +"]").attr('selected', 'selected');
+
+    $("#year_id option[value=" + model +"]").attr('selected', 'selected');
+
+    $("#size_id option[value=" + size +"]").attr('selected', 'selected');
+
+    $("#color_id option[value=" + color +"]").attr('selected', 'selected');
+   
+    $('#Modal_Edit').modal('show');
+    
+    });
+   
+    });

@@ -155,6 +155,18 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::post('/admin/product/add',[ProductController::class,'insert_product'])->name('product.add');
 
+    Route::get('/admin/product/getcoupon',[ProductController::class,'copon_get'])->name('admin/product/getcoupon');
+
+    Route::get('/admin/product/getsize',[ProductController::class,'size_get'])->name('admin/product/getsize');
+
+    Route::get('/admin/product/getcolor',[ProductController::class,'color_get'])->name('admin/product/getcolor');
+
+    Route::get('/admin/product/getcat',[ProductController::class,'cat_get'])->name('admin/product/getcat');
+
+    Route::get('/admin/product/getbrand',[ProductController::class,'brand_get'])->name('admin/product/getbrand');
+
+    Route::get('/admin/product/getyear',[ProductController::class,'year_get'])->name('admin/product/getyear');
+
 });
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');

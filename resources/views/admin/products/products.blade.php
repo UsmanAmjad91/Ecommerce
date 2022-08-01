@@ -167,50 +167,100 @@
                             <label for="cat_id" class="control-label mb-1">Category</label>
                             <div class="form-group col-3">
                                 <select class="selectpicker form-control category" id="cat_id" name="cat_id">
-                                    @foreach ($getdata as $item)
-                                    <option value="{{ $item->cat_id }}" {{( $item->cat_id == $item->category) ? 'selected' : '' }}> {{$item->cat_name }} </option>
-                                  @endforeach 
-                                    {{-- @foreach ($getdata as $row)
-                                        @if ($row->product_id)
-                                            <option value="{{ $row->cat_id }}" {{ $row->product_id }}>
-                                                {{ $row->cat_name }}</option>
-                                            @else
-                                            <option value="{{ $row->product_id }}" >{{ $row->cat_name }}</option>
-                                        @endif
-                                    @endforeach --}}
+                                   <option value="">Select</option>
+
                                 </select>
-                                <h6 id="catidcheck"> </h6>
+                                <h6 id="catideditcheck"> </h6>
                             </div>
 
                         </div>
+                        <div class="row col-lg-12 mt-3">
 
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">product Code</label>
-                            <div class="col-md-10">
-                                <input type="text" name="product_code_edit" id="product_code_edit"
-                                    class="form-control" placeholder="product Code">
-                            </div>
-                            <h6 id="product_code_editcheck"></h6>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">product Value</label>
-                            <div class="col-md-10">
-                                <input type="text" name="product_value_edit" id="product_value_edit"
-                                    class="form-control" placeholder="product Value">
-                            </div>
-                            <h6 id="product_value_editcheck"></h6>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">product status</label>
-                            <div class="col-md-8">
-                                <select class="selectpicker form-control col-4" name="product_status_edit"
-                                    id="product_status_edit">
-                                    <option value="1">Status On</option>
-                                    <option value="0">Status Off</option>
+                            <label class="form-label"> Brand</label>
+                            <div class="form-group col-3">
+                                <select class="selectpicker form-control brand" id="brand_id" name="brand_id">
+                                    
                                 </select>
+                                <h6 id="product_brand_editcheck"></h6>
                             </div>
-                            <h6 id="product_status_editcheck"></h6>
+                            <label class="form-label"> Model</label>
+                            <div class="form-group col-2">
+                                <select class="selectpicker form-control year" id="year_id" name="year_id">     
+                              
+                                </select>
+                                <h6 id="product_year_editcheck"></h6>
+                            </div>
+                            <label for="slug" class="control-label mb-1">Slug</label>
+                            <div class="form-group col-4">
+                                    <input type="text" value="" name="slug_edit" id="slug_edit" class="form-control" placeholder="product Slug">
+                            </div>
+                            <h6 id="slug_editcheck"> </h6>
                         </div>
+                        <div class="row col-lg-12 mt-3"> 
+                       
+                            <label for="keyword"  class="control-label mb-1">Keywords</label>
+                            <div class="form-group col-3">
+                                <input type="text" name="keyword_edit" id="keyword_edit"
+                                    class="form-control" placeholder="product keyword">
+                            </div>
+                            <h6 id="keyword_editcheck"></h6>
+                        
+                    
+                            <label for="warranty" class="control-label mb-1">Warranty</label>
+                            <div class="form-group col-3">
+                                <input type="text" name="warranty_edit" id="warranty_edit"
+                                    class="form-control" placeholder="Warranty">
+                            </div>
+                            <h6 id="warranty_editcheck"></h6>
+                           
+                            <label class="form-label">Color</label>
+                            <div class="form-group col-2">
+                                <select class="selectpicker form-control color" id="color_id" name="color_id">     
+                               
+                                </select>
+                                <h6 id="color_editcheck"></h6>
+                            
+                            </div>
+                      </div>
+                      <div class="row col-lg-12 mt-3">
+                      <label for="status" class="control-label mb-1">status</label>
+                      <div class="form-group col-3">
+                          <select class="selectpicker form-control col-12" name="status_edit" id="status_edit">
+                              <option value="1">Status On</option>
+                              <option value="0">Status Off</option>
+                          </select>
+                      </div>
+                      <h6 id="status_editcheck"></h6>
+                      
+                      <label class="form-label">Size</label>
+                      <div class="form-group col-2">
+                          <select class="selectpicker form-control size" id="size_id" name="size_id">     
+                          
+                          </select>
+                          <h6 id="size_editcheck"></h6>
+                      </div>
+                      <label class="form-label">Coupon</label>
+                      <div class="form-group col-3">
+                          <select class="selectpicker form-control coupon" id="coupon_id" name="coupon_id">   
+                            <option value="">Select</option>  
+                          </select>
+                          <h6 id="size_editcheck"></h6>
+                      </div>
+                   
+                      </div>
+                      <div class="row col-lg-12 mt-3">
+                        <label class="form-label">Uses</label>
+                        <div class="form-group col-4">
+                            <input type="text" name="uses_edit" id="uses_edit" class="form-control" placeholder="Uses">
+                            <h6 id="uses_editcheck"></h6>
+                        </div>
+
+                        <label class="form-label">Short_Desc</label>
+                        <div class="form-group col-4">
+                            <input type="text" name="shortdesc" id="shortdesc" class="form-control" placeholder="Short desc">
+                            <h6 id="shortdesc_editcheck"></h6>
+                        </div>
+                      </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="close_cop" data-backdrop="false" class="btn btn-secondary"
