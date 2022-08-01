@@ -35,6 +35,14 @@
                                 {{config('constants.name')}}
                             </a>
                         </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                          @if (session()->has('logout'))
+                          <p class="ml-3 text-sm font-bold text-green-600" id="catmsg">{{ session()->get('logout') }}</p>
+                          @endif
+                          <h6 id="responseeditcheck"></h6>
+                            </div>
+                          </div>
                         <div class="login-form">
                             <form class="login" id="login" method="POST" action="javascript:void(0);">
                                 @csrf

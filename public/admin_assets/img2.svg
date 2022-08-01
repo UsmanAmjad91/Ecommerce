@@ -1,0 +1,7 @@
+<svg id="Component_13_1" data-name="Component 13 – 1" xmlns="http://www.w3.org/2000/svg" width="120.191" height="76" viewBox="0 0 120.191 76">
+  <g id="Group_4965" data-name="Group 4965" transform="translate(-17 -219)">
+    <rect id="Rectangle_2029" data-name="Rectangle 2029" width="120.191" height="76" rx="12" transform="translate(17 219)" fill="#2a2a2a"/>
+    <path id="Rectangle_2042" data-name="Rectangle 2042" d="M12,0h1a0,0,0,0,1,0,0V76a0,0,0,0,1,0,0H12A12,12,0,0,1,0,64V12A12,12,0,0,1,12,0Z" transform="translate(17 219)" fill="#00b570"/>
+  </g>
+  <path id="Icon_awesome-user-circle" data-name="Icon awesome-user-circle" d="M16.065.562A16.065,16.065,0,1,0,32.13,16.627,16.062,16.062,0,0,0,16.065.562Zm0,6.219a5.7,5.7,0,1,1-5.7,5.7A5.7,5.7,0,0,1,16.065,6.781Zm0,22.284a12.413,12.413,0,0,1-9.49-4.418,7.222,7.222,0,0,1,6.381-3.874,1.585,1.585,0,0,1,.46.071,8.577,8.577,0,0,0,2.649.447,8.544,8.544,0,0,0,2.649-.447,1.585,1.585,0,0,1,.46-.071,7.222,7.222,0,0,1,6.381,3.874A12.413,12.413,0,0,1,16.065,29.065Z" transform="translate(44 21.279)" fill="#fff"/>
+</svg>

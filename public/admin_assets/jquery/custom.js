@@ -1421,3 +1421,656 @@ $(document).ready(function() {
     });
 
 });
+
+
+/// Status brand Active And Deactive ///
+$(document).ready(function() {
+    /// Active to deactive ///
+    $('#show_data').on('click', '.brand_status_ac', function() {
+        var id = $(this).data('brand_id');   
+        if (!id == "") { 
+            
+            // return false;
+           $.ajax({
+               url: "/admin/brand/status_active/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+    ///  Deactive To Active  ///
+    $('#show_data').on('click', '.brand_status_de', function() {
+        var id = $(this).data('brand_id');   
+        if (!id == "") { 
+            // return false;
+           $.ajax({
+               url: "/admin/brand/status_deactive/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+});
+
+$(document).ready(function() {
+    /// Delete Record brand ///
+    $("#show_data").on('click','.brand_delete',function () { 
+        
+     var brand_id = $(this).data('brand_id');
+     $('#Modal_Delete').modal('show');
+    $('[name="brand_id_delete"]').val(brand_id);
+    });
+
+    $("#delbrand").submit(function(e) {
+     e.preventDefault();
+    var  id = $('#brand_id_delete').val();
+    if (!id == "") {
+     var formData = new FormData(this);
+     var id = $('#brand_id_delete').val();
+    $.ajax({
+        url: "/admin/brand/delete/" + id,
+        type: 'post',
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function(msg) {    
+         if (msg.status == 200) {                    
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.message).css("color", "green"); 
+               $('#Modal_Delete').modal('hide');  
+            var table= $('#studentsTable').DataTable();
+             table.ajax.reload(null, false);
+         } else{    
+         if (msg.error) {  
+             console.log(msg.error); 
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.error).css("color", "red");
+         } else {
+             $('#responseeditcheck').hide();
+         }
+         
+         }
+        }
+    });
+ }
+     
+ }); 
+ ///brand Delete Model ///
+$("#closed_branddel").click(function () {
+    $('#Modal_Delete').modal('hide');   
+}); 
+$("#closed_brand_del").click(function () {
+    $('#Modal_Delete').modal('hide');   
+});
+
+ });
+
+ /// ADD brand  ///
+$(document).ready(function() {
+    $("#addbrand").submit(function(e) {
+        e.preventDefault();
+     
+        var brand = $('#brand').val();
+        // alert(size);
+        if ((brand.length == "") || (brand.length == null)) {  
+            $("#brandcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#brandcheck").html('** Please fill brand Field').css("color", "red");
+            $('#brandcheck').focus();
+        }else{
+            $('#brandcheck').hide();
+        }  
+       
+        var brand_status = $('#brand_status').val();
+        if (brand_status.length == "") {    
+            $("#brandstatuscheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#brandstatuscheck").html('** Please Select brand Status').css("color", "red");
+            $('#brandstatuscheck').focus();
+        } else {
+            $('#brandstatuscheck').hide();
+        }    
+        if ((brand != '') && (brand_status != '') ) {
+            // return false;
+            var formData = new FormData(this);
+            $.ajax({
+                url: "/admin/brand/insert",
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Brand Successfully Added").css("color", "green"); 
+                          window.location.replace("/admin/brand");    
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});
+
+/// brand Edit ///
+$(document).ready(function() {
+    
+    ///Show Data brand On Edit Modal /// 
+    $('#show_data').on('click', '.brand_edit', function() {
+    var brand_id = $(this).data('brand_id');  
+    var brand = $(this).data('brand');
+    var brand_status = $(this).data('brand_status');
+    
+    $('[name="brand_id_edit"]').val(brand_id);
+    $('[name="brand_edit"]').val(brand);
+    $("#size_brand_edit option[value="+brand_status+"]").attr('selected', 'selected');
+
+    $('#Modal_Edit').modal('show');
+    
+    });
+   
+    });
+
+    $('#show_data').on('click', '.brand_edit', function() {
+        $('#Modal_Edit').modal('show');   
+    });
+    $('#close_brd').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#closed_br').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#show_data').on('click', '.brand_edit', function() {
+        $('#Modal_Edit').modal('show');   
+    });
+    /// Update Brand  ///
+$(document).ready(function() {
+    $("#editbrand").submit(function(e) {
+        e.preventDefault();
+        
+        var brand_id_edit = $('#brand_id_edit').val();
+        // alert(size);
+        if ((brand_id_edit.length == "") || (brand_id_edit.length == null)) {  
+            $("#brand_id_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#brand_id_editcheck").html('** Please Dont Remove ID').css("color", "red");
+            $('#brand_id_editcheck').focus();
+        }else{
+            $('#brand_id_editcheck').hide();
+        }  
+
+        var brand_edit = $('#brand_edit').val();
+        // alert(size);
+        if ((brand_edit.length == "") || (brand_edit.length == null)) {  
+            $("#brand_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#brand_editcheck").html('** Please fill brand field').css("color", "red");
+            $('#brand_editcheck').focus();
+        }else{
+            $('#brand_editcheck').hide();
+        }  
+       
+        var brand_status_edit = $('#brand_status_edit').val();
+        if (brand_status_edit.length == "") {    
+            $("#brand_status_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#brand_status_editcheck").html('** Please Select brand Status').css("color", "red");
+            $('#brand_status_editcheck').focus();
+        } else {
+            $('#brand_status_editcheck').hide();
+        }    
+        if ((brand_edit != '') && (brand_status_edit != '') && (brand_id_edit !='') ) {
+            // return false;
+            var formData = new FormData(this);
+            var id = $('#brand_id_edit').val();
+            $.ajax({
+                url: "/admin/brand/edit/" + id,
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Size Successfully Updated").css("color", "green"); 
+                          $('#Modal_Edit').modal('hide'); 
+                          var table= $('#studentsTable').DataTable();
+                               table.ajax.reload(null, false);   
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});
+
+/// Status year Active And Deactive ///
+$(document).ready(function() {
+    /// Active to deactive ///
+    $('#show_data').on('click', '.year_status_ac', function() {
+        var id = $(this).data('year_id');   
+        if (!id == "") { 
+            
+            // return false;
+           $.ajax({
+               url: "/admin/year/status_active/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+    ///  Deactive To Active  ///
+    $('#show_data').on('click', '.year_status_de', function() {
+        var id = $(this).data('year_id');   
+        if (!id == "") { 
+            // return false;
+           $.ajax({
+               url: "/admin/year/status_deactive/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+});
+
+$(document).ready(function() {
+    /// Delete Record year ///
+    $("#show_data").on('click','.year_delete',function () { 
+        
+     var year_id = $(this).data('year_id');
+     $('#Modal_Delete').modal('show');
+    $('[name="year_id_delete"]').val(year_id);
+    });
+
+    $("#delyear").submit(function(e) {
+     e.preventDefault();
+    var  id = $('#year_id_delete').val();
+    if (!id == "") {
+     var formData = new FormData(this);
+     var id = $('#year_id_delete').val();
+    $.ajax({
+        url: "/admin/year/delete/" + id,
+        type: 'post',
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function(msg) {    
+         if (msg.status == 200) {                    
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.message).css("color", "green"); 
+               $('#Modal_Delete').modal('hide');  
+            var table= $('#studentsTable').DataTable();
+             table.ajax.reload(null, false);
+         } else{    
+         if (msg.error) {  
+             console.log(msg.error); 
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.error).css("color", "red");
+         } else {
+             $('#responseeditcheck').hide();
+         }
+         
+         }
+        }
+    });
+ }
+     
+ }); 
+ ///year Delete Model ///
+$("#closed_yeardel").click(function () {
+    $('#Modal_Delete').modal('hide');   
+}); 
+$("#closed_year_del").click(function () {
+    $('#Modal_Delete').modal('hide');   
+});
+
+ });
+
+ /// ADD year  ///
+$(document).ready(function() {
+    $("#addyear").submit(function(e) {
+        e.preventDefault();
+     
+        var year = $('#year').val();
+        // alert(size);
+        if ((year.length == "") || (year.length == null)) {  
+            $("#yearcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#yearcheck").html('** Please fill year Field').css("color", "red");
+            $('#yearcheck').focus();
+        }else{
+            $('#yearcheck').hide();
+        }  
+       
+        var year_status = $('#year_status').val();
+        if (year_status.length == "") {    
+            $("#yearstatuscheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#yearstatuscheck").html('** Please Select year Status').css("color", "red");
+            $('#yearstatuscheck').focus();
+        } else {
+            $('#yearstatuscheck').hide();
+        }    
+        if ((year != '') && (year_status != '') ) {
+            // return false;
+            var formData = new FormData(this);
+            $.ajax({
+                url: "/admin/year/insert",
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("year Successfully Added").css("color", "green"); 
+                          window.location.replace("/admin/year");    
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});
+
+/// year Edit ///
+$(document).ready(function() {
+    
+    ///Show Data year On Edit Modal /// 
+    $('#show_data').on('click', '.year_edit', function() {
+    var year_id = $(this).data('year_id');  
+    var year = $(this).data('year');
+    var year_status = $(this).data('year_status');
+    
+    $('[name="year_id_edit"]').val(year_id);
+    $('[name="year_edit"]').val(year);
+    $("#size_year_edit option[value="+year_status+"]").attr('selected', 'selected');
+
+    $('#Modal_Edit').modal('show');
+    
+    });
+   
+    });
+
+    $('#show_data').on('click', '.year_edit', function() {
+        $('#Modal_Edit').modal('show');   
+    });
+    $('#close_brd').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#closed_br').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#show_data').on('click', '.year', function() {
+        $('#Modal_Edit').modal('show');   
+    });
+    /// Update Year  ///
+$(document).ready(function() {
+    $("#edityear").submit(function(e) {
+        e.preventDefault();
+        
+        var year_id_edit = $('#year_id_edit').val();
+        // alert(size);
+        if ((year_id_edit.length == "") || (year_id_edit.length == null)) {  
+            $("#year_id_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#year_id_editcheck").html('** Please Dont Remove ID').css("color", "red");
+            $('#year_id_editcheck').focus();
+        }else{
+            $('#year_id_editcheck').hide();
+        }  
+
+        var year_edit = $('#year_edit').val();
+        // alert(size);
+        if ((year_edit.length == "") || (year_edit.length == null)) {  
+            $("#year_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#year_editcheck").html('** Please fill year field').css("color", "red");
+            $('#year_editcheck').focus();
+        }else{
+            $('#year_editcheck').hide();
+        }  
+       
+        var year_status_edit = $('#year_status_edit').val();
+        if (year_status_edit.length == "") {    
+            $("#year_status_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#year_status_editcheck").html('** Please Select year Status').css("color", "red");
+            $('#year_status_editcheck').focus();
+        } else {
+            $('#year_status_editcheck').hide();
+        }    
+        if ((year_edit != '') && (year_status_edit != '') && (year_id_edit !='') ) {
+            // return false;
+            var formData = new FormData(this);
+            var id = $('#year_id_edit').val();
+            $.ajax({
+                url: "/admin/year/edit/" + id,
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Size Successfully Updated").css("color", "green"); 
+                          $('#Modal_Edit').modal('hide'); 
+                          var table= $('#studentsTable').DataTable();
+                               table.ajax.reload(null, false);   
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});

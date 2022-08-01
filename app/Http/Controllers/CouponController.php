@@ -20,7 +20,7 @@ class CouponController extends Controller
     public function index()
     {
         $title="Coupon";
-        return view('admin.coupon',compact('title'));
+        return view('admin.coupon.coupon',compact('title'));
     }
 
     /**
@@ -31,7 +31,7 @@ class CouponController extends Controller
     public function manage_coupon()
     {
         $title="Add Coupon";
-        return view('admin.manage_coupon',compact('title'));
+        return view('admin.coupon.manage_coupon',compact('title'));
     }
 
     /**
@@ -84,7 +84,7 @@ class CouponController extends Controller
             $insert_cat->coupon_status = $request->post('coupon_status');
             $insert_cat->save();
             if ($insert_cat) {
-                session()->flash('message', 'Succsessfuly Added Coupon');
+                session()->flash('mes', 'Succsessfuly Added Coupon');
                 return json_encode(array('message' => 'Succsessfuly Added Coupon', 'status' => 200));
             } else {
                 return json_encode(array('message' => 'Not Inserted Coupon', 'status' => 500));
@@ -112,7 +112,7 @@ class CouponController extends Controller
                  
             ]);
             if ($is_update) {
-                session()->flash('message', 'Succsessfuly Update Coupons');
+                session()->flash('mes', 'Succsessfuly Update Coupons');
                 return json_encode(array('message' => 'Succsessfuly Update Coupons', 'status' => 200));
             } else {
                 return json_encode(array('message' => 'Not Update Coupons', 'status' => 500));
@@ -126,7 +126,7 @@ class CouponController extends Controller
         // dd($id);
         if (!empty($id)) {
             $is_delete = Coupon::where('coupon_id', $id)->delete();
-            session()->flash('message', 'Succsessfuly Delete Coupon');
+            session()->flash('mes', 'Succsessfuly Delete Coupon');
             if (!empty($is_delete))
             
                 return json_encode(array('message' => 'Record Deleted successfully', 'status' => 200));
@@ -142,7 +142,7 @@ class CouponController extends Controller
             // dd($id);
             $isst =  DB::table('coupons')->where('coupon_id', $id)->update(array('coupon_status' => '1'));  
             if (!empty($isst)){
-                session()->flash('message', 'Succsessfuly Active Coupon');
+                session()->flash('mes', 'Succsessfuly Active Coupon');
                 return json_encode(array('message' => 'Coupon Active successfully', 'status' => 200));
             }else{
                 return json_encode(array('message' => 'Coupon Not Active', 'status' => 500));
@@ -156,7 +156,7 @@ class CouponController extends Controller
             // dd($id);
             $isstrt =  DB::table('coupons')->where('coupon_id', $id)->update(array('coupon_status' => '0'));
             if (!empty($isstrt)){
-                session()->flash('message', 'Succsessfuly Deactive Coupon');
+                session()->flash('mes', 'Succsessfuly Deactive Coupon');
                 return json_encode(array('message' => 'Coupon Deactive successfully', 'status' => 200));
              } else{
                 return json_encode(array('message' => 'Coupon Not Deactive', 'status' => 500));

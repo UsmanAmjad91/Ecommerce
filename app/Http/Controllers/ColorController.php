@@ -20,13 +20,13 @@ class ColorController extends Controller
     public function index()
     {
         $title="Color";
-        return view('admin.color',compact('title'));
+        return view('admin.color.color',compact('title'));
     }
    
     public function  manage_color()
     {
         $title="Add Color";
-        return view('admin.manage_color',compact('title'));
+        return view('admin.color.manage_color',compact('title'));
     }
     
     public function color_list(Request $request)
@@ -57,7 +57,7 @@ class ColorController extends Controller
     {
         // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'color' => 'required',
+            'color' => 'required|unique:colors',
             'color_status' => 'required',
         ]);
         if ($validator->fails()) {
@@ -69,10 +69,10 @@ class ColorController extends Controller
         $insert_color->color_status = $request->post('color_status');
         $insert_color->save();
         if ($insert_color) {
-            session()->flash('msg', 'Succsessfuly Added color');
-            return json_encode(array('message' => 'Succsessfuly Added color', 'status' => 200));
+            session()->flash('msg', 'Succsessfuly Added Color');
+            return json_encode(array('message' => 'Succsessfuly Added Color', 'status' => 200));
         } else {
-            return json_encode(array('message' => 'Not Inserted color', 'status' => 500));
+            return json_encode(array('message' => 'Not Inserted Color', 'status' => 500));
         }
     }
 
@@ -80,7 +80,7 @@ class ColorController extends Controller
     {
         // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'color_edit' => 'required',
+            'color_edit' => 'required', Rule::unique('colors')->ignore($id),
             'color_status_edit' => 'required',
         ]);
         if ($validator->fails()) {
@@ -92,10 +92,10 @@ class ColorController extends Controller
                 'color_status' => $request->color_status_edit,         
             ]);
             if ($is_update) {
-                session()->flash('msg', 'Succsessfuly Update color');
-                return json_encode(array('message' => 'Succsessfuly Update color', 'status' => 200));
+                session()->flash('msg', 'Succsessfuly Update Color');
+                return json_encode(array('message' => 'Succsessfuly Update Color', 'status' => 200));
             } else {
-                return json_encode(array('message' => 'Not Update color', 'status' => 500));
+                return json_encode(array('message' => 'Not Update Color', 'status' => 500));
             }
         }
     }
@@ -106,7 +106,7 @@ class ColorController extends Controller
         // dd($id);
         if (!empty($id)) {
             $is_delete = Color::where('color_id', $id)->delete();
-            session()->flash('message', 'Succsessfuly Delete Coupon');
+            session()->flash('msg', 'Succsessfuly Delete Color');
             if (!empty($is_delete))
             
                 return json_encode(array('message' => 'Record Deleted successfully', 'status' => 200));
@@ -122,7 +122,7 @@ class ColorController extends Controller
             // dd($id);
             $isst =  DB::table('colors')->where('color_id', $id)->update(array('color_status' => '1'));  
             if (!empty($isst)){
-                session()->flash('msg', 'Succsessfuly Active color');
+                session()->flash('msg', 'Succsessfuly Active Color');
                 return json_encode(array('message' => 'color Active successfully', 'status' => 200));
             }else{
                 return json_encode(array('message' => 'color Not Active', 'status' => 500));
@@ -136,7 +136,7 @@ class ColorController extends Controller
             // dd($id);
             $isstrt =  DB::table('colors')->where('color_id', $id)->update(array('color_status' => '0'));
             if (!empty($isstrt)){
-                session()->flash('msg', 'Succsessfuly Deactive color');
+                session()->flash('msg', 'Succsessfuly Deactive Color');
                 return json_encode(array('message' => 'color Deactive successfully', 'status' => 200));
              } else{
                 return json_encode(array('message' => 'color Not Deactive', 'status' => 500));

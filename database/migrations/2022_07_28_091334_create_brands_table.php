@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('colors', function (Blueprint $table) {
-            $table->increments('color_id')->length(11);
-            $table->string('color')->nllable(true)->length(191);
-            $table->integer('color_status')->nllable(true)->length(11);
+        Schema::create('brands', function (Blueprint $table) {
+            $table->increments('brand_id')->length(11);
+            $table->string('brand')->nllable(true)->length(191);
+            $table->integer('brand_status')->length(11);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colors');
+        Schema::dropIfExists('brands');
     }
 };

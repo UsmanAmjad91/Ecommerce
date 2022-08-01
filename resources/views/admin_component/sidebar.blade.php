@@ -18,7 +18,7 @@
                 </li>
                 <li class="@yield('coupon_select')">
                     <a href="{{url('/admin/coupon')}}">
-                        <i class="fa fa-tags"></i>Coupon</a>
+                        <i class="fa fa-tags"></i>Coupons</a>
                 </li>
                 <li class="@yield('size_select')">
                     <a href="{{url('/admin/size')}}">
@@ -26,11 +26,22 @@
                 </li>
                 <li class="@yield('color_select')">
                     <a href="{{url('/admin/color')}}">
-                        <i class="fa fa-fill-drip"></i>Color</a>
+                        <i class="fa fa-paint-brush"></i>Colors</a>
                 </li>
-                <li>
-                    <a href="map.html">
-                        <i class="fas fa-map-marker-alt"></i>Maps</a>
+                <li class="@yield('brand_select')">
+                    <a href="{{url('/admin/brand')}}">
+                         <i class="fa fa-pause-circle"></i>
+                          Brands</a>
+                </li>
+                <li class="@yield('year_select')">
+                    <a href="{{url('/admin/year')}}">
+                         <i class="fa fa-pause-circle"></i>
+                          Model Year</a>
+                </li>
+                <li class="@yield('product_select')">
+                    <a href="{{url('/admin/product')}}">
+                         <i class="fa fa-pause-circle"></i>
+                          Products</a>
                 </li>
                 <li class="has-sub">
                     <a class="js-arrow" href="#">

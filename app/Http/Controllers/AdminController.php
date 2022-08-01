@@ -84,6 +84,7 @@ class AdminController extends Controller
         $request->session()->forget('username');
         $request->session()->forget('ADMIN_LOGIN');
         $request->session()->forget('admin_id');
+        session()->flash('logout', 'Succsessfuly Logout');
         return redirect('/admin');
     }
     public function updatepassword(Request $request)

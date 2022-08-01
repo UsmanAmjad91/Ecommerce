@@ -20,13 +20,13 @@ class SizeController extends Controller
     public function index()
     {
         $title="Size";
-        return view('admin.size',compact('title'));
+        return view('admin.size.size',compact('title'));
     }
    
     public function  manage_size()
     {
         $title="Add Size";
-        return view('admin.manage_size',compact('title'));
+        return view('admin.size.manage_size',compact('title'));
     }
     
     public function size_list(Request $request)
@@ -69,7 +69,7 @@ class SizeController extends Controller
         $insert_size->size_status = $request->post('size_status');
         $insert_size->save();
         if ($insert_size) {
-            session()->flash('message', 'Succsessfuly Added Size');
+            session()->flash('reply', 'Succsessfuly Added Size');
             return json_encode(array('message' => 'Succsessfuly Added Size', 'status' => 200));
         } else {
             return json_encode(array('message' => 'Not Inserted Size', 'status' => 500));
@@ -106,7 +106,7 @@ class SizeController extends Controller
         // dd($id);
         if (!empty($id)) {
             $is_delete = Size::where('size_id', $id)->delete();
-            session()->flash('message', 'Succsessfuly Delete Coupon');
+            session()->flash('reply', 'Succsessfuly Delete Coupon');
             if (!empty($is_delete))
             
                 return json_encode(array('message' => 'Record Deleted successfully', 'status' => 200));
@@ -122,7 +122,7 @@ class SizeController extends Controller
             // dd($id);
             $isst =  DB::table('sizes')->where('size_id', $id)->update(array('size_status' => '1'));  
             if (!empty($isst)){
-                session()->flash('message', 'Succsessfuly Active Size');
+                session()->flash('reply', 'Succsessfuly Active Size');
                 return json_encode(array('message' => 'Size Active successfully', 'status' => 200));
             }else{
                 return json_encode(array('message' => 'Size Not Active', 'status' => 500));
@@ -136,7 +136,7 @@ class SizeController extends Controller
             // dd($id);
             $isstrt =  DB::table('sizes')->where('size_id', $id)->update(array('size_status' => '0'));
             if (!empty($isstrt)){
-                session()->flash('message', 'Succsessfuly Deactive Size');
+                session()->flash('reply', 'Succsessfuly Deactive Size');
                 return json_encode(array('message' => 'Size Deactive successfully', 'status' => 200));
              } else{
                 return json_encode(array('message' => 'Size Not Deactive', 'status' => 500));

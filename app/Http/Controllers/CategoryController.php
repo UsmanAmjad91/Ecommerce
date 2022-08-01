@@ -20,14 +20,14 @@ class CategoryController extends Controller
     public function index()
     {
         $title="Category";
-        return view('admin.category',compact('title'));
+        return view('admin.category.category',compact('title'));
     }
 
 
     public function manage_category()
     {
         $title="Add Category";
-        return view('admin.manage_category',compact('title'));
+        return view('admin.category.manage_category',compact('title'));
     }
     public function insert_cat(Request $request)
     {
