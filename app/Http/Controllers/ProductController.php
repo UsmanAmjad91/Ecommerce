@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\category;
@@ -10,11 +11,14 @@ use App\Models\Coupon;
 use App\Models\Myear;
 use App\Models\Size;
 use App\Models\Productattr;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 use Yajra\Datatables\Datatables;
 
 class ProductController extends Controller
@@ -109,11 +113,16 @@ class ProductController extends Controller
         // dd($solution);
         $siz = 'size_id' . $count;
         if ($request->siz) {
-            // $size = $request->siz;
-            $insert_pro->size = $request->siz;
+            $size = $request->siz;
         } else {
-            $insert_pro->size = $request->size;
+            $size = $request->size_id;
         }
+        $string = '';
+        foreach ($size as $b => $c) {
+            $string .= $c . ',';
+        }
+        $solution = substr($string, 0, -1);
+        $insert_pro->size = $solution;
 
         $insert_pro->model = $request->post('year_id');
         $insert_pro->brand = $request->post('brand_id');
@@ -130,8 +139,9 @@ class ProductController extends Controller
         $insert_pro->image3 = $filename3;
         $insert_pro->image4 = $filename4;
         $insert_pro->save();
-        $pid = $insert_pro->product_id;
-
+        $pid = $insert_pro->id;
+        
+        
 
         if ($file = $request->imageatrr1) {
             $file = $request->imageatrr1;
@@ -157,7 +167,7 @@ class ProductController extends Controller
         $mprr = 'mrp' . $count;
         $pric = 'price' . $count;
         $qt = 'qty' . $count;
-
+// dd($pid);
         $productattr['products_id'] = $pid;
         $productattr['name'] = $request->post('product');
         if ($request->skut) {
@@ -240,18 +250,18 @@ class ProductController extends Controller
                 //    return json_encode($data);
                 return Datatables::of($data)->addIndexColumn()
                     ->addColumn('action', function ($row) {
-                        $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-success btn-sm  item d-inline-flex product_edit" data-product_id="' . $row->product_id . '" data-product="' . $row->product_name . '" data-coupon_name="' . $row->coupon_id . '"
+                        $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-success btn-sm mr-1 item d-inline-flex product_edit" data-product_id="' . $row->product_id . '" data-product="' . $row->product_name . '" data-coupon_name="' . $row->coupon_id . '"
                     data-cat_name="' . $row->cat_id . '" data-color_name="' . $row->color_id . '" data-size_name="' . $row->size_id . '"
                     data-brand_name="' . $row->brand_id . '"  data-year_name="' . $row->model_id . '"  data-product_slug="' . $row->product_slug . '"
                      data-short_desc="' . $row->short_desc . '"  data-desc="' . $row->desc . '"  data-keywords="' . $row->keywords . '"
                      data-technical_specification="' . $row->technical_specification . '" data-uses="' . $row->uses . '" data-warranty="' . $row->warranty . '"
                      data-image1="' . $row->image1 . '" data-image2="' . $row->image2 . '" data-image3="' . $row->image3 . '" data-image4="' . $row->image4 . '"  data-product_status="' . $row->product_status . '" >Edit</a>';
-                        $actionBtn .= '<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm mt-2 item d-inline-flex  product_delete" data-toggle="modal" data-target="#Modal_Delete"  data-product_id="' . $row->product_id . '" >Delete</a>';
+                        $actionBtn .= '<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm ml-1 mt-1  item d-inline-flex  product_delete" data-toggle="modal" data-target="#Modal_Delete"  data-product_id="' . $row->product_id . '" >Delete</a>';
                         if ($row->product_status == 1) {
                             $actionBtn .= '<a href="javascript:void(0)"  class="product_status_ac btn btn-success btn-sm mt-2 item d-inline-flex  product_status"  data-product_id="' . $row->product_id . '" >Active</a>';
                         }
                         if ($row->product_status == 0) {
-                            $actionBtn .= ' <a href="javascript:void(0)"  class="product_status_de btn btn-warning btn-sm mt-2 item d-inline-flex  product_status"  data-product_id="' . $row->product_id . '" >DeActive</a>';
+                            $actionBtn .= ' <a href="javascript:void(0)"  class="product_status_de btn btn-warning btn-sm mt-2  item d-inline-flex  product_status"  data-product_id="' . $row->product_id . '" >DeActive</a>';
                         }
 
                         return $actionBtn;
@@ -350,50 +360,256 @@ class ProductController extends Controller
 
         return json_encode($year);
     }
-    public function edit_product(Request $request , $id){
-    //  dd($request->all());
-     $validator = Validator::make($request->all(), [
-        'product_id_edit'=> 'required',
-        'product_name_edit' => 'required',
-        'slug_edit' => 'required',Rule::unique('products')->ignore($id),
-        'cat_id' => 'required',
-        'brand_id' => 'required',
-        // 'year_id' => 'required',
-        'keyword_edit' => 'required',
-        'warranty_edit' => 'required',
-        'uses_edit' => 'required',
-        'shortdesc' => 'required',
-        'status_edit' => 'required',
-    ]);
-
-    if ($validator->fails()) {
-        return json_encode(array('msgpro' => $validator->errors()->all()));
-    }
-
-    if (!empty($id)) {
-        $is_update = Product::where('product_id',$id)->update([
-           'product_name' => $request->product_name_edit,
-            'category' => $request->cat_id,
-            'color' => $request->color_id,
-            'coupon'  =>   $request->coupon_id,
-            'size' => $request->size_id,
-            'product_slug' => $request->slug_edit,
-            'brand' => $request->brand_id,
-            'model' => $request->year_id,
-            'keywords' => $request->keyword_edit,
-            'warranty' => $request->warranty_edit,
-            'uses' => $request->uses_edit, 
-            'short_desc' => $request->shortdesc, 
-            'product_status' => $request->status_edit, 
+    public function edit_product(Request $request, $id)
+    {
+        //  dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'product_id_edit' => 'required',
+            'product_name_edit' => 'required',
+            'slug_edit' => 'required', Rule::unique('products')->ignore($id),
+            'cat_id' => 'required',
+            'brand_id' => 'required',
+            // 'year_id' => 'required',
+            'keyword_edit' => 'required',
+            'warranty_edit' => 'required',
+            'uses_edit' => 'required',
+            'shortdesc' => 'required',
+            'status_edit' => 'required',
         ]);
-        if ($is_update) {
-            session()->flash('msgpro', 'Succsessfuly Update Product');
-            return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
-        } else {
-            return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+
+        if ($validator->fails()) {
+            return json_encode(array('msgpro' => $validator->errors()->all()));
+        }
+        DB::table('productattrs')->where('products_id', $id)->update([
+            'name' => $request->product_name_edit,
+            
+        ]);
+
+        if (!empty($id)) {
+            $is_update = Product::where('product_id', $id)->update([
+                'product_name' => $request->product_name_edit,
+                'category' => $request->cat_id,
+                'color' => $request->color_id,
+                'coupon'  =>   $request->coupon_id,
+                'size' => $request->size_id,
+                'product_slug' => $request->slug_edit,
+                'brand' => $request->brand_id,
+                'model' => $request->year_id,
+                'keywords' => $request->keyword_edit,
+                'warranty' => $request->warranty_edit,
+                'uses' => $request->uses_edit,
+                'short_desc' => $request->shortdesc,
+                'product_status' => $request->status_edit,
+            ]);
+            if ($is_update) {
+                session()->flash('msgpro', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
         }
     }
 
+    public function edit_pro(Request $request)
+    {
+        $title = "Edit Product";
+       
+        $data = DB::table('products')
+        ->Join('productattrs', 'products.product_id', '=', 'productattrs.products_id')->Paginate(10);
+        // dd($data);
+        if ($request->ajax()) {
+            return view('admin.products.edit', compact('data','title'));
+        }
+        return view('admin.products.edit', compact('data','title'));
+
+    }
+
+
+    public function edit2_pro(Request $request , $id){
+
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'product_name_edit' => 'required',
+            'productsid_edit' => 'required',
+            'sku_edit' => 'required',
+            'mrp_edit' => 'required',
+            'price_edit' => 'required',
+            'qty_edit' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return json_encode(array('msgpro' => $validator->errors()->all()));
+        }
+        DB::table('productattrs')->where('patrr_id', $id)->update([
+            'products_id' => $id,
+            'sku' => $request->sku_edit,
+            'mrp' => $request->mrp_edit,   
+            'price'    => $request->price_edit,
+            'qty'    => $request->qty_edit,
+        ]);
+    
+    if (!empty($request->image1_edit) && empty($request->image2_edit) && empty($request->image3_edit) && empty($request->image4_edit)) {  
+
+            $file = $request->image1_edit;
+            $image1 = time().'.'.$file->getClientOriginalExtension();
+            $imagePath = public_path('admin_assets/product_images/'.$image1);
+                if(File::exists($imagePath)){
+                    unlink($imagePath);
+                }
+            $file->move(public_path('admin_assets/product_images'),$image1);
+            if (!empty($id)) {
+                
+                $is_update = DB::table('Products')->where('product_id', $id)->update([
+                    'desc' => $request->desc_edit,
+                    'technical_specification' => $request->ts_edit,   
+                    'image1'    => $image1,
+                ]);
+            }
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+            
+        }
+       
+        if (!empty($request->image2_edit) && empty($request->image1_edit) && empty($request->image3_edit) && empty($request->image4_edit)) {  
+           $file = $request->image2_edit;
+            $image2 = time().'.'.$file->getClientOriginalExtension();
+            
+            $imagePath = public_path('admin_assets/product_images/'.$image2);
+                if(File::exists($imagePath)){
+                    unlink($imagePath);
+                }
+            $file->move(public_path('admin_assets/product_images'),$image2);
+            if (!empty($id)) {
+                $is_update = DB::table('Products')->where('product_id', $id)->update([
+                    'desc' => $request->desc_edit,
+                    'technical_specification' => $request->ts_edit,   
+                    'image2'    => $image2,
+                ]);
+            }
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+          
+        }
+        if (!empty($request->image3_edit) && empty($request->image1_edit) && empty($request->image2_edit) && empty($request->image4_edit)) {
+            $file = $request->image3_edit;
+            $image3 = time().'.'.$file->getClientOriginalExtension();
+            $imagePath = public_path('admin_assets/product_images/'.$image3);
+            if(File::exists($imagePath)){
+                unlink($imagePath);
+            }
+            $file->move(public_path('admin_assets/product_images'),$image3);
+            if (!empty($id)) {
+                $is_update = DB::table('Products')->where('product_id', $id)->update([
+                    'desc' => $request->desc_edit,
+                    'technical_specification' => $request->ts_edit,   
+                    'image3'    => $image3,
+                ]);
+            }
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        
+        }
+        if (!empty($request->image4_edit) && empty($request->image1_edit) && empty($request->image2_edit) && empty($request->image3_edit)) {
+            $file = $request->image4_edit;
+            $image4 = time().'.'.$file->getClientOriginalExtension();
+            $imagePath = public_path('admin_assets/product_images/'.$image4);
+            if(File::exists($imagePath)){
+                unlink($imagePath);
+            }
+            $file->move(public_path('admin_assets/product_images'),$image4);
+            if (!empty($id)) {
+                $is_update = DB::table('Products')->where('product_id', $id)->update([
+                    'desc' => $request->desc_edit,
+                    'technical_specification' => $request->ts_edit,   
+                    'image4'    => $image4,
+                ]);
+            }
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+        // dd();
+        if(!empty($request->image1_edit) && !empty($request->image2_edit) && !empty($request->image3_edit) && !empty($request->image4_edit)){
+           
+            $file = $request->image1_edit;
+            $image1 = time() . '.' . $file->getClientOriginalName();
+            $imagePath = public_path('admin_assets/product_images/'.$image1);
+                if(File::exists($imagePath)){
+                    unlink($imagePath);
+                }
+            $file->move(public_path('admin_assets/product_images'),$image1);
+           
+            $file = $request->image2_edit;
+            $image2 = time() . '.' . $file->getClientOriginalName();
+            $imagePath = public_path('admin_assets/product_images/'.$image2);
+                if(File::exists($imagePath)){
+                    unlink($imagePath);
+                }
+            $file->move(public_path('admin_assets/product_images'),$image2);
+
+            $file = $request->image3_edit;
+            $image3 = time() . '.' . $file->getClientOriginalName();
+            $imagePath = public_path('admin_assets/product_images/'.$image3);
+            if(File::exists($imagePath)){
+                unlink($imagePath);
+            }
+            $file->move(public_path('admin_assets/product_images'),$image3);
+
+            $file = $request->image4_edit;
+            $image4 = time() . '.' . $file->getClientOriginalName();
+            $imagePath = public_path('admin_assets/product_images/'.$image4);
+                if(File::exists($imagePath)){
+                    unlink($imagePath);
+                }
+            $file->move(public_path('admin_assets/product_images'),$image4);
+
+            if (!empty($id)) {
+                $is_update = DB::table('Products')->where('product_id', $id)->update([
+                    'desc' => $request->desc_edit,
+                    'technical_specification' => $request->ts_edit, 
+                    'image1'      =>  $image1,
+                    'image2'      =>  $image2,
+                    'image3'      =>  $image3,
+                    'image4'      =>  $image4,
+                ]);
+                if ($is_update) {
+                    session()->flash('reply', 'Succsessfuly Update Product');
+                    return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+                } else {
+                    return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+                }
+              }
+        }
+
+            if (!empty($id)) {
+                $is_update = DB::table('Products')->where('product_id', $id)->update([
+                    'desc' => $request->desc_edit,
+                    'technical_specification' => $request->ts_edit, 
+                    
+                ]);
+                if ($is_update) {
+                    session()->flash('reply', 'Succsessfuly Update Product');
+                    return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+                } else {
+                    return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+                }
+            }
+       
 
     }
 }

@@ -167,6 +167,10 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::get('/admin/product/getyear',[ProductController::class,'year_get'])->name('admin/product/getyear');
 
+    Route::get('/admin/product/editproduct',[ProductController::class,'edit_pro'])->name('admin/product/editproduct');
+
+    Route::post('/admin/product/edit2/{id}',[ProductController::class,'edit2_pro'])->name('admin/product/edit2');
+
 });
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');

@@ -22,7 +22,7 @@
                 </li>
                 <li class="@yield('size_select')">
                     <a href="{{url('/admin/size')}}">
-                <i class="fa fa-user-circle"></i>Size</a>
+                <i class="fa fa-object-group"></i>Size</a>
                 </li>
                 <li class="@yield('color_select')">
                     <a href="{{url('/admin/color')}}">
@@ -30,18 +30,23 @@
                 </li>
                 <li class="@yield('brand_select')">
                     <a href="{{url('/admin/brand')}}">
-                         <i class="fa fa-pause-circle"></i>
+                         <i class="fa fa-building-o"></i>
                           Brands</a>
                 </li>
                 <li class="@yield('year_select')">
                     <a href="{{url('/admin/year')}}">
-                         <i class="fa fa-pause-circle"></i>
+                         <i class="fa fa-calendar"></i>
                           Model Year</a>
                 </li>
                 <li class="@yield('product_select')">
                     <a href="{{url('/admin/product')}}">
-                         <i class="fa fa-pause-circle"></i>
+                         <i class="fa fa-cart-plus"></i>
                           Products</a>
+                </li>
+                <li class="@yield('product_edit')">
+                    <a href="{{url('/admin/product/editproduct')}}">
+                         <i class="fa fa-pencil-square-o"></i> 
+                          Products Edit</a>
                 </li>
                 <li class="has-sub">
                     <a class="js-arrow" href="#">

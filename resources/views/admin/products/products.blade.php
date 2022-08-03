@@ -2,11 +2,6 @@
 <title>{{ $title }}</title>
 @section('product_select', 'active')
 @include('admin_component.sidebar')
-<style>
-    .any {
-        overflow: auto;
-    }
-</style>
 
 <!-- PAGE CONTAINER-->
 <div class="page-container">
@@ -102,16 +97,8 @@
                                         {{-- <th>Product Size</th> --}}
                                         <th>Product Model</th>
                                         <th>Product Slug</th>
-                                        {{-- <th>Short_desc</th>
-                                        <th>Desc</th> --}}
                                         <th>Keyword</th>
                                         <th>warranty</th>
-                                        {{-- <th>Uses</th> --}}
-                                        {{-- <th>T S</th> --}}
-                                        {{-- <th>Image</th>
-                                        <th>Image</th>
-                                        <th>Image</th>
-                                        <th>Image</th> --}}
                                         <th>Actions</th>
                                     </tr>
                                 </thead>

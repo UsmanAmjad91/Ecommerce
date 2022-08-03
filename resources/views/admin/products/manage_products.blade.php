@@ -284,8 +284,8 @@
                                     <div class="row d-flex justify-content-around">
                                         <div class="form-group col-3">
                                             <label for="size_id" class="control-label mb-1">Size</label>
-                                            <select class="selectpicker form-control size" id="[size_id]"
-                                                name="size_id">
+                                            <select class="selectpicker form-control size" id="size_id"
+                                                name="size_id[]">
                                                 <option value="" selected>Select</option>
                                                 @foreach ($size as $row)
                                                     <option value="{{ $row->size_id }}">{{ $row->size }}

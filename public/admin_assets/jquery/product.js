@@ -871,3 +871,202 @@ $(document).ready(function() {
     });
    
     });
+
+    $(document).ready(function() {
+    
+        ///Show Data product On Edit Modal /// 
+        $('#show_pro').on('click', '.product2_edit', function() {
+        var product_id = $(this).data('product_id');  
+        var product = $(this).data('product');
+        var desc = $(this).data('desc');
+        var ts = $(this).data('technical_specification');
+        var image1 = $(this).data('image1');
+        var image2 =$(this).data('image2');
+        var image3 =$(this).data('image3');
+        var image4 =$(this).data('image4');
+        var price =$(this).data('price');
+        var sku =$(this).data('sku');
+        var mrp =$(this).data('mrp');
+        var qty =$(this).data('qty');
+        var products_id =$(this).data('products_id');
+       
+        // alert(image1);
+    
+        $('[name="product_id_edit"]').val(product_id);
+        $('[name="product_name_edit"]').val(product);
+        $('[name="desc_edit"]').val(desc);
+        $('[name="ts_edit"]').val(ts);
+        $('[name="price_edit"]').val(price);
+        $('[name="sku_edit"]').val(sku);
+        $('[name="qty_edit"]').val(qty);
+        $('[name="productsid_edit"]').val(products_id);
+        $('[name="mrp_edit"]').val(mrp);
+        // $('[name="image1_edit"]').val(image1);
+    
+        // $('#img1').append('<img src="admin_assets/product_images/'+image1+'"/>');
+
+        // $("#img1").attr('src',objectURL);
+        // $("#image2_edit").attr("src","admin_assets/product_images/"+image2+"");
+        // $("#image3_edit").attr("src","admin_assets/product_images/"+image3+"");
+        // $("#image4_edit").attr("src","admin_assets/product_images/"+image4+"");
+        // $('[name="image2_edit"]').val(image2);
+        // $('[name="image3_edit"]').val(image3);
+        // $('[name="image4_edit"]').val(image4);
+
+
+
+        $('#Modal_Edit').modal('show');
+        
+        });
+       
+        });
+
+        $(document).ready(function() {
+            $("#editproduct2").submit(function(e) {
+                e.preventDefault();
+                
+                var product_id_edit = $('#product_id_edit').val();
+                // alert(size);
+                if ((product_id_edit.length == "") || (product_id_edit.length == null)) {  
+                    $("#product_id_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#product_id_editcheck").html('** Please Dont Remove ID').css("color", "red");
+                    $('#product_id_editcheck').focus();
+                }else{
+                    $('#product_id_editcheck').hide();
+                }  
+        
+                var product_name_edit = $('#product_name_edit').val();
+                if ((product_name_edit.length == "") || (product_name_edit.length == null)) {  
+                    $("#product_name_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#product_name_editcheck").html('** Please fill Product Name field').css("color", "red");
+                    $('#product_name_editcheck').focus();
+                }else{
+                    $('#product_name_editcheck').hide();
+                }  
+
+                var price_edit = $('#price_edit').val();
+                if ((price_edit.length == "") || (price_edit.length == null)) {  
+                    $("#pricecheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#pricecheck").html('** Please fill Product Price field').css("color", "red");
+                    $('#pricecheck').focus();
+                }else{
+                    $('#pricecheck').hide();
+                }  
+
+                var desc_edit = $('#desc_edit').val();
+                if ((desc_edit.length == "") || (desc_edit.length == null)) {  
+                    $("#desc_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#desc_editcheck").html('** Please fill Product Desc field').css("color", "red");
+                    $('#desc_editcheck').focus();
+                }else{
+                    $('#desc_editcheck').hide();
+                }  
+
+                var ts_edit = $('#ts_edit').val();
+                if ((ts_edit.length == "") || (ts_edit.length == null)) {  
+                    $("#ts_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#ts_editcheck").html('** Please fill Product T.S field').css("color", "red");
+                    $('#ts_editcheck').focus();
+                }else{
+                    $('#ts_editcheck').hide();
+                } 
+
+                var sku_edit = $('#sku_edit').val();
+                if ((sku_edit.length == "") || (sku_edit.length == null)) {  
+                    $("#sku_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#sku_editcheck").html('** Please fill Product SKU field').css("color", "red");
+                    $('#sku_editcheck').focus();
+                }else{
+                    $('#sku_editcheck').hide();
+                } 
+
+                var mrp_edit = $('#mrp_edit').val();
+                if ((mrp_edit.length == "") || (mrp_edit.length == null)) {  
+                    $("#mrp_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#mrp_editcheck").html('** Please fill Product MRP field').css("color", "red");
+                    $('#mrp_editcheck').focus();
+                }else{
+                    $('#mrp_editcheck').hide();
+                } 
+
+                var qty_edit = $('#qty_edit').val();
+                if ((qty_edit.length == "") || (qty_edit.length == null)) {  
+                    $("#qty_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#qty_editcheck").html('** Please fill Product QTY field').css("color", "red");
+                    $('#qty_editcheck').focus();
+                }else{
+                    $('#qty_editcheck').hide();
+                } 
+
+                var productsid_edit = $('#productsid_edit').val();
+                if ((productsid_edit.length == "") || (productsid_edit.length == null)) {  
+                    $("#productsid_editcheck").show().delay(8000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                    $("#productsid_editcheck").html('** Please fill Products ID field').css("color", "red");
+                    $('#productsid_editcheck').focus();
+                }else{
+                    $('#productsid_editcheck').hide();
+                } 
+
+                if ((price_edit != '') && (product_name_edit != '') && (product_id_edit !='') && (productsid_edit !='') && (qty_edit !='') && (mrp_edit !='') && (sku_edit !='') && (ts_edit !='') && (desc_edit !='')) {
+                    // return false;
+                    var formData = new FormData(this);
+                    var id = $('#product_id_edit').val();
+                    $.ajax({
+                        url: "/admin/product/edit2/" + id,
+                        type: 'post',
+                        data: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        dataType: 'json',
+                        enctype: 'multipart/form-data',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(msg) {
+                            if (msg.status == 200) {                    
+                                $("#responseeditcheck").show().delay(8000).queue(function(n) {
+                                    $(this).hide(); n();
+                                  });
+                                  $('#responseeditcheck').html("Product Successfully Updated").css("color", "green"); 
+                                  $('#Modal_Edit').modal('hide'); 
+                                 location.reload('#show_pro');
+                            } else{
+                               
+                            if (msg.error) {    
+                                $("#responseeditcheck").show().delay(8000).queue(function(n) {
+                                    $(this).hide(); n();
+                                  });
+                                  $('#responseeditcheck').html(msg.error).css("color", "red");
+                            } else {
+                                $('#responseeditcheck').hide();
+                            }
+                            
+                            }    
+                        }
+                    });
+                }
+
+
+
+
+            });
+        });
