@@ -73,11 +73,6 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="table-data__tool-right">
-                                <a href="{{ url('/admin/product/add_product') }}">
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                        <i class="zmdi"></i>Add product</button></a>
-                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="col-12 text-center">
@@ -87,9 +82,14 @@
                                 @endif
                                 <h6 id="responseeditcheck"></h6>
                             </div>
+                            <div class="row form-group ml-5">
+                                {{-- <form name="form" method="POST" action="{{url('/admin/product/editproduct')}}"> --}}
+                                <input type="text" name="search" id="search" onkeyup="search()" class="form-control">
+                            {{-- </form> --}}
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-data2 datatable table-responsive table-lg" id='studentsTable'>
+                        <div class="table-responsive" id="show_table">
+                            <table class="table table-data2  table-responsive table-lg" id='studentsTable'>
                                 <thead>
                                     <tr>
                                         {{-- <th>Product ID</th> --}}
@@ -297,4 +297,39 @@
             });
         }
     });
+</script>
+<script>
+    var url = window.location.href;
+    //  alert(url);
+    function search(){
+       var search = $('#search').val();
+    //    console.log(search);
+    if (search != '') {
+            $.ajax({
+                type: 'get',
+                url: '/admin/product/search',
+                data: {
+                    search: search
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                success: function(html) {
+                    // console.log(html);
+                     $('#show_pro').html(html);
+                }
+            });
+        } else {
+            // $("#show_pro").find('td').val(reload);
+            // $('#show_pro').html();
+            // href="javascript:void(0)";
+            history.go(href);
+            
+            // window.history.back();
+        }
+
+    
+    }
+   
 </script>

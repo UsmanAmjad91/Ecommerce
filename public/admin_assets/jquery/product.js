@@ -1070,3 +1070,5 @@ $(document).ready(function() {
 
             });
         });
+        //Searchbar //
+

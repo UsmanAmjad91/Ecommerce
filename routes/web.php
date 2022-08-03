@@ -171,6 +171,8 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::post('/admin/product/edit2/{id}',[ProductController::class,'edit2_pro'])->name('admin/product/edit2');
 
+    Route::get('/admin/product/search',[ProductController::class,'search'])->name('admin/product/search');
+
 });
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');
