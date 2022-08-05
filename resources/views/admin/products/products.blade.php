@@ -260,7 +260,7 @@
     </form>
     <!--END MODAL EDIT-->
     <!--MODAL DELETE-->
-    <form id="delcop" name="delcop" method="POST" action="javascript:void(0);">
+    <form id="delproduct" name="delproduct" method="POST" action="javascript:void(0);">
         @csrf
         <div class="modal fade" id="Modal_Delete" data-backdrop="false" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -305,63 +305,33 @@
             serverSide: true,
             ajax: "{{ route('product.list') }}",
             columns: [
-                // {
-                //     data: 'product_id'
-                // },
+               
                 {
                     data: 'product_name'
                 },
-                // {
-                //     data: 'coupon_title'
-                // },
+               
                 {
                     data: 'cat_name'
                 },
-                // {
-                //     data: 'color'
-                // },
+                
                 {
                     data: 'brand'
                 },
-                // {
-                //     data: 'size'
-                // },
+                
                 {
                     data: 'year'
                 },
                 {
                     data: 'product_slug'
                 },
-                // {
-                //     data: 'short_desc'
-                // },
-                // {
-                //     data: 'desc'
-                // },
+                
                 {
                     data: 'keywords'
                 },
                 {
                     data: 'warranty'
                 },
-                // {
-                //     data: 'uses'
-                // },
-                // {
-                //     data: 'technical_specification'
-                // },
-                // {
-                //     data: 'image1'
-                // },
-                // {
-                //     data: 'image2'
-                // },
-                // {
-                //     data: 'image3'
-                // },
-                // {
-                //     data: 'image4'
-                // },
+               
                 {
                     data: 'action',
                     name: 'action',

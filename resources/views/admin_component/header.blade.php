@@ -80,7 +80,7 @@
                         </li>
                         <li class="@yield('brand_select')">
                             <a href="{{url('/admin/brand')}}">
-                                 <i class="fa fa-building-o"></i>
+                                 <i class="fa fa-building"></i>
                                   Brands</a>
                         </li>
                         <li class="@yield('year_select')">

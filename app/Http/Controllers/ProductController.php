@@ -303,9 +303,36 @@ class ProductController extends Controller
     {
         // dd($id);
         if (!empty($id)) {
-            $is_delete = Product::where('product_id', $id)->delete();
+          $products = Product::where('product_id',$id)->get();
+            foreach ( $products as  $product) {
+                // dd($product['image1']);
+                $image1 = ($product['image1']);
+                $image2 = ($product['image2']);
+                $image3 = ($product['image3']);
+                $image4 = ($product['image4']);
+         }
+            $image_path1 = public_path("admin_assets/product_images/");
+            $image_path2 = public_path("admin_assets/product_images/");
+            $image_path3 = public_path("admin_assets/product_images/");
+            $image_path4 = public_path("admin_assets/product_images/");
+       
+            unlink($image_path1.$image1);
+            unlink($image_path2.$image2);
+            unlink($image_path3.$image3);
+            unlink($image_path4.$image4);
+            $produc = Product::where('product_id',$id);
+            $produc->delete();
+
+            $is_delete = DB::table('productattrs')->where('products_id', $id)->get();
+            foreach ( $is_delete as  $product) {
+                $imagerr = ($product->imageatrr);
+         }
+            $image_path = public_path("admin_assets/product_images/");
+            unlink($image_path.$imagerr);
+            $delete = DB::table('productattrs')->where('products_id', $id);
+            $delete->delete();
             session()->flash('msgpro', 'Succsessfuly Delete Product');
-            if (!empty($is_delete))
+            if (!empty($products))
 
                 return json_encode(array('message' => 'Record Deleted successfully', 'status' => 200));
             else
@@ -449,15 +476,352 @@ class ProductController extends Controller
             'price'    => $request->price_edit,
             'qty'    => $request->qty_edit,
         ]);
+       
+        $products = Product::where('product_id',$id)->get();
+        foreach ( $products as  $product) {
+            // dd($product['image1']);
+            $imageget1 = ($product['image1']);
+            $imageget2 = ($product['image2']);
+            $imageget3 = ($product['image3']);
+            $imageget4 = ($product['image4']);
+     }
 
+     if (!empty($request->image1_edit) && !empty($request->image2_edit) && empty($request->image3_edit) && empty($request->image4_edit)) {
+
+
+        $file = $request->image1_edit;
+        $image1 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget1);
+        $file->move(public_path('admin_assets/product_images'), $image1);
+
+        $file = $request->image2_edit;
+        $image2 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/'); 
+            unlink($imagePath.$imageget2);
+        $file->move(public_path('admin_assets/product_images'), $image2);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image1'      =>  $image1,
+                'image2'      =>  $image2,
+                ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+
+     }
+
+     if (!empty($request->image1_edit) && empty($request->image2_edit) && !empty($request->image3_edit) && empty($request->image4_edit)) {
+
+
+        $file = $request->image1_edit;
+        $image1 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget1);
+        $file->move(public_path('admin_assets/product_images'), $image1);
+
+        $file = $request->image3_edit;
+        $image3 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget3);
+        $file->move(public_path('admin_assets/product_images'), $image3);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image1'      =>  $image1,
+                'image3'      =>  $image3,
+                
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+
+    }
+    if (!empty($request->image1_edit) && empty($request->image2_edit) && empty($request->image3_edit) && !empty($request->image4_edit)) {
+
+
+        $file = $request->image1_edit;
+        $image1 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget1);
+        $file->move(public_path('admin_assets/product_images'), $image1);
+
+        $file = $request->image4_edit;
+        $image4 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget4);
+        $file->move(public_path('admin_assets/product_images'), $image4);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image1'      =>  $image1,
+                'image4'      =>  $image4,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+
+    }
+    if (empty($request->image1_edit) && !empty($request->image2_edit) && !empty($request->image3_edit) && empty($request->image4_edit)) {
+
+        $file = $request->image2_edit;
+        $image2 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/'); 
+            unlink($imagePath.$imageget2);
+        $file->move(public_path('admin_assets/product_images'), $image2);
+
+        $file = $request->image3_edit;
+        $image3 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget3);
+        $file->move(public_path('admin_assets/product_images'), $image3);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image2'      =>  $image2,
+                'image3'      =>  $image3,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+
+    }
+    if (empty($request->image1_edit) && !empty($request->image2_edit) && empty($request->image3_edit) && !empty($request->image4_edit)) {
+
+         $file = $request->image2_edit;
+        $image2 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/'); 
+            unlink($imagePath.$imageget2);
+        $file->move(public_path('admin_assets/product_images'), $image2);
+
+        $file = $request->image4_edit;
+        $image4 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget4);
+        $file->move(public_path('admin_assets/product_images'), $image4);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image2'      =>  $image2,
+                'image4'      =>  $image4,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+
+    }
+    if (empty($request->image1_edit) && empty($request->image2_edit) && !empty($request->image3_edit) && !empty($request->image4_edit)) {
+
+        $file = $request->image3_edit;
+        $image3 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget3);
+        $file->move(public_path('admin_assets/product_images'), $image3);
+
+        $file = $request->image4_edit;
+        $image4 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget4);
+        $file->move(public_path('admin_assets/product_images'), $image4);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image3'      =>  $image3,
+                'image4'      =>  $image4,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+
+    }
+    if (!empty($request->image1_edit) && !empty($request->image2_edit) && !empty($request->image3_edit) && empty($request->image4_edit)) {
+        $file = $request->image1_edit;
+        $image1 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget1);
+        $file->move(public_path('admin_assets/product_images'), $image1);
+
+        $file = $request->image2_edit;
+        $image2 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/'); 
+            unlink($imagePath.$imageget2);
+        $file->move(public_path('admin_assets/product_images'), $image2);
+
+        $file = $request->image3_edit;
+        $image3 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget3);
+        $file->move(public_path('admin_assets/product_images'), $image3);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image1'      =>  $image1,
+                'image2'      =>  $image2,
+                'image3'      =>  $image3,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+   
+    }
+    if (!empty($request->image1_edit) && !empty($request->image2_edit) && empty($request->image3_edit) && !empty($request->image4_edit)) {
+   
+        $file = $request->image1_edit;
+        $image1 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget1);
+        $file->move(public_path('admin_assets/product_images'), $image1);
+
+        $file = $request->image2_edit;
+        $image2 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/'); 
+            unlink($imagePath.$imageget2);
+        $file->move(public_path('admin_assets/product_images'), $image2);
+
+        $file = $request->image4_edit;
+        $image4 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget4);
+        $file->move(public_path('admin_assets/product_images'), $image4);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image1'      =>  $image1,
+                'image2'      =>  $image2,
+                'image4'      =>  $image4,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+    }
+    if (!empty($request->image1_edit) && empty($request->image2_edit) && !empty($request->image3_edit) && !empty($request->image4_edit)) {
+        $file = $request->image1_edit;
+        $image1 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget1);
+        $file->move(public_path('admin_assets/product_images'), $image1);
+
+         $file = $request->image3_edit;
+        $image3 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget3);
+        $file->move(public_path('admin_assets/product_images'), $image3);
+
+        $file = $request->image4_edit;
+        $image4 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget4);
+        $file->move(public_path('admin_assets/product_images'), $image4);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image1'      =>  $image1,
+                'image3'      =>  $image3,
+                'image4'      =>  $image4,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+   
+    }
+    if (empty($request->image1_edit) && !empty($request->image2_edit) && !empty($request->image3_edit) && !empty($request->image4_edit)) {
+      
+        $file = $request->image2_edit;
+        $image2 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/'); 
+            unlink($imagePath.$imageget2);
+        $file->move(public_path('admin_assets/product_images'), $image2);
+
+        $file = $request->image3_edit;
+        $image3 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget3);
+        $file->move(public_path('admin_assets/product_images'), $image3);
+
+        $file = $request->image4_edit;
+        $image4 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/product_images/');
+            unlink($imagePath.$imageget4);
+        $file->move(public_path('admin_assets/product_images'), $image4);
+
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'desc' => $request->desc_edit,
+                'technical_specification' => $request->ts_edit,
+                'image2'      =>  $image2,
+                'image3'      =>  $image3,
+                'image4'      =>  $image4,
+            ]);
+            if ($is_update) {
+                session()->flash('reply', 'Succsessfuly Update Product');
+                return json_encode(array('message' => 'Succsessfuly Update Product', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product', 'status' => 500));
+            }
+        }
+   
+    }
         if (!empty($request->image1_edit) && empty($request->image2_edit) && empty($request->image3_edit) && empty($request->image4_edit)) {
-
+           
             $file = $request->image1_edit;
             $image1 = time() . '.' . $file->getClientOriginalExtension();
-            $imagePath = public_path('admin_assets/product_images/' . $image1);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/');
+                unlink($imagePath.$imageget1);
             $file->move(public_path('admin_assets/product_images'), $image1);
             if (!empty($id)) {
 
@@ -479,10 +843,8 @@ class ProductController extends Controller
             $file = $request->image2_edit;
             $image2 = time() . '.' . $file->getClientOriginalExtension();
 
-            $imagePath = public_path('admin_assets/product_images/' . $image2);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/'); 
+                unlink($imagePath.$imageget2);
             $file->move(public_path('admin_assets/product_images'), $image2);
             if (!empty($id)) {
                 $is_update = DB::table('Products')->where('product_id', $id)->update([
@@ -501,10 +863,8 @@ class ProductController extends Controller
         if (!empty($request->image3_edit) && empty($request->image1_edit) && empty($request->image2_edit) && empty($request->image4_edit)) {
             $file = $request->image3_edit;
             $image3 = time() . '.' . $file->getClientOriginalExtension();
-            $imagePath = public_path('admin_assets/product_images/' . $image3);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/');
+                unlink($imagePath.$imageget3);
             $file->move(public_path('admin_assets/product_images'), $image3);
             if (!empty($id)) {
                 $is_update = DB::table('Products')->where('product_id', $id)->update([
@@ -523,10 +883,8 @@ class ProductController extends Controller
         if (!empty($request->image4_edit) && empty($request->image1_edit) && empty($request->image2_edit) && empty($request->image3_edit)) {
             $file = $request->image4_edit;
             $image4 = time() . '.' . $file->getClientOriginalExtension();
-            $imagePath = public_path('admin_assets/product_images/' . $image4);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/');
+                unlink($imagePath.$imageget4);
             $file->move(public_path('admin_assets/product_images'), $image4);
             if (!empty($id)) {
                 $is_update = DB::table('Products')->where('product_id', $id)->update([
@@ -547,34 +905,26 @@ class ProductController extends Controller
 
             $file = $request->image1_edit;
             $image1 = time() . '.' . $file->getClientOriginalName();
-            $imagePath = public_path('admin_assets/product_images/' . $image1);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/');
+                unlink($imagePath.$imageget1);
             $file->move(public_path('admin_assets/product_images'), $image1);
 
             $file = $request->image2_edit;
             $image2 = time() . '.' . $file->getClientOriginalName();
-            $imagePath = public_path('admin_assets/product_images/' . $image2);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/'); 
+                unlink($imagePath.$imageget2);
             $file->move(public_path('admin_assets/product_images'), $image2);
 
             $file = $request->image3_edit;
             $image3 = time() . '.' . $file->getClientOriginalName();
-            $imagePath = public_path('admin_assets/product_images/' . $image3);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/');
+                unlink($imagePath.$imageget3);
             $file->move(public_path('admin_assets/product_images'), $image3);
 
             $file = $request->image4_edit;
             $image4 = time() . '.' . $file->getClientOriginalName();
-            $imagePath = public_path('admin_assets/product_images/' . $image4);
-            if (File::exists($imagePath)) {
-                unlink($imagePath);
-            }
+            $imagePath = public_path('admin_assets/product_images/');
+                unlink($imagePath.$imageget4);
             $file->move(public_path('admin_assets/product_images'), $image4);
 
             if (!empty($id)) {
@@ -593,7 +943,7 @@ class ProductController extends Controller
                     return json_encode(array('message' => 'Not Update Product', 'status' => 500));
                 }
             }
-        }
+        }else{
 
         if (!empty($id)) {
             $is_update = DB::table('Products')->where('product_id', $id)->update([
@@ -608,6 +958,7 @@ class ProductController extends Controller
                 return json_encode(array('message' => 'Not Update Product', 'status' => 500));
             }
         }
+      }
     }
     public function search(Request $request)
     {

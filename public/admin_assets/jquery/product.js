@@ -92,6 +92,7 @@ $(document).ready(function() {
     $("#delproduct").submit(function(e) {
      e.preventDefault();
     var  id = $('#product_id_delete').val();
+    // console.log(id);
     if (!id == "") {
      var formData = new FormData(this);
      var id = $('#product_id_delete').val();
