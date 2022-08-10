@@ -65,7 +65,7 @@
                         <div class="card">
                             <div class="card-header">Add Brand</div>
                             <div class="card-body">
-                                <form class="addbrand" id="addbrand" name="addbrand" method="POST" action="javascript:void(0);">
+                                <form class="addbrand" id="addbrand" name="addbrand" method="POST" action="javascript:void(0);"  enctype="multipart/form-data">
                                     @csrf
                                     <h6 id="responsecheck"> </h6>
                                                            
@@ -73,6 +73,13 @@
                                         <label for="brand" class="control-label mb-1">Brand</label>
                                             <input type="text" id="brand" name="brand" class="form-control">
                                         <h6 id="brandcheck"> </h6>
+                                    </div>
+                                    
+                                    <div class="form-group col-1 justify-content-end">
+                                        <label for="brand_image" class="control-label mb-1"><i
+                                                class="fa fa-picture-o fa-3x" aria-hidden="true"></i></label>
+                                        <input type="file" id="brand_image" name="brand_image" hidden>
+                                        <h6 id="imgcheck"> </h6>
                                     </div>
                                     
                                     <div class="form-group">

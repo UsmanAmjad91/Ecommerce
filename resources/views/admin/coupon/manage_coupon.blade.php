@@ -88,16 +88,39 @@
                                         <h6 id="coupon_valuecheck"> </h6>
                                     </div>
                                     <div class="form-group">
-                                        <label for="coupon_status" class="control-label mb-1">Coupon Status</label>
-                                        {{-- <input type="text" id="coupon_code" name="coupon_code" type="text" class="au-input au-input--full"> --}}
-                                        <select class="selectpicker form-control col-4" name="coupon_status" id="coupon_status">
+                                        <label for="min_order_amount" class="control-label mb-1">Min order Amount</label>
+                                        <input type="text" id="min_order_amount" name="min_order_amount" type="text" class="au-input au-input--full">
+                                        <h6 id="min_order_amountcheck"> </h6>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4">
+                                            <label for="type" class="control-label">Type</label>
+                                             <select class="selectpicker form-control" name="type" id="type">
+                                                <option  value="" selected>Select</option>
+                                                <option value="Value">Value</option>
+                                                <option value="Per">Percent</option>
+                                              </select> 
+                                            <h6 id="typecheck"> </h6>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="is_one_time" class="control-label">Is One Time</label>
+                                             <select class="selectpicker form-control" name="is_one_time" id="is_one_time">
+                                                <option  value="" selected>Select</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                              </select> 
+                                            <h6 id="is_one_timecheck"> </h6>
+                                        </div>
+                                    <div class="form-group col-lg-4">
+                                        <label for="coupon_status" class="control-label">Status</label>
+                                         <select class="selectpicker form-control" name="coupon_status" id="coupon_status">
                                             <option  value="" selected>Select</option>
                                             <option value="1">Status On</option>
                                             <option value="0">Status Off</option>
-                                          </select>
-                                          
+                                          </select> 
                                         <h6 id="couponstatuscheck"> </h6>
                                     </div>
+                                </div>
                                     <div class="form-group">
                                         <button type="submit" id="addcoupon" name="addcoupon" class="form-control btn btn-lg btn-info btn-block">Add Coupon</button>  
                                     </div>

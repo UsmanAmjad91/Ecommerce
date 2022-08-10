@@ -219,10 +219,10 @@
 
                                         </div>
                                     </div>
-
-                                    <div class="form-group ">
-                                        <label for="coupon_status" class="control-label mb-1">Product Status</label>
-                                        <select class="selectpicker form-control col-2" name="product_status"
+                                <div class="row">
+                                    <div class="form-group col-lg-3">
+                                        <label for="product_status" class="control-label">Product Status</label>
+                                        <select class="selectpicker form-control" name="product_status"
                                             id="product_status">
                                             <option value="" selected>Select</option>
                                             <option value="1">Status On</option>
@@ -230,14 +230,70 @@
                                         </select>
                                         <h6 id="productstatuscheck"> </h6>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <div class="col text-center">
-                                            <button type="submit" id="addproduct" name="addproduct"
-                                                class="form-control btn btn-lg btn-info btn-block w-25 d-flex justify-content-center">Add
-                                                product</button>
+                                    <div class="form-group col-lg-2">
+                                        <label for="is_promo" class="control-label">Product Promo</label>
+                                        <select class="selectpicker form-control" name="is_promo"
+                                            id="is_promo">
+                                            <option value="" selected>Select</option>
+                                            <option value="ON">Yes</option>
+                                            <option value="OFF">No</option>
+                                        </select>
+                                        <h6 id="is_promocheck"> </h6>
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="is_featured" class="control-label">Product Featured</label>
+                                        <select class="selectpicker form-control" name="is_featured"
+                                            id="is_featured">
+                                            <option value="" selected>Select</option>
+                                            <option value="ON">Yes</option>
+                                            <option value="OFF">No</option>
+                                        </select>
+                                        <h6 id="is_featuredcheck"> </h6>
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="is_discounted" class="control-label">Discounted</label>
+                                        <select class="selectpicker form-control" name="is_discounted"
+                                            id="is_discounted">
+                                            <option value="" selected>Select</option>
+                                            <option value="ON">Yes</option>
+                                            <option value="OFF">No</option>
+                                        </select>
+                                        <h6 id="is_discountedcheck"> </h6>
+                                    </div>
+                                    <div class="form-group col-lg-3">
+                                        <label for="is_tranding" class="control-label">Tranding</label>
+                                        <select class="selectpicker form-control" name="is_tranding"
+                                            id="is_tranding">
+                                            <option value="" selected>Select</option>
+                                            <option value="ON">Yes</option>
+                                            <option value="OFF">No</option>
+                                        </select>
+                                        <h6 id="is_trandingcheck"> </h6>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="row d-flex justify-content-between">
+                                        <div class="form-group">
+                                            <label for="lead_time" class="control-label mb-1">Lead time</label>
+                                            <input type="text" id="lead_time" name="lead_time"
+                                                class="form-control">
+                                            <h6 id="lead_timecheck"> </h6>
                                         </div>
-                                    </div> --}}
-
+                                        <div class="form-group">
+                                            <label for="tax" class="control-label mb-1">Tax</label>
+                                            <input type="text" id="tax" name="tax"
+                                                class="form-control">
+                                            <h6 id="taxcheck"> </h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tax_type" class="control-label mb-1">Tax type</label>
+                                            <input type="text" id="tax_type" name="tax_type"
+                                                class="form-control">
+                                            <h6 id="tax_typecheck"> </h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -379,4 +435,7 @@ $(document).ready(function() {
     function remove_atrr(count){
 $('#product_attr_'+ count).remove();
     }
+
+    CKEDITOR.replace('desc');
+    CKEDITOR.replace('technical_specification');
 </script>

@@ -66,6 +66,10 @@ class ProductController extends Controller
             'mrp' => 'required',
             'price' => 'required',
             'qty' => 'required',
+            'is_promo' => 'required',
+            'is_featured' => 'required',
+            'is_discounted' => 'required',
+            'is_tranding' => 'required',
             'product_status' => 'required',
         ]);
 
@@ -130,14 +134,27 @@ class ProductController extends Controller
         $insert_pro->uses = $request->post('uses');
         $insert_pro->keywords = $request->post('keyword');
         $insert_pro->short_desc = $request->post('short_desc');
-        $insert_pro->technical_specification = $request->post('technical_specification');
-        $insert_pro->desc = $request->post('desc');
+           $ts=$request->post('technical_specification');
+           $text = preg_replace("/^<p.*?>./", "",$ts);
+          $insert_pro->technical_specification = $text ;
+        $tse=$request->post('desc');
+        $textd =  preg_replace("/^<p.*?>/", "",$tse);
+        $insert_pro->desc = $textd;
         $insert_pro->product_slug = $request->post('product_slug');
         $insert_pro->product_status = $request->post('product_status');
         $insert_pro->image1 = $filename1;
         $insert_pro->image2 = $filename2;
         $insert_pro->image3 = $filename3;
         $insert_pro->image4 = $filename4;
+
+        $insert_pro->lead_time = $request->post('lead_time');
+        $insert_pro->tax = $request->post('tax');
+        $insert_pro->tax_type = $request->post('tax_type');
+        $insert_pro->is_promo = $request->post('is_promo');
+        $insert_pro->is_featured = $request->post('is_featured');
+        $insert_pro->is_discounted = $request->post('is_discounted');
+        $insert_pro->is_tranding = $request->post('is_tranding');
+
         $insert_pro->save();
         $pid = $insert_pro->id;
 
@@ -995,4 +1012,71 @@ class ProductController extends Controller
         }
     }
 
+    public function p_attr()
+    {
+        $title = "Product _Attributes";
+
+        return view('admin.products.attribute_edit', compact('title'));
+    }
+
+    public function productatrr_list(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('products')
+                ->orderBy('product_id', 'desc')->get();
+
+            foreach ($data as $row) {
+                // dd($data);
+                //    return json_encode($data);
+                return Datatables::of($data)->addIndexColumn()
+                    ->addColumn('action', function ($row) {
+                        $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-success btn-lg mr-1 item d-inline-flex productattr_edit" data-product_id="' . $row->product_id . '" data-product="' . $row->product_name . '" data-lead_time="' . $row->lead_time . '"
+                    data-tax="' . $row->tax . '" data-tax_type="' . $row->tax_type . '" data-is_promo="' . $row->is_promo . '"
+                    data-is_featured="' . $row->is_featured . '"  data-is_discounted="' . $row->is_discounted . '"  data-is_tranding="' . $row->is_tranding . '"
+                      >Edit</a>';
+                       
+
+                        return $actionBtn;
+                    })
+                    ->rawColumns(['action'])->make(true);
+            }
+        }
+    }
+
+
+    public function productatrr_edit(Request $request,$id)
+    {
+         // dd($request->all());
+         $validator = Validator::make($request->all(), [
+            'lead_time' => 'required',
+            'tax' => 'required',
+            'tax_type' => 'required',
+            'is_discounted' => 'required',
+            'is_tranding' => 'required',
+            'is_promo' => 'required',
+            'is_featured' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return json_encode(array('msgpro' => $validator->errors()->all()));
+        }
+        if (!empty($id)) {
+            $is_update = DB::table('Products')->where('product_id', $id)->update([
+                'lead_time' => $request->lead_time,
+                'tax' => $request->tax,
+                'tax_type' => $request->tax_type,
+                'is_discounted' => $request->is_discounted,
+                'is_tranding' => $request->is_tranding,
+                'is_promo' => $request->is_promo,
+                'is_featured' => $request->is_featured,
+            ]);
+            if ($is_update) {
+                session()->flash('msgproatt', 'Succsessfuly Update Product Attibutes');
+                return json_encode(array('message' => 'Succsessfuly Update Product Attibutes', 'status' => 200));
+            } else {
+                return json_encode(array('message' => 'Not Update Product Attibutes', 'status' => 500));
+            }
+        }
+
+    }
 }

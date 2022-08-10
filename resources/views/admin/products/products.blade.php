@@ -345,6 +345,4 @@
         table.ajax.reload(null, false);
     });
 
-
-    {{-- //  shift+alt+f --}}
 </script>

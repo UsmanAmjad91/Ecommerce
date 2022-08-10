@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->increments('brand_id')->length(11);
             $table->string('brand')->nllable(true)->length(191);
+            $table->longText('brand_image');
             $table->integer('brand_status')->length(11);
             $table->timestamps();
         });

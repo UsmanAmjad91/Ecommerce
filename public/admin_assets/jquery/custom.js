@@ -86,6 +86,16 @@ $(document).ready(function() {
         } else {
             $('#cat_slugcheck').hide();
         }   
+        var cat_image = $('#cat_image').val();
+        if (cat_image.length == "") {    
+            $("#imgcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#imgcheck").html('** Please enter Category Image').css("color", "red");
+            $('#imgcheck').focus();
+        } else {
+            $('#imgcheck').hide();
+        }   
         var cat_status = $('#cat_status').val();
         if (cat_status.length == "") {    
             $("#cat_statuscheck").show().delay(5000).queue(function(n) {
@@ -96,7 +106,7 @@ $(document).ready(function() {
         } else {
             $('#cat_statuscheck').hide();
         }    
-        if ((cat_name != '') && (cat_slug != '') && (cat_status != '')) {
+        if ((cat_name != '') && (cat_slug != '') && (cat_status != '') && (cat_image!='')) {
             // return false;
             var formData = new FormData(this);
             $.ajax({
@@ -147,27 +157,46 @@ setTimeout(function () {
     });
 
 /// Category Edit ///
+// $(document).ready(function() {
+// $('#shows_data').on('click', '.category_edit', function() {
+//     $('#Modal_Edit').modal('show');  
+// }); 
+
+// });
 $(document).ready(function() {
     
     ///Show Data On Edit Modal /// 
-    $('#show_data').on('click', '.cat_edit', function() {
+    $('#shows_data').on('click', '.cat_edit', function() {
     var cat_id = $(this).data('cat_id');  
     var cat_name = $(this).data('cat_name');
     var cat_slug = $(this).data('cat_slug');
+    var cat_image = $(this).data('cat_image');
+    var cat_parent_id = $(this).data('cat_parent_id');
     var cat_status = $(this).data('cat_status');
     
     $('[name="cat_id_edit"]').val(cat_id);
     $('[name="cat_slug_edit"]').val(cat_slug);
     $('[name="cat_name_edit"]').val(cat_name);
+    
     $("#cat_status_edit option[value="+cat_status+"]").attr('selected', 'selected');
-    $('#Modal_Edit').modal('show');
+    $('#catim').attr('src', '/admin_assets/cat_images/'+cat_image);
+    if(cat_parent_id!= ''){
+        $("#cat_parent_id option[value="+cat_parent_id+"]").attr('selected', 'selected');
+        }
+    //   $('#Modal_Edit').modal('show');
     
     });
    
     });
-    $('#show_data').on('click', '.cat_edit', function() {
+    $('#shows_data').on('click', '.category_edit', function() {
         $('#Modal_Edit').modal('show');  
     }); 
+    // $('#shows_data').on('click', '.cat_edit', function() {
+    //     $('#Modal_Edit').modal('show');  
+    // }); 
+    $('.cat_edit').click(function() {
+        $('#Modal_Edit').modal('show'); 
+    });
 
     $("#close").click(function () {
         $('#Modal_Edit').modal('hide');   
@@ -202,6 +231,16 @@ $("#editpro").submit(function(e) {
         } else {
             $('#cat_name_editcheck').hide();
         }
+        // var cat_image = $('#cat_image').val();
+        // if (cat_image.length == "") {    
+        //     $("#imgcheck").show().delay(5000).queue(function(n) {
+        //         $(this).hide(); n();
+        //       });
+        //     $("#imgcheck").html('** Please enter Category Image').css("color", "red");
+        //     $('#imgcheck').focus();
+        // } else {
+        //     $('#imgcheck').hide();
+        // }   
            var cat_slug_edit = $('#cat_slug_edit').val();
 if (cat_slug_edit.length == "") {    
     $("#cat_slug_editcheck").show().delay(5000).queue(function(n) {
@@ -226,7 +265,7 @@ if (cat_status_edit.length == "") {
 }
 // console.log(cat_name_edit,cat_slug_edit,cat_id_edit,cat_status_edit);
 
-if ((cat_name_edit != '') && (cat_slug_edit != '') && (cat_id_edit != '') && (cat_status_edit != '')) {
+if ((cat_name_edit != '') && (cat_slug_edit != '') && (cat_id_edit != '') && (cat_status_edit != '') ) {
     var formData = new FormData(this);
     var id = $('#cat_id_edit').val();
     // return false;
@@ -274,7 +313,7 @@ if ((cat_name_edit != '') && (cat_slug_edit != '') && (cat_id_edit != '') && (ca
 
 $(document).ready(function() {
    /// Delete Record Category ///
-   $("#show_data").on('click','.cat_delete',function () { 
+   $("#shows_data").on('click','.cat_delete',function () { 
        
     var cat_id = $(this).data('cat_id');
     $('#Modal_Delete').modal('show');
@@ -363,6 +402,36 @@ $(document).ready(function() {
         } else {
             $('#coupon_valuecheck').hide();
         }    
+        var min_order_amount = $('#min_order_amount').val();
+        if (min_order_amount.length == "") {    
+            $("#min_order_amountcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#min_order_amountcheck").html('** Please enter Min order amount').css("color", "red");
+            $('#min_order_amountcheck').focus();
+        } else {
+            $('#min_order_amountcheck').hide();
+        }  
+        var type = $('#type').val();
+        if (type.length == "") {    
+            $("#typecheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#typecheck").html('** Please enter Type').css("color", "red");
+            $('#typecheck').focus();
+        } else {
+            $('#typecheck').hide();
+        }   
+        var is_one_time = $('#is_one_time').val();
+        if (is_one_time.length == "") {    
+            $("#is_one_time").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#is_one_time").html('** Please enter One Time Or more').css("color", "red");
+            $('#is_one_time').focus();
+        } else {
+            $('#is_one_time').hide();
+        }    
         var coupon_status = $('#coupon_status').val();
         if (coupon_status.length == "") {    
             $("#couponstatuscheck").show().delay(5000).queue(function(n) {
@@ -373,7 +442,7 @@ $(document).ready(function() {
         } else {
             $('#couponstatuscheck').hide();
         }    
-        if ((coupon_name != '') && (coupon_code != '') && (coupon_status != '') ) {
+        if ((coupon_name != '') && (coupon_code != '') && (coupon_status != '') && (min_order_amount!='') && (type!='') && (is_one_time!='')) {
             // return false;
             var formData = new FormData(this);
             $.ajax({
@@ -423,12 +492,18 @@ $(document).ready(function() {
     var coupon_name = $(this).data('coupon_name');
     var coupon_code = $(this).data('coupon_code');
     var coupon_value = $(this).data('coupon_value');
+    var type = $(this).data('type');
+    var is_one_time = $(this).data('is_one_time');
+    var min_order_amount = $(this).data('min_order_amount');
     var coupon_status = $(this).data('coupon_status');
     
     $('[name="coupon_id_edit"]').val(coupon_id);
     $('[name="coupon_code_edit"]').val(coupon_code);
     $('[name="coupon_name_edit"]').val(coupon_name);
     $('[name="coupon_value_edit"]').val(coupon_value);
+    $('[name="min_order_amount"]').val(min_order_amount);
+    $("#type option[value="+type+"]").attr('selected', 'selected');
+    $("#is_one_time option[value="+is_one_time+"]").attr('selected', 'selected');
     $("#coupon_status_edit option[value="+coupon_status+"]").attr('selected', 'selected');
 
     $('#Modal_Edit').modal('show');
@@ -485,6 +560,36 @@ $(document).ready(function() {
         } else {
             $('#coupon_value_editcheck').hide();
         }   
+        var min_order_amount = $('#min_order_amount').val();
+        if (min_order_amount.length == "") {    
+            $("#min_order_amountcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#min_order_amountcheck").html('** Please enter Min order amount').css("color", "red");
+            $('#min_order_amountcheck').focus();
+        } else {
+            $('#min_order_amountcheck').hide();
+        }  
+        var type = $('#type').val();
+        if (type.length == "") {    
+            $("#typecheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#typecheck").html('** Please enter Type').css("color", "red");
+            $('#typecheck').focus();
+        } else {
+            $('#typecheck').hide();
+        }   
+        var is_one_time = $('#is_one_time').val();
+        if (is_one_time.length == "") {    
+            $("#is_one_time").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#is_one_time").html('** Please enter One Time Or more').css("color", "red");
+            $('#is_one_time').focus();
+        } else {
+            $('#is_one_time').hide();
+        }    
         var coupon_status_edit = $('#coupon_status_edit').val();
         if (coupon_status_edit.length == "") {    
             $("#coupon_status_editcheck").show().delay(5000).queue(function(n) {
@@ -495,7 +600,7 @@ $(document).ready(function() {
         } else {
             $('#coupon_status_editcheck').hide();
         }    
-        if ((coupon_name_edit != '') && (coupon_code_edit != '') && (coupon_status_edit != '') && (coupon_value_edit != '') ) {
+        if ((coupon_name_edit != '') && (coupon_code_edit != '') && (coupon_status_edit != '') && (coupon_value_edit != '') && (min_order_amount!='') && (type!='') && (is_one_time!='')) {
             // return false;
             var id = $('#coupon_id_edit').val();
             var formData = new FormData(this);
@@ -610,7 +715,7 @@ $("#closed_copdel").click(function () {
  
 $(document).ready(function() {
     /// Active to deactive ///
-    $('#show_data').on('click', '.status_ac', function() {
+    $('#shows_data').on('click', '.status_ac', function() {
         var id = $(this).data('cat_id');      
         if (!id == "") { 
             // return false;
@@ -650,7 +755,7 @@ $(document).ready(function() {
            
     });
      ///  Deactive To Active  ///
-     $('#show_data').on('click', '.status_de', function() {
+     $('#shows_data').on('click', '.status_de', function() {
         var id = $(this).data('cat_id');    
         if (!id == "") { 
             // return false;
@@ -1582,6 +1687,17 @@ $(document).ready(function() {
             $('#brandcheck').hide();
         }  
        
+        var brand_image = $('#brand_image').val();
+        if (brand_image.length == "") {    
+            $("#imgcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#imgcheck").html('** Please Select brand Image').css("color", "red");
+            $('#imgcheck').focus();
+        } else {
+            $('#imgcheck').hide();
+        }    
+
         var brand_status = $('#brand_status').val();
         if (brand_status.length == "") {    
             $("#brandstatuscheck").show().delay(5000).queue(function(n) {
@@ -1592,7 +1708,7 @@ $(document).ready(function() {
         } else {
             $('#brandstatuscheck').hide();
         }    
-        if ((brand != '') && (brand_status != '') ) {
+        if ((brand != '') && (brand_status != '') && (brand_image != '')) {
             // return false;
             var formData = new FormData(this);
             $.ajax({
@@ -1603,7 +1719,8 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 dataType: 'json',
-                // cache: false,
+                enctype: 'multipart/form-data',
+                cache: false,
                 contentType: false,
                 processData: false,
                 success: function(msg) {
@@ -1641,21 +1758,25 @@ $(document).ready(function() {
     $('#show_data').on('click', '.brand_edit', function() {
     var brand_id = $(this).data('brand_id');  
     var brand = $(this).data('brand');
+    var brand_image = $(this).data('brand_image');
     var brand_status = $(this).data('brand_status');
     
     $('[name="brand_id_edit"]').val(brand_id);
     $('[name="brand_edit"]').val(brand);
     $("#size_brand_edit option[value="+brand_status+"]").attr('selected', 'selected');
-
-    $('#Modal_Edit').modal('show');
+   $('#sho').attr('src', '/admin_assets/brand_images/'+brand_image);
+      
+    // $('#Modal_Edit').modal('show');
     
+    });
+    $('#show_data').on('click', '.brand-br', function() {
+        // alert("hello");
+        $('#Modal_Edit').modal('show');   
     });
    
     });
 
-    $('#show_data').on('click', '.brand_edit', function() {
-        $('#Modal_Edit').modal('show');   
-    });
+    
     $('#close_brd').click(function () {
         $('#Modal_Edit').modal('hide');   
     });
@@ -1665,6 +1786,7 @@ $(document).ready(function() {
     $('#show_data').on('click', '.brand_edit', function() {
         $('#Modal_Edit').modal('show');   
     });
+    
     /// Update Brand  ///
 $(document).ready(function() {
     $("#editbrand").submit(function(e) {
@@ -1716,7 +1838,8 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 dataType: 'json',
-                // cache: false,
+                enctype: 'multipart/form-data',
+                cache: false,
                 contentType: false,
                 processData: false,
                 success: function(msg) {
@@ -1724,10 +1847,11 @@ $(document).ready(function() {
                         $("#responsecheck").show().delay(5000).queue(function(n) {
                             $(this).hide(); n();
                           });
-                          $('#responsecheck').html("Size Successfully Updated").css("color", "green"); 
+                          $('#responsecheck').html("Brand Successfully Updated").css("color", "green"); 
                           $('#Modal_Edit').modal('hide'); 
                           var table= $('#studentsTable').DataTable();
-                               table.ajax.reload(null, false);   
+                               table.ajax.reload(null, false); 
+                               window.location = window.location.href+'?eraseCache=true';  
                     } else{
                        
                     if (msg.error) {    

@@ -228,7 +228,8 @@
                           <h6 id="productsid_editcheck"></h6>
                       </div>
                       </div>
-                      <div class="row col-lg-12 mt-3 justify-content-around"> 
+                      <div class="row col-lg-12 mt-3 "> 
+                        <img src ="" id="imgshow1" style="height:50px; width:40px;" /> 
                         <label for="image1_edit" class="form-label form-group col-2"><i
                             class="fa fa-picture-o fa-3x" aria-hidden="true"></i></label>
                         <div class="">
@@ -236,25 +237,28 @@
                             
                             <h6 id="img1_editcheck"></h6>
                         </div>
+                        <img src ="" id="imgshow2" style="height:50px;width:40px;" /> 
                         <label for="image2_edit" class="form-label form-group col-2"><i
                             class="fa fa-picture-o fa-3x" aria-hidden="true"></i></label>
                         <div class="">
                             <input type="file" name="image2_edit" id="image2_edit" value="" class="form-control" hidden>
-                            {{-- <img src ="{{ asset('admin_assets/product_images/'. $row->image2)}}"/>  --}}
+                           
                             <h6 id="img2_editcheck"></h6>
                         </div>
+                        <img src ="" id="imgshow3" style="height:50px;width:40px;" /> 
                         <label for="image3_edit" class="form-label form-group col-2"><i
                             class="fa fa-picture-o fa-3x" aria-hidden="true"></i></label>
                         <div class="">
                             <input type="file" name="image3_edit" id="image3_edit" value="" class="form-control" hidden>
-                            {{-- <img src ="{{ asset('admin_assets/product_images/'. $row->image3)}}"/>  --}}
+                            
                             <h6 id="img3_editcheck"></h6>
                         </div>
+                        <img src ="" id="imgshow4" style="height:50px;width:40px;" /> 
                         <label for="image4_edit" class="form-label form-group col-2"><i
                             class="fa fa-picture-o fa-3x" aria-hidden="true"></i></label>
                         <div class="">
                             <input type="file" name="image4_edit" id="image4_edit" value="" class="form-control" hidden>
-                            {{-- <img src ="{{ asset('admin_assets/product_images/'. $row->image4)}}"/>  --}}
+                           
                             <h6 id="img4_editcheck"></h6>
                         </div>
                       </div>
@@ -279,9 +283,7 @@
         var page='';
         $('body').on('click', '.pagination a', function (e) {
             e.preventDefault();
-            // $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 10000;" src="https://i.imgur.com/v3KWF05.gif />');
             var url ='/admin/product/editproduct?page=' + page,
-            // $(this).attr('href');
            data : window.history.pushState("", "", url);
             loadBooks(url);
         });

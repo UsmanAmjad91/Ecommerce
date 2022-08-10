@@ -31,6 +31,8 @@ Route::get('/admin',[AdminController::class,'index'])->name('admin');
 Route::post('/admin/auth',[AdminController::class,'auth'])->name('admin/auth');
 
 Route::group(['middleware'=>'admin_auth'],function(){
+    //Pswd//
+    Route::get('/admin/updatepassword',[AdminController::class,'updatepassword'])->name('admin/updatepassword');
     /// Dashboard Route ///
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('admin/dashboard');
      /// Category Routes ///
@@ -38,7 +40,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::get('/admin/category/add_category',[CategoryController::class,'manage_category'])->name('admin/category/add_category');
 
-    Route::get('/admin/updatepassword',[AdminController::class,'updatepassword'])->name('admin/updatepassword');
+    Route::get('/admin/category/cat_list',[CategoryController::class,'cat_name'])->name('admin/category/cat_list');
 
     Route::post('/admin/category/insert',[CategoryController::class,'insert_cat'])->name('admin/category/insert');
 
@@ -172,6 +174,12 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('/admin/product/edit2/{id}',[ProductController::class,'edit2_pro'])->name('admin/product/edit2');
 
     Route::get('/admin/product/search',[ProductController::class,'search'])->name('admin/product/search');
+
+    Route::get('/admin/product/p_attr',[ProductController::class,'p_attr'])->name('admin/product/p_attr');
+
+    Route::get('/admin/product/atrr_list',[ProductController::class,'productatrr_list'])->name('product.atrr_list');
+
+    Route::post('/admin/product/editattr/{id}',[ProductController::class,'productatrr_edit'])->name('admin/product/editattr');
 
 });
 

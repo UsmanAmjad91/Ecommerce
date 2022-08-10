@@ -27,23 +27,28 @@ class BrandController extends Controller
     public function brand_list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Brand::select('brand_id', 'brand','brand_status')->orderBy('brand_id', 'desc')->get();
+            $data = Brand::select('brand_id','brand','brand_image','brand_status')->orderBy('brand_id', 'desc')->get();
             
             foreach ($data as $row) {
              return Datatables::of($data)->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-success btn-sm item brand_edit" data-brand_id="' . $row->brand_id . '" data-brand="' . $row->brand . '" data-brand_status="' . $row->brand_status . '">Edit</a>'; 
-                    $actionBtn .='<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm item ml-3 brand_delete" data-toggle="modal" data-target="#Modal_Delete"  data-brand_id="' . $row->brand_id . '" >Delete</a>';
+             ->addColumn('image', function($row){
+                $brand_images=asset("admin_assets/brand_images/$row->brand_image");
+               $image = '<img src='.$brand_images.' style="height:50px;" />';
+                return $image;
+             })
+          ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit brand-br btn btn-success btn-sm item brand_edit" data-brand_id="' . $row->brand_id . '" data-brand="' . $row->brand . '"  data-brand_image="' . $row->brand_image . '" data-brand_status="' . $row->brand_status . '">Edit</a>'; 
+                    $actionBtn .='<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm item ml-2 brand_delete" data-toggle="modal" data-target="#Modal_Delete"  data-brand_id="' . $row->brand_id . '" >Delete</a>';
                     if($row->brand_status == 1){
-                        $actionBtn .= '<a href="javascript:void(0)"  class="brand_status_ac btn btn-success btn-sm item ml-3 brand_status"  data-brand_id="' . $row->brand_id . '" >Active</a>';
+                        $actionBtn .= '<a href="javascript:void(0)"  class="brand_status_ac btn btn-success btn-sm item ml-2 brand_status"  data-brand_id="' . $row->brand_id . '" >Active</a>';
                     }
                     if($row->brand_status == 0){
-                 $actionBtn .= ' <a href="javascript:void(0)"  class="brand_status_de btn btn-warning btn-sm item ml-3 brand_status"  data-brand_id="' . $row->brand_id . '" >DeActive</a>';
+                 $actionBtn .= ' <a href="javascript:void(0)"  class="brand_status_de btn btn-warning btn-sm item ml-2 brand_status"  data-brand_id="' . $row->brand_id . '" >DeActive</a>';
                      }
                     
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])->make(true);
+                ->rawColumns(['action','image'])->make(true);
             }
         }
     }
@@ -54,14 +59,20 @@ class BrandController extends Controller
         $validator = Validator::make($request->all(), [
             'brand' => 'required|unique:brands',
             'brand_status' => 'required',
+            'brand_image' => 'required',
         ]);
         if ($validator->fails()) {
             return json_encode(array('error' => $validator->errors()->all()));
         }
+        $file = $request->brand_image;
+        $filename1 = time() . '.' . $file->getClientOriginalName();
+        $file->move(public_path('admin_assets/brand_images'), $filename1);
+
 
         $insert_brand = new Brand;
         $insert_brand->brand = $request->post('brand');
         $insert_brand->brand_status = $request->post('brand_status');
+        $insert_brand->brand_image =  $filename1;
         $insert_brand->save();
         if ($insert_brand) {
             session()->flash('msgbrand', 'Succsessfuly Added brand');
@@ -81,18 +92,47 @@ class BrandController extends Controller
         if ($validator->fails()) {
             return json_encode(array('error' => $validator->errors()->all()));
         }
-        if (!empty($id)) {
-            $is_update = Brand::where('brand_id', $id)->update([
+
+        $brands = Brand::where('brand_id',$id)->get();
+        foreach ( $brands as  $brand) {
+            // dd($brand['brand_image']);
+            $imageget = ($brand['brand_image']);   
+     }
+
+        $file = $request->brand_image;
+        $filename1 = time() . '.' . $file->getClientOriginalName();
+        $imagePath = public_path('admin_assets/brand_images/');
+            unlink($imagePath.$imageget);
+        $file->move(public_path('admin_assets/brand_images'), $filename1);
+  
+        if (!empty($request->brand_image)){
+            if (!empty($id)) {
+                $is_update = Brand::where('brand_id', $id)->update([
+                    'brand' => $request->brand_edit,
+                    'brand_image' => $filename1,
+                    'brand_status' => $request->brand_status_edit,         
+                ]);
+                if ($is_update) {
+                    session()->flash('msgbrand', 'Succsessfuly Update brand');
+                    return json_encode(array('message' => 'Succsessfuly Update brand', 'status' => 200));
+                } else {
+                    return json_encode(array('message' => 'Not Update brand', 'status' => 500));
+                }
+            }
+           }else{
+                if (!empty($id)) {
+                $is_update = Brand::where('brand_id', $id)->update([
                 'brand' => $request->brand_edit,
                 'brand_status' => $request->brand_status_edit,         
-            ]);
-            if ($is_update) {
+               ]);
+              if ($is_update) {
                 session()->flash('msgbrand', 'Succsessfuly Update brand');
                 return json_encode(array('message' => 'Succsessfuly Update brand', 'status' => 200));
             } else {
                 return json_encode(array('message' => 'Not Update brand', 'status' => 500));
             }
-        }
+                   }
+          }
     }
 
 
@@ -100,7 +140,16 @@ class BrandController extends Controller
     {
         // dd($id);
         if (!empty($id)) {
-            $is_delete = Brand::where('brand_id', $id)->delete();
+
+            $brands = Brand::where('brand_id',$id)->get();
+            foreach ( $brands as  $brand) {
+                // dd($brand['brand_image']);
+                $imageget = ($brand['brand_image']);   
+         }
+            $imagePath = public_path('admin_assets/brand_images/');
+                unlink($imagePath.$imageget);
+                $br = Brand::where('brand_id',$id);
+            $is_delete = $br->delete();
             session()->flash('msgbrand', 'Succsessfuly Delete brand');
             if (!empty($is_delete))
             

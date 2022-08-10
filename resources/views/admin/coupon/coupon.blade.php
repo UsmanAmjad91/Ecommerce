@@ -91,7 +91,9 @@
                                         <th>Name Coupon</th>
                                         <th>Code Coupon</th>
                                         <th>Value Coupon</th>
-                                        {{-- <th>Status Coupon</th> --}}
+                                        <th>Min Amount</th>
+                                        <th>One Time</th>
+                                        <th>Type</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -147,23 +149,48 @@
               </div>
               <h6 id="coupon_code_editcheck"></h6>
             </div>
-            <div class="form-group row">
-                <label class="col-md-2 col-form-label">Coupon Value</label>
-                <div class="col-md-10">
-                  <input type="text" name="coupon_value_edit" id="coupon_value_edit" class="form-control" placeholder="Coupon Value">
-                </div>
+            <div class="row">
+            <div class="form-group col-md-5">
+                <label class="control-label mb-1">Coupon Value</label>
+                
+                  <input type="text" name="coupon_value_edit" id="coupon_value_edit" class="au-input au-input--full" placeholder="Coupon Value">
+               
                 <h6 id="coupon_value_editcheck"></h6>
               </div>
-            <div class="form-group row">
-                <label class="col-md-2 col-form-label">Coupon status</label>
-                <div class="col-md-8">
-                    <select class="selectpicker form-control col-4" name="coupon_status_edit" id="coupon_status_edit">
+              <div class="form-group col-md-5">
+                <label for="min_order_amount" class="control-label mb-1">Min order Amount</label>
+                <input type="text" id="min_order_amount" name="min_order_amount" type="text" class="au-input au-input--full">
+                <h6 id="min_order_amountcheck"> </h6>
+            </div>
+            </div>
+            <div class="row justify-content-around">
+              <div class="form-group">
+                <label for="is_one_time" class="control-label">Is One Time</label>
+                 <select class="selectpicker form-control" name="is_one_time" id="is_one_time">
+                    <option  value="" selected>Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select> 
+                <h6 id="is_one_timecheck"> </h6>
+            </div>
+              <div class="form-group">
+                <label for="type" class="control-label">Type</label>
+                 <select class="selectpicker form-control" name="type" id="type">
+                    <option  value="" selected>Select</option>
+                    <option value="Value">Value</option>
+                    <option value="Per">Percent</option>
+                  </select> 
+                <h6 id="typecheck"> </h6>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Coupon status</label>
+                    <select class="selectpicker form-control" name="coupon_status_edit" id="coupon_status_edit">
                         <option value="1">Status On</option>
                         <option value="0">Status Off</option>
                       </select>
-                </div>
                 <h6 id="coupon_status_editcheck"></h6>
               </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" id="close_cop" data-backdrop="false" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -217,7 +244,9 @@
             { data: 'coupon_title' },
             { data: 'coupon_code' },
             { data: 'coupon_value' },
-            // { data: 'coupon_status' },
+            { data: 'min_order_amount' },
+            { data: 'is_one_time' },
+            { data: 'type' },
             {
                 data: 'action', 
                 name: 'action', 

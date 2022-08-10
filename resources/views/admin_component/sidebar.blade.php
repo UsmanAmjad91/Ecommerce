@@ -48,6 +48,11 @@
                          <i class="fa fa-pencil-square-o"></i> 
                           Products Edit</a>
                 </li>
+                <li class="@yield('product_attr')">
+                    <a href="{{url('/admin/product/p_attr')}}">
+                         <i class="fa fa-pencil-square-o"></i> 
+                          Products Attributes</a>
+                </li>
                 <li class="has-sub">
                     <a class="js-arrow" href="#">
                         <i class="fas fa-copy"></i>Pages</a>

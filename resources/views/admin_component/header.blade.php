@@ -6,7 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <meta http-equiv="cache-control" content="no-cache" />
+     <meta http-equiv="Pragma" content="no-cache" />
+     <meta http-equiv="Expires" content="-1" />
     <!-- Title Page-->
     {{-- <title>@yield('Page_title')</title> --}}
 
@@ -33,6 +35,7 @@
  <!-- Datatables CSS CDN -->
  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
  {{-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script> --}}
+ <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 
 
 </head>
@@ -97,6 +100,11 @@
                             <a href="{{url('/admin/product/editproduct')}}">
                                  <i class="fa fa-pencil-square-o"></i> 
                                   Products Edit</a>
+                        </li>
+                        <li class="@yield('product_attr')">
+                            <a href="{{url('/admin/product/p_attr')}}">
+                                 <i class="fa fa-pencil-square-o"></i> 
+                                  Products Attributes</a>
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
