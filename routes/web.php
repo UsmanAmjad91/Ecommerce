@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\MyearController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\CustomerController;
-
+use App\Http\Controllers\Front\Front;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +24,8 @@ use App\Http\Controllers\Admin\CustomerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/',[Front::class,'index'])->name('index');
 
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
 
