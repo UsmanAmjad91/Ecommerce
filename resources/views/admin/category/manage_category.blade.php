@@ -109,7 +109,13 @@
                                             <h6 id="imgcheck"> </h6>
                                         </div>
                                     </div>
-
+                                     <div class="row">
+                                        <div class="form-group">
+                                            <label for="is_home" class="control-label mb-1 ml-3">Is Home Show</label>
+                                            <input type="checkbox" id="is_home" name="is_home" class="ml-3">
+                                         
+                                        </div>
+                                     </div>
                                     <div class="form-group">
                                         <button type="submit" id="addcategory" name="addcategory"
                                             class="form-control btn btn-lg btn-info btn-block">Add Category</button>

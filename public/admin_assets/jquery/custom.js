@@ -173,6 +173,9 @@ $(document).ready(function() {
     var cat_image = $(this).data('cat_image');
     var cat_parent_id = $(this).data('cat_parent_id');
     var cat_status = $(this).data('cat_status');
+    var is_home = $(this).data('is_home');
+    // console.log(is_home);
+
     
     $('[name="cat_id_edit"]').val(cat_id);
     $('[name="cat_slug_edit"]').val(cat_slug);
@@ -184,6 +187,12 @@ $(document).ready(function() {
         $("#cat_parent_id option[value="+cat_parent_id+"]").attr('selected', 'selected');
         }
     //   $('#Modal_Edit').modal('show');
+    if(is_home != 0){
+        $("#is_home").prop( "checked", true );
+    }else{
+        $("#is_home").prop( "checked", false );
+ 
+    }
     
     });
    
@@ -1760,13 +1769,20 @@ $(document).ready(function() {
     var brand = $(this).data('brand');
     var brand_image = $(this).data('brand_image');
     var brand_status = $(this).data('brand_status');
-    
+    var is_home = $(this).data('is_home');
+
     $('[name="brand_id_edit"]').val(brand_id);
     $('[name="brand_edit"]').val(brand);
     $("#size_brand_edit option[value="+brand_status+"]").attr('selected', 'selected');
    $('#sho').attr('src', '/admin_assets/brand_images/'+brand_image);
       
     // $('#Modal_Edit').modal('show');
+    if(is_home != 0){
+        $("#is_home").prop( "checked", true );
+    }else{
+        $("#is_home").prop( "checked", false );
+ 
+    }
     
     });
     $('#show_data').on('click', '.brand-br', function() {
@@ -2197,4 +2213,348 @@ $(document).ready(function() {
 
     });
 
+});
+
+/// ADD Tax ///
+$(document).ready(function() {
+    $("#addtax").submit(function(e) {
+        e.preventDefault();
+     
+        var tax_name = $('#tax_name').val();
+        if ($('#tax_name').val() == '') { 
+            $("#taxnamecheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#taxnamecheck").html('** Please enter Tax Name').css("color", "red");
+            $('#taxnamecheck').focus();
+        }else{
+            $('#taxnamecheck').hide();
+        }  
+        
+        var tax_value = $('#tax_value').val();
+        if (tax_value.length == "") {    
+            $("#tax_valuecheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#tax_valuecheck").html('** Please enter Tax Value').css("color", "red");
+            $('#tax_valuecheck').focus();
+        } else {
+            $('#tax_valuecheck').hide();
+        }    
+       
+        var tax_status = $('#tax_status').val();
+        if (tax_status.length == "") {    
+            $("#taxstatuscheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#taxstatuscheck").html('** Please Select Tax Status').css("color", "red");
+            $('#taxstatuscheck').focus();
+        } else {
+            $('#taxstatuscheck').hide();
+        }    
+        if ((tax_name != '') && (tax_status != '') && (tax_value!='') ) {
+            // return false;
+            var formData = new FormData(this);
+            $.ajax({
+                url: "/admin/tax/insert",
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html("Tax Successfully Added").css("color", "green"); 
+                          window.location.replace("/admin/tax");    
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responsecheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responsecheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responsecheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+
+});
+
+
+/// Active De Active Tax /// 
+$(document).ready(function() {
+    /// Active to deactive ///
+    $('#show_data').on('click', '.tax_status_ac', function() {
+        var id = $(this).data('tax_id');   
+        if (!id == "") { 
+            // return false;
+           $.ajax({
+               url: "/admin/tax/status_active/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+    ///  Deactive To Active  Tax ///
+    $('#show_data').on('click', '.tax_status_de', function() {
+        var id = $(this).data('tax_id');   
+        if (!id == "") { 
+            // return false;
+           $.ajax({
+               url: "/admin/tax/status_deactive/" + id,
+               type: 'post',
+               data: {id:id},
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               dataType: 'json',
+               contentType: false,
+               processData: false,
+               success: function(msg) {    
+                if (msg.status == 200) {                    
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.message).css("color", "green");  
+                   var table= $('#studentsTable').DataTable();
+                    table.ajax.reload(null, false);
+                } else{    
+                if (msg.error) {  
+                    $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                        $(this).hide(); n();
+                      });
+                      $('#responseeditcheck').html(msg.error).css("color", "red");
+                } else {
+                    $('#responseeditcheck').hide();
+                }
+                
+                }
+               }
+           });
+        }   
+    });
+});
+
+$(document).ready(function() {
+    /// Delete Record Tax ///
+    $("#show_data").on('click','.tax_delete',function () { 
+        
+     var tax_id = $(this).data('tax_id');
+     $('#Modal_Delete').modal('show');
+    $('[name="tax_id_delete"]').val(tax_id);
+    });
+    $("#deltax").submit(function(e) {
+     e.preventDefault();
+    var  id = $('#tax_id_delete').val();
+    if (!id == "") {
+     var formData = new FormData(this);
+     var id = $('#tax_id_delete').val();
+    $.ajax({
+        url: "/admin/tax/delete/" + id,
+        type: 'post',
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function(msg) {    
+         if (msg.status == 200) {                    
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.message).css("color", "green"); 
+               $('#Modal_Delete').modal('hide');  
+            var table= $('#studentsTable').DataTable();
+             table.ajax.reload(null, false);
+         } else{    
+         if (msg.error) {  
+            //  console.log(msg.error); 
+             $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                 $(this).hide(); n();
+               });
+               $('#responseeditcheck').html(msg.error).css("color", "red");
+         } else {
+             $('#responseeditcheck').hide();
+         }
+         
+         }
+        }
+    });
+ }
+     
+ }); 
+ 
+ 
+ $("#closed_tax_del").click(function () {
+    $('#Modal_Delete').modal('hide');   
+}); 
+$("#closed_taxx").click(function () {
+    $('#Modal_Delete').modal('hide');   
+}); 
+ });
+
+
+ /// Tax Edit ///
+$(document).ready(function() {
+    
+    ///Show Data On Edit Modal /// 
+    $('#show_data').on('click', '.tax_edit', function() {
+    var tax_id = $(this).data('tax_id');  
+    var tax_name = $(this).data('tax_name');
+    var tax_value = $(this).data('tax_value');
+    var tax_status = $(this).data('tax_status');
+    
+    $('[name="tax_id_edit"]').val(tax_id);
+    $('[name="tax_name_edit"]').val(tax_name);
+    $('[name="tax_value_edit"]').val(tax_value);
+    
+    $("#tax_status_edit option[value="+tax_status+"]").attr('selected', 'selected');
+   
+
+    $('#Modal_Edit').modal('show');
+    
+    });
+   
+    });
+    $('.tax_edit').click(function () {
+        $('#Modal_Edit').modal('show');   
+    });
+   
+   
+    /// Update Tax ///
+$(document).ready(function() {
+    $("#edittax").submit(function(e) {
+        e.preventDefault();
+        var tax_id_edit = $('#tax_id_edit').val();
+        if ($('#tax_id_edit').val() == '') { 
+            $("#tax_id_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#tax_id_editcheck").html('** Please enter Tax ID').css("color", "red");
+            $('#tax_id_editcheck').focus();
+        }else{
+            $('#tax_id_editcheck').hide();
+        }  
+        var tax_name_edit = $('#tax_name_edit').val();
+        if ($('#tax_name_edit').val() == '') { 
+            $("#tax_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#tax_editcheck").html('** Please enter Tax Name').css("color", "red");
+            $('#tax_editcheck').focus();
+        }else{
+            $('#tax_editcheck').hide();
+        }  
+       
+        var tax_value_edit = $('#tax_value_edit').val();
+        if (tax_value_edit.length == "") {    
+            $("#tax_value_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#tax_value_editcheck").html('** Please enter Tax Value').css("color", "red");
+            $('#tax_value_editcheck').focus();
+        } else {
+            $('#tax_value_editcheck').hide();
+        }   
+        
+        var tax_status_edit = $('#tax_status_edit').val();
+        if (tax_status_edit.length == "") {    
+            $("#tax_status_editcheck").show().delay(5000).queue(function(n) {
+                $(this).hide(); n();
+              });
+            $("#tax_status_editcheck").html('** Please Select tax Status').css("color", "red");
+            $('#tax_status_editcheck').focus();
+        } else {
+            $('#tax_status_editcheck').hide();
+        }    
+        if ((tax_name_edit != '') && (tax_status_edit != '') && (tax_value_edit != '') ) {
+            // return false;
+            var id = $('#tax_id_edit').val();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "/admin/tax/edit/" + id,
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(msg) {
+                    if (msg.status == 200) {                    
+                        $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responseeditcheck').html("Tax Successfully Updated").css("color", "green"); 
+                          var table= $('#studentsTable').DataTable();
+                          table.ajax.reload(null, false); 
+                          $('#Modal_Edit').modal('hide');  
+                    } else{
+                       
+                    if (msg.error) {    
+                        $("#responseeditcheck").show().delay(5000).queue(function(n) {
+                            $(this).hide(); n();
+                          });
+                          $('#responseeditcheck').html(msg.error).css("color", "red");
+                    } else {
+                        $('#responseeditcheck').hide();
+                    }
+                    
+                    }    
+                }
+            });
+        }
+      
+
+    });
+    $('#close_tax').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
+    $('#close_taxt').click(function () {
+        $('#Modal_Edit').modal('hide');   
+    });
 });

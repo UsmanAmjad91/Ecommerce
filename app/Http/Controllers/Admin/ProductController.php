@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
-use App\Models\Product;
-use App\Models\Brand;
-use App\Models\category;
-use App\Models\Color;
-use App\Models\Coupon;
-use App\Models\Myear;
-use App\Models\Size;
-use App\Models\Productattr;
+use App\Models\Admin\Product;
+use App\Models\Admin\Brand;
+use App\Models\Admin\category;
+use App\Models\Admin\Color;
+use App\Models\Admin\Coupon;
+use App\Models\Admin\Myear;
+use App\Models\Admin\Size;
+use App\Models\Admin\Productattr;
+use App\Models\Admin\Tax;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -1023,6 +1025,7 @@ class ProductController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('products')
+            ->leftJoin('taxes', 'products.tax_type', '=', 'taxes.tax_id')
                 ->orderBy('product_id', 'desc')->get();
 
             foreach ($data as $row) {
@@ -1030,8 +1033,8 @@ class ProductController extends Controller
                 //    return json_encode($data);
                 return Datatables::of($data)->addIndexColumn()
                     ->addColumn('action', function ($row) {
-                        $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-success btn-lg mr-1 item d-inline-flex productattr_edit" data-product_id="' . $row->product_id . '" data-product="' . $row->product_name . '" data-lead_time="' . $row->lead_time . '"
-                    data-tax="' . $row->tax . '" data-tax_type="' . $row->tax_type . '" data-is_promo="' . $row->is_promo . '"
+                        $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit_ptr btn btn-success btn-lg mr-1 item d-inline-flex productattr_edit" data-product_id="' . $row->product_id . '" data-product="' . $row->product_name . '" data-lead_time="' . $row->lead_time . '"
+                     data-tax_type="' . $row->tax_type . '" data-is_promo="' . $row->is_promo . '"
                     data-is_featured="' . $row->is_featured . '"  data-is_discounted="' . $row->is_discounted . '"  data-is_tranding="' . $row->is_tranding . '"
                       >Edit</a>';
                        
@@ -1046,10 +1049,10 @@ class ProductController extends Controller
 
     public function productatrr_edit(Request $request,$id)
     {
-         // dd($request->all());
+        //  dd($request->all());
          $validator = Validator::make($request->all(), [
             'lead_time' => 'required',
-            'tax' => 'required',
+            // 'tax' => 'required',
             'tax_type' => 'required',
             'is_discounted' => 'required',
             'is_tranding' => 'required',
@@ -1063,7 +1066,7 @@ class ProductController extends Controller
         if (!empty($id)) {
             $is_update = DB::table('Products')->where('product_id', $id)->update([
                 'lead_time' => $request->lead_time,
-                'tax' => $request->tax,
+                // 'tax' => $request->tax,
                 'tax_type' => $request->tax_type,
                 'is_discounted' => $request->is_discounted,
                 'is_tranding' => $request->is_tranding,

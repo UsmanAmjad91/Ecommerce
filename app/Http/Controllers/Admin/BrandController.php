@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Brand;
+use App\Http\Controllers\Controller;
+use App\Models\Admin\Brand;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +28,7 @@ class BrandController extends Controller
     public function brand_list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Brand::select('brand_id','brand','brand_image','brand_status')->orderBy('brand_id', 'desc')->get();
+            $data = Brand::select('brand_id','brand','brand_image','is_home','brand_status')->orderBy('brand_id', 'desc')->get();
             
             foreach ($data as $row) {
              return Datatables::of($data)->addIndexColumn()
@@ -37,7 +38,7 @@ class BrandController extends Controller
                 return $image;
              })
           ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit brand-br btn btn-success btn-sm item brand_edit" data-brand_id="' . $row->brand_id . '" data-brand="' . $row->brand . '"  data-brand_image="' . $row->brand_image . '" data-brand_status="' . $row->brand_status . '">Edit</a>'; 
+                    $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit brand-br btn btn-success btn-sm item brand_edit" data-brand_id="' . $row->brand_id . '" data-brand="' . $row->brand . '"  data-brand_image="' . $row->brand_image . '" data-is_home="' . $row->is_home . '" data-brand_status="' . $row->brand_status . '">Edit</a>'; 
                     $actionBtn .='<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm item ml-2 brand_delete" data-toggle="modal" data-target="#Modal_Delete"  data-brand_id="' . $row->brand_id . '" >Delete</a>';
                     if($row->brand_status == 1){
                         $actionBtn .= '<a href="javascript:void(0)"  class="brand_status_ac btn btn-success btn-sm item ml-2 brand_status"  data-brand_id="' . $row->brand_id . '" >Active</a>';
@@ -73,6 +74,11 @@ class BrandController extends Controller
         $insert_brand->brand = $request->post('brand');
         $insert_brand->brand_status = $request->post('brand_status');
         $insert_brand->brand_image =  $filename1;
+        if(!empty($request->post('is_home'))){
+            $insert_brand->is_home = 1;
+        }else{
+            $insert_brand->is_home = 0;  
+        }
         $insert_brand->save();
         if ($insert_brand) {
             session()->flash('msgbrand', 'Succsessfuly Added brand');
@@ -106,11 +112,17 @@ class BrandController extends Controller
         $file->move(public_path('admin_assets/brand_images'), $filename1);
   
         if (!empty($request->brand_image)){
+            if(!empty($request->post('is_home'))){
+                $check = $request->is_home = 1;
+             }else{
+                 $check =  $request->is_home = 0; 
+             }
             if (!empty($id)) {
                 $is_update = Brand::where('brand_id', $id)->update([
                     'brand' => $request->brand_edit,
                     'brand_image' => $filename1,
-                    'brand_status' => $request->brand_status_edit,         
+                    'brand_status' => $request->brand_status_edit, 
+                    'is_home'  => $check,        
                 ]);
                 if ($is_update) {
                     session()->flash('msgbrand', 'Succsessfuly Update brand');
@@ -120,10 +132,16 @@ class BrandController extends Controller
                 }
             }
            }else{
+            if(!empty($request->post('is_home'))){
+                $check = $request->is_home = 1;
+             }else{
+                 $check =  $request->is_home = 0; 
+             }
                 if (!empty($id)) {
                 $is_update = Brand::where('brand_id', $id)->update([
                 'brand' => $request->brand_edit,
-                'brand_status' => $request->brand_status_edit,         
+                'brand_status' => $request->brand_status_edit,  
+                'is_home'  => $check,       
                ]);
               if ($is_update) {
                 session()->flash('msgbrand', 'Succsessfuly Update brand');

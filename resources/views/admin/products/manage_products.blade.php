@@ -279,16 +279,22 @@
                                                 class="form-control">
                                             <h6 id="lead_timecheck"> </h6>
                                         </div>
-                                        <div class="form-group">
+                                        {{-- <div class="form-group col-lg-4">
                                             <label for="tax" class="control-label mb-1">Tax</label>
-                                            <input type="text" id="tax" name="tax"
-                                                class="form-control">
+                                            <input type="text" id="tax" name="tax" class="form-control">
+                                            <select class="selectpicker form-control"  id="tax" name="tax" >
+                                                <option value="" selected>Select</option>
+                                               
+                                            </select>
                                             <h6 id="taxcheck"> </h6>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="tax_type" class="control-label mb-1">Tax type</label>
-                                            <input type="text" id="tax_type" name="tax_type"
-                                                class="form-control">
+                                        </div> --}}
+                                        <div class="form-group col-lg-4">
+                                            <label for="tax_type" class="control-label mb-1">Tax</label>
+                                            {{-- <input type="text" id="tax_type" name="tax_type" class="form-control"> --}}
+                                                <select class="selectpicker form-control"  id="tax_type" name="tax_type">
+                                            <option value="" selected>Select</option>
+                                           
+                                        </select>
                                             <h6 id="tax_typecheck"> </h6>
                                         </div>
                                        
@@ -438,4 +444,42 @@ $('#product_attr_'+ count).remove();
 
     CKEDITOR.replace('desc');
     CKEDITOR.replace('technical_specification');
+</script>
+<script>
+$(document).ready(function(){
+show_tax();
+function show_tax() {
+    $.ajax({
+        url: "/admin/tax/get_tax",
+        type: 'get',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+    success: function(html) {
+        var items = html;
+
+        // console.log(html);
+        var i;
+        var html = '';
+        var tax = '';
+        for (i = 0; i < items.length; i++) {   
+          html += '<option value="'+ items[i].tax_id + '">' +
+           '<td>' + items[i].tax_desc + " "+  items[i].tax_value + '</td>' +
+            '</option>';
+            // tax += '<option value="'+ items[i].tax_id + '">' +
+            // '<td>' + items[i].tax_value + '</td>' +
+            //  '</option>';
+        }
+      $('#tax_type').append(html);
+    //   $('#tax').append(tax);
+    //   console.log(html);
+    }
+
+  });
+}
+});
+
 </script>

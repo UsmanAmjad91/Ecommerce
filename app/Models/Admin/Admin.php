@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
+class Admin extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'color_id',
-        'color',
-        'color_status',
+        'admin_id',
+        'username',
+        'email',
+        'password',
+        'status',
     ];
 }
+

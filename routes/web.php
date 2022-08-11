@@ -1,14 +1,16 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CouponController;
-use App\Http\Controllers\SizeController;
-use App\Http\Controllers\ColorController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\MyearController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\MyearController;
+use App\Http\Controllers\Admin\TaxController;
+use App\Http\Controllers\Admin\CustomerController;
 
 
 /*
@@ -181,6 +183,35 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::post('/admin/product/editattr/{id}',[ProductController::class,'productatrr_edit'])->name('admin/product/editattr');
 
+    // Tax Routes//
+    Route::get('/admin/tax',[TaxController::class,'index'])->name('admin/tax');
+
+    Route::get('/admin/tax/add_tax',[TaxController::class,'manage_tax'])->name('admin/tax/add_tax');
+
+    Route::get('/admin/tax/list',[TaxController::class,'tax_list'])->name('tax.list');
+
+    Route::post('/admin/tax/insert',[TaxController::class,'insert_tax'])->name('admin/tax/insert');
+
+    Route::post('/admin/tax/edit/{id}',[TaxController::class,'edit_tax'])->name('admin/tax/edit');
+
+    Route::post('/admin/tax/delete/{id}',[TaxController::class,'destroy'])->name('admin/tax/delete');
+
+    Route::post('/admin/tax/status_deactive/{id}',[TaxController::class,'tax_status_de'])->name('admin/tax/status_deactive');
+
+    Route::post('/admin/tax/status_active/{id}',[TaxController::class,'tax_status_ac'])->name('admin/tax/status_active');
+
+    Route::get('/admin/tax/get_tax',[TaxController::class,'get_tax'])->name('admin/tax/get_tax');
+
+    // Customers //
+    Route::get('/admin/customer',[CustomerController::class,'index'])->name('admin//admin/customer');
+
+    Route::get('/admin/customer/list',[CustomerController::class,'customer_list'])->name('customer.list');
+
+    Route::post('/admin/customer/delete/{id}',[CustomerController::class,'destroy'])->name('admin/customer/delete');
+
+    Route::post('/admin/customer/status_deactive/{id}',[CustomerController::class,'customer_status_de'])->name('admin/customer/status_deactive');
+
+    Route::post('/admin/customer/status_active/{id}',[CustomerController::class,'customer_status_ac'])->name('admin/customer/status_active');
 });
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');

@@ -181,6 +181,13 @@
                                 <img src=" " id="catim" />
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="is_home" class="control-label mb-1 ml-3">Is Home Show</label>
+                                <input type="checkbox" id="is_home" name="is_home" class="ml-3">
+                             
+                            </div>
+                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="close" class="btn btn-secondary"

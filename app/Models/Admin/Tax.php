@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class Tax extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'admin_id',
-        'username',
-        'email',
-        'password',
-        'status',
+        'tax_id',
+        'tax_desc',
+        'tax_value',
+        'tax_status',
     ];
 }
-

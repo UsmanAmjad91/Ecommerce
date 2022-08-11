@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Size extends Model
+class Brand extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'size_id',
-        'size',
-        'size_status',
+        'brand_id',
+        'brand',
+        'brand_image',
+        'brand_status',
     ];
 }

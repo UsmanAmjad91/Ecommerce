@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Models\category;
+use App\Models\Admin\category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -53,6 +54,11 @@ class CategoryController extends Controller
         $insert_cat->cat_parent_id = $request->post('cat_parent_id');
         $insert_cat->cat_image = $filename;
         $insert_cat->status = $request->post('cat_status');
+        if(!empty($request->post('is_home'))){
+            $insert_cat->is_home = 1;
+        }else{
+            $insert_cat->is_home = 0;  
+        }
         $insert_cat->save();
         if ($insert_cat) {
             session()->flash('message', 'Succsessfuly Added Category');
@@ -85,6 +91,13 @@ class CategoryController extends Controller
             $imagePath = public_path('admin_assets/cat_images/');
             unlink($imagePath . $imageget);
             $file->move(public_path('admin_assets/cat_images'), $filename1);
+
+            if(!empty($request->post('is_home'))){
+               $check = $request->is_home = 1;
+            }else{
+                $check =  $request->is_home = 0; 
+            }
+            
             if (!empty($id)) {
                 $is_update = category::where('cat_id', $id)->update([
                     'cat_name' => $request->cat_name_edit,
@@ -92,6 +105,7 @@ class CategoryController extends Controller
                     'status' => $request->cat_status_edit,
                     'cat_parent_id' => $request->cat_parent_id,
                     'cat_image' => $filename1,
+                    'is_home'  => $check,
                 ]);
                 if ($is_update) {
                     session()->flash('message', 'Succsessfuly Update Category');
@@ -102,11 +116,17 @@ class CategoryController extends Controller
             }
         } else {
             if (!empty($id)) {
+                if(!empty($request->post('is_home'))){
+                    $check = $request->is_home = 1;
+                 }else{
+                     $check =  $request->is_home = 0; 
+                 }
                 $is_update = category::where('cat_id', $id)->update([
                     'cat_name' => $request->cat_name_edit,
                     'cat_slug' => $request->cat_slug_edit,
                     'status' => $request->cat_status_edit,
                     'cat_parent_id' => $request->cat_parent_id,
+                    'is_home'  => $check,
                 ]);
                 if ($is_update) {
                     session()->flash('message', 'Succsessfuly Update Category');
@@ -143,7 +163,7 @@ class CategoryController extends Controller
     public function cat_list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Category::select('cat_id', 'cat_name', 'cat_parent_id', 'cat_image', 'cat_slug', 'status')->orderBy('cat_id', 'desc')->get();
+            $data = Category::select('cat_id', 'cat_name', 'cat_parent_id', 'cat_image','is_home', 'cat_slug', 'status')->orderBy('cat_id', 'desc')->get();
             foreach ($data as $row) {
                 return Datatables::of($data)->addIndexColumn()
                 ->addColumn('image', function($row){
@@ -160,7 +180,7 @@ class CategoryController extends Controller
                             $actionBtn .= ' <a href="javascript:void(0)"  class="status_de btn btn-warning btn-sm item mr-3 cat_status"  data-cat_id="' . $row->cat_id . '" >DeActive</a>';
                         }
 
-                        $actionBtn .= '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="category_edit edit btn btn-info btn-sm item cat_edit" data-cat_id="' . $row->cat_id . '" data-cat_name="' . $row->cat_name . '" data-cat_parent_id="' . $row->cat_parent_id . '"  data-cat_image="' . $row->cat_image. '" data-cat_slug="' . $row->cat_slug . '" data-cat_status="' . $row->status . '">Edit</a>';
+                        $actionBtn .= '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="category_edit edit btn btn-info btn-sm item cat_edit" data-cat_id="' . $row->cat_id . '" data-cat_name="' . $row->cat_name . '" data-cat_parent_id="' . $row->cat_parent_id . '"  data-cat_image="' . $row->cat_image. '" data-cat_slug="' . $row->cat_slug . '" data-is_home="' . $row->is_home . '" data-cat_status="' . $row->status . '">Edit</a>';
                         $actionBtn .=  '<a href="javascript:void(0)"  class="delete btn btn-danger btn-sm item ml-3 cat_delete" data-toggle="modal" data-target="#Modal_Delete"  data-cat_id="' . $row->cat_id . '" >Delete</a>';
 
                         return $actionBtn;
