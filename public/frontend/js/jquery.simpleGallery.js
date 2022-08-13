@@ -5,7 +5,7 @@
 
     function debug(message) {
         if (window.console) {
-            console.log(message);
+            // console.log(message);
         }
     }
 

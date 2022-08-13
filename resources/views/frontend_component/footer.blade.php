@@ -138,6 +138,7 @@
   <script src="{{asset('frontend/js/custom.js')}}"></script> 
   <!-- Datatables JS CDN -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('frontend/jquery/front.js')}}"></script>  
 
   </body>
 </html>

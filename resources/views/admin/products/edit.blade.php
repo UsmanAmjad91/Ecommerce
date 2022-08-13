@@ -266,7 +266,7 @@
                     <div class="modal-footer">
                         <button type="button" id="close_cop" data-backdrop="false" class="btn btn-secondary"
                             data-dismiss="modal">Close</button>
-                        <button type="submit" id="btn_update" class="btn btn-primary">Update</button>
+                        <button type="submit" id="btn_update"  class="btn btn-primary upd">Update</button>
                     </div>
                 </div>
             </div>

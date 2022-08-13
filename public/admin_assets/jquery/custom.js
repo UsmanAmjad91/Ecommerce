@@ -157,12 +157,11 @@ setTimeout(function () {
     });
 
 /// Category Edit ///
-// $(document).ready(function() {
-// $('#shows_data').on('click', '.category_edit', function() {
-//     $('#Modal_Edit').modal('show');  
-// }); 
-
-// });
+$(document).ready(function() {
+$('#shows_data').on('click', '.category_edit', function() {
+    $('#Modal_Edit').modal('show');  
+}); 
+});
 $(document).ready(function() {
     
     ///Show Data On Edit Modal /// 
@@ -186,14 +185,14 @@ $(document).ready(function() {
     if(cat_parent_id!= ''){
         $("#cat_parent_id option[value="+cat_parent_id+"]").attr('selected', 'selected');
         }
-    //   $('#Modal_Edit').modal('show');
+      
     if(is_home != 0){
         $("#is_home").prop( "checked", true );
     }else{
         $("#is_home").prop( "checked", false );
  
     }
-    
+    $('#Modal_Edit').modal('show');
     });
    
     });

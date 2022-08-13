@@ -102,7 +102,7 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="show_data" class="overflow-auto">
+                                <tbody id="show_adata" class="overflow-auto">
 
                                     <tr class="spacer"></tr>
 

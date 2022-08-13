@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\MyearController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\BannerController;
+
 use App\Http\Controllers\Front\Front;
 
 /*
@@ -202,7 +204,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::get('/admin/tax/get_tax',[TaxController::class,'get_tax'])->name('admin/tax/get_tax');
 
     // Customers //
-    Route::get('/admin/customer',[CustomerController::class,'index'])->name('admin//admin/customer');
+    Route::get('/admin/customer',[CustomerController::class,'index'])->name('admin/admin/customer');
 
     Route::get('/admin/customer/list',[CustomerController::class,'customer_list'])->name('customer.list');
 
@@ -211,7 +213,26 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('/admin/customer/status_deactive/{id}',[CustomerController::class,'customer_status_de'])->name('admin/customer/status_deactive');
 
     Route::post('/admin/customer/status_active/{id}',[CustomerController::class,'customer_status_ac'])->name('admin/customer/status_active');
+     /// Banner ///
+     Route::get('/admin/banner',[BannerController::class,'index'])->name('admin/admin/banner');
+
+     Route::get('/admin/banner/add_banner',[BannerController::class,'manage_banner'])->name('admin/banner/add_banner');
+
+     Route::get('/admin/banner/list',[BannerController::class,'banner_list'])->name('banner.list');
+ 
+     Route::post('/admin/banner/insert',[BannerController::class,'insert_banner'])->name('admin/banner/insert');
+ 
+     Route::post('/admin/banner/edit/{id}',[BannerController::class,'edit_banner'])->name('admin/banner/edit');
+ 
+     Route::post('/admin/banner/delete/{id}',[BannerController::class,'destroy_banner'])->name('admin/banner/delete');
+
+     Route::post('/admin/banner/status_deactive/{id}',[BannerController::class,'banner_status_de'])->name('admin/banner/status_deactive');
+ 
+     Route::post('/admin/banner/status_active/{id}',[BannerController::class,'banner_status_ac'])->name('admin/banner/status_active');
+
 });
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');
+
+/// Front End ///
 

@@ -269,7 +269,7 @@ class ProductController extends Controller
                 //    return json_encode($data);
                 return Datatables::of($data)->addIndexColumn()
                     ->addColumn('action', function ($row) {
-                        $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit btn btn-success btn-sm mr-1 item d-inline-flex product_edit" data-product_id="' . $row->product_id . '" data-product="' . $row->product_name . '" data-coupon_name="' . $row->coupon_id . '"
+                        $actionBtn = '<a href="javascript:void(0)"  data-toggle="modal"  data-target="#Modal_Edit"  class="edit_pro btn btn-success btn-sm mr-1 item d-inline-flex product_edit" data-product_id="' . $row->product_id . '" data-product="' . $row->product_name . '" data-coupon_name="' . $row->coupon_id . '"
                     data-cat_name="' . $row->cat_id . '" data-color_name="' . $row->color_id . '" data-size_name="' . $row->size_id . '"
                     data-brand_name="' . $row->brand_id . '"  data-year_name="' . $row->model_id . '"  data-product_slug="' . $row->product_slug . '"
                      data-short_desc="' . $row->short_desc . '"  data-desc="' . $row->desc . '"  data-keywords="' . $row->keywords . '"
@@ -488,13 +488,14 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return json_encode(array('msgpro' => $validator->errors()->all()));
         }
-        DB::table('productattrs')->where('patrr_id', $id)->update([
+       $arrt= DB::table('productattrs')->where('patrr_id', $id)->update([
             'products_id' => $id,
             'sku' => $request->sku_edit,
             'mrp' => $request->mrp_edit,
             'price'    => $request->price_edit,
             'qty'    => $request->qty_edit,
         ]);
+       
        
         $products = Product::where('product_id',$id)->get();
         foreach ( $products as  $product) {
@@ -978,6 +979,8 @@ class ProductController extends Controller
             }
         }
       }
+      
+
     }
     public function search(Request $request)
     {

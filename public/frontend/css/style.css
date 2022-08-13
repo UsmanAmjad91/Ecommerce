@@ -907,14 +907,15 @@ img {
 }
 #aa-promo .aa-promo-area .aa-promo-right {
   display: inline;
-  float: left;
+  /* float: left; */
   width: 100%;
-  height: 400px;
+  height: 350px;
 }
 #aa-promo .aa-promo-area .aa-promo-right .aa-single-promo-right {
-  width: 50%;
-  height: 50%;
+  width: 80%;
+  height: 40%;
   float: left;
+  display: inline;
 }
 #aa-promo .aa-promo-area .aa-promo-banner {
   width: 100%;
@@ -1105,10 +1106,10 @@ img {
 .aa-product-catg li {
   display: block;
   float: left;
-  height: 380px;
+  height: 300px;
   text-align: center;
   margin: 0 0 20px 55px;
-  width: 20.5%;
+  /* width: 20.5%; */
   position: relative;
   overflow: hidden;
 }
@@ -1668,7 +1669,7 @@ img {
   display: inline;
   float: left;
   width: 100%;
-  height: 15%;
+  height: 25%;
 }
 #aa-client-brand .aa-client-brand-area .aa-client-brand-slider {
   margin-left: -35px;

@@ -694,9 +694,12 @@ $(document).ready(function() {
                             $(this).hide(); n();
                           });
                           $('#responseeditcheck').html("Product Successfully Updated").css("color", "green"); 
-                          $('#Modal_Edit').modal('hide'); 
                           var table= $('#studentsTable').DataTable();
                                table.ajax.reload(null, false);   
+                               setTimeout(function() {
+                                $('#Modal_Edit').modal('hide'); 
+                               }, 2000);
+                              
                     } else{
                        
                     if (msg.error) {    
@@ -891,11 +894,14 @@ $(document).ready(function(){
       });
     }
 });
+// $('#show_adata').on('click', '.product_edit', function() {
+//     $('#Modal_Edit').modal('show');   
+// });
 
 $(document).ready(function() {
     
     ///Show Data product On Edit Modal /// 
-    $('#show_data').on('click', '.product_edit', function() {
+    $('#show_adata').on('click', '.product_edit', function() {
     var product_id = $(this).data('product_id');  
     var product = $(this).data('product');
     var product_slug = $(this).data('product_slug');
@@ -936,12 +942,17 @@ $(document).ready(function() {
 
     $("#color_id option[value=" + color +"]").attr('selected', 'selected');
    
-    $('#Modal_Edit').modal('show');
+    // $('#Modal_Edit').modal('show');
     
     });
    
     });
-
+    $('#show_adata').on('click', '.edit_pro', function() {
+        $('#Modal_Edit').modal('show');  
+        setTimeout(function() {
+            $('#Modal_Edit').modal('show'); 
+           }, 2000);
+    });
     $(document).ready(function() {
     
         ///Show Data product On Edit Modal /// 
@@ -1108,8 +1119,11 @@ $(document).ready(function() {
                                     $(this).hide(); n();
                                   });
                                   $('#responseeditcheck').html("Product Successfully Updated").css("color", "green"); 
+
                                   $('#Modal_Edit').modal('hide'); 
+                                 
                                  location.reload('#show_pro');
+                                 $('#Modal_Edit').modal('hide'); 
                             } else{
                                
                             if (msg.error) {    
@@ -1132,7 +1146,13 @@ $(document).ready(function() {
             });
         });
         //Searchbar //
+$('.upd').on('click',  function() {
+setTimeout(function() {
+    $('#Modal_Edit').modal('hide');
+    location.reload();
+   }, 3000); 
 
+});
 /// product attributes Edit ///
 
 $('#show_data').on('click', '.productattr_edit', function() {

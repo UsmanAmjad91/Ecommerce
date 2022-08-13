@@ -111,6 +111,11 @@
                                  <i class="fa fa-pencil-square-o"></i> 
                                   Products Attributes</a>
                         </li>
+                        <li class="@yield('banner')">
+                            <a href="{{url('/admin/banner')}}">
+                                <i class="fa fa-camera" aria-hidden="true"></i> 
+                                  Banner</a>
+                        </li>
                         <li class="@yield('customer')">
                             <a href="{{url('/admin/customer')}}">
                                  <i class="fa fa-users"></i> 
