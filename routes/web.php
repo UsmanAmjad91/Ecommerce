@@ -26,8 +26,14 @@ use App\Http\Controllers\Front\Front;
 |
 */
 
-
+/// Front End ///
 Route::get('/',[Front::class,'index'])->name('index');
+
+Route::get('/product{slug}',[Front::class,'product'])->name('product');
+
+
+
+
 
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
 
@@ -234,5 +240,5 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin/logout');
 
-/// Front End ///
+
 

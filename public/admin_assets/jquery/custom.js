@@ -197,7 +197,11 @@ $(document).ready(function() {
    
     });
     $('#shows_data').on('click', '.category_edit', function() {
-        $('#Modal_Edit').modal('show');  
+        $('#Modal_Edit').modal('show'); 
+        setTimeout(function () { 
+            $('#Modal_Edit').modal('show'); 
+             }, 2000); 
+             $('#Modal_Edit').modal('show'); 
     }); 
     // $('#shows_data').on('click', '.cat_edit', function() {
     //     $('#Modal_Edit').modal('show');  
@@ -295,7 +299,10 @@ if ((cat_name_edit != '') && (cat_slug_edit != '') && (cat_id_edit != '') && (ca
               $('#responseeditcheck').html(msg.message).css("color", "green");  
               var table= $('#studentsTable').DataTable();
               table.ajax.reload(null, false); 
-              $('#Modal_Edit').modal('hide');            
+              setTimeout(function () { 
+                $('#Modal_Edit').modal('hide');
+                 }, 2000);
+                         
         } else{    
         if (msg.error) {  
             console.log(msg.error); 

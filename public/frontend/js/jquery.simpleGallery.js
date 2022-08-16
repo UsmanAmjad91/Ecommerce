@@ -19,7 +19,7 @@
 
         this.each(function () {
             var img = $('<img>');
-            img.src = $(this).attr('rel');
+            img.src =  $(this).attr('rel');
         });
 
         var init = function () {
@@ -54,7 +54,8 @@
         parent_anchor_class: 'simpleLens-lens-image',
         gallery_container: '.simpleLens-gallery-container',
         big_image_container: '.simpleLens-big-image-container',
-        loading_image: '../img/view-slider/loading.gif',
+        // loading_image: '../img/view-slider/loading.gif',
+        // loading_image: '../demo/images/loading.gif',
         show_event: 'mouseenter'
     };
 

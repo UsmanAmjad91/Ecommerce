@@ -19,16 +19,20 @@
  */
 
 // Get the Sequence element
-var sequenceElement = document.getElementById("sequence");
+// var sequenceElement = document.getElementById("sequence");
 
-// Place your Sequence options here to override defaults
-// See: http://sequencejs.com/documentation/#options
-var options = {
-  animateCanvas: false,
-  phaseThreshold: false,
-  preloader: true,
-  reverseWhenNavigatingBackwards: true
-}
+// // Place your Sequence options here to override defaults
+// // See: http://sequencejs.com/documentation/#options
+// var options = {
+//   animateCanvas: false,
+//   phaseThreshold: false,
+//   preloader: true,
+//   reverseWhenNavigatingBackwards: true
+// };
+// // var sequenceElement=$('#sequence');
 
-// Launch Sequence on the element, and with the options we specified above
-var mySequence = sequence(sequenceElement, options);
+// var mySequence=sequence(sequenceElement);
+// // var options={animateCanvas:!1,phaseThreshold:!1,preloader:!0,reverseWhenNavigatingBackwards:!0}
+ 
+// // Launch Sequence on the element, and with the options we specified above
+// var mySequence = sequence(sequenceElement, options);

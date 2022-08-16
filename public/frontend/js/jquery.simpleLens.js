@@ -13,7 +13,7 @@
 
     function debug(message) {
         if (window.console) {
-            console.log(message);
+            // console.log(message);
         }
     }
 
@@ -166,10 +166,9 @@
 
                 this.lens_container.appendTo(this.parent_div);
 
-                var margin_top = (this.lens_container.height() / 2) - 25,
-                    loading_image = $('<img>', {'src': opts.loading_image})
-                        .css("margin-top", margin_top);
-                this.lens_container.html(loading_image);
+                var margin_top = (this.lens_container.height() / 2) - 25;
+                    // loading_image = $('<img>', {'src': opts.loading_image}).css("margin-top", margin_top);
+                this.lens_container.html(opts);
 
                 this.lens_image.load(function () {
                     that.lens_container.html(that.lens_image);
@@ -223,7 +222,7 @@
         parent_class: '.simpleLens-big-image-container',
         lens_class: 'simpleLens-lens-element',
         cursor_class: 'simpleLens-mouse-cursor',
-        loading_image: '../img/view-slider/loading.gif',
+        // loading_image: '../img/view-slider/loading.gif',
         open_lens_event: 'mouseenter'
     };
 
