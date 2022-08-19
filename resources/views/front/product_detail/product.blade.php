@@ -6,7 +6,8 @@
 <!-- / menu -->
 
 @foreach ($product_view as $row)
-    {{-- <title>{{ $row->product_name }}</title> --}}
+    <input type="hidden" id="id" name="id" data-id={{$row->product_id}} >
+    <input type="hidden" id="p_id" name="p_id" data-p_id={{$row->patrr_id}} >
     <!-- product category -->
     <section id="aa-product-details">
         <div class="container">
@@ -14,10 +15,18 @@
                 <div class="col-md-12">
                     <div class="aa-product-details-area">
                         <div class="aa-product-details-content">
+                            
                             <div class="row">
                                 <!-- Modal view slider -->
+                                <div class="col-12 text-center">
+                                    @if (session()->has('msgcart'))
+                                    <h1 class="ml-3 text-sm font-bold text-green" id="sessmsg">{{ session()->get('msgcart') }}</h1>
+                                    @endif
+                                    <h6 id="responseeditcheck"></h6>
+                                  </div>
                                 <div class="col-md-5 col-sm-5 col-xs-12">
                                     <div class="aa-product-view-slider">
+                                        
                                         <div id="demo-1" class="simpleLens-gallery-container">
                                             <div class="simpleLens-container">
                                                 <div class="simpleLens-big-image-container">
@@ -64,60 +73,74 @@
                                 <!-- Modal view content -->
                                 <div class="col-md-7 col-sm-7 col-xs-12">
                                     <div class="aa-product-view-content">
-                                        <h3>{{ $row->product_name }}</h3>
+                                        <h3 id="name" data-name="{{ $row->product_name }}">{{ $row->product_name }}</h3>
                                         <div class="aa-price-block">
-                                            <span class="aa-product-view-price">RS {{ $row->price }} </span> <span
+                                            <span class="aa-product-view-price" data-price="{{$row->price}}" id="price">RS {{ $row->price }} </span> <span
                                                 class="aa-product-view-price"><del class="text-danger"> RS
                                                     {{ $row->mrp }}</del></span>
                                             <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
 
                                             @if ($row->lead_time != '')
-                                                <p class="lead_time"><span>Delivery Time : </span>
+                                                <p class="lead_time" data-lead="{{ $row->lead_time }}" id="lead_time"><span>Delivery Time : </span>
                                                     {{ $row->lead_time }}</p>
                                             @endif
-                                            <p class="warranty"><span>Warranty : </span> {{ $row->warranty }}</p>
+                                            <p class="warranty" data-warranty="{{ $row->warranty }}" id="warranty"><span>Warranty : </span> {{ $row->warranty }}</p>
                                         </div>
                                         <p>
                                             {{ $row->short_desc }}
                                         </p>
                                         <h4>Size</h4>
                                         <div class="aa-prod-view-size">
-                                            @if ($row->size != '')
-                                                <a href="#">{{ $row->size }}</a>
+                                              @php 
+                                             $arr_size=array();
+                                             foreach ($product_view as $row_size) {
+                                                $arr_size[]=$row_size->size;
+                                             }
+                                           
+                                             $arrsize = array_unique($arr_size);
+                                             
+                                            @endphp
+                                          @foreach($arrsize as $rowsize)
+                                            @if ($rowsize != '')
+                                                <a href="javascript:void(0)" id="size_{{$rowsize}}" class="link_size" onclick="Showcolor('{{$rowsize}}')">{{ $rowsize }}</a>
                                             @endif
+                                            @endforeach
                                         </div>
+                                        <h6 id="sizecheck"></h6>
                                         <h4>Color</h4>
                                         <div class="aa-color-tag">
                                             @if ($row->color != '')
-                                                <a href="javascript:void(0)" id="clr" class="aa-color-{{ $row->color }}"
-                                                    data-color="{{ $row->color }}" onclick="changeimage_color('{{ asset('admin_assets/product_images/' . $row->imageatrr)}}')"></a>
+                                                <a href="javascript:void(0)" id="clr" class="aa-color-{{ $row->color }}  size_{{$row->size}}"
+                                                    data-color="{{ $row->color }}"  onclick="changeimage_color('{{ asset('admin_assets/product_images/' . $row->imageatrr)}}')"></a>
                                             @endif
                                         </div>
+                                        <h6 id="colorcheck"></h6>
                                         <div class="aa-prod-quantity">
                                             <label>Quantity</label>
-                                            <form action="">
-                                                <select id="" name="">
-                                                    <option selected="1" value="0">1</option>
-                                                    <option value="1">2</option>
-                                                    <option value="2">3</option>
-                                                    <option value="3">4</option>
-                                                    <option value="4">5</option>
-                                                    <option value="5">6</option>
+                                            <h6 id="qtycheck"></h6>
+                                                <select  class="selectpicker col-2" id="qty" name="qty">
+                                                    <option  value="" selected>Select</option>
+                                                    @for($i=1 ; $i<11 ; $i++ )
+                                                    <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
                                                 </select>
-                                            </form>
+
+                                               
+
                                             <p class="aa-prod-category">
-                                                Category: <a href="#"
-                                                    {{ $row->category }}>{{ $row->cat_name }}</a>
+                                                Category: <a href="#" data-category="{{$row->cat_name}}"   id="category">{{ $row->cat_name }}</a>
                                             </p>
+                                            
                                             <p class="aa-prod-category">
-                                                Brand: <a href="#" {{ $row->brand }}>{{ $row->brand }}</a>
+                                                Brand: <a href="#"    data-brand="{{$row->brand}}"  id="brand">{{ $row->brand }}</a>
                                             </p>
                                         </div>
                                         <div class="aa-prod-view-bottom">
-                                            <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
+                                            <a class="aa-add-to-cart-btn" href="javascript:void(0)" onclick="addtocart('{{$row->product_id}}')">Add To Cart</a>
                                             {{-- <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
                      <a class="aa-add-to-cart-btn" href="#">Compare</a> --}}
                                         </div>
+                                        <h6 id="responsecheck"></h6>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +229,10 @@
                         </div>
 @endforeach
 <!-- Related product -->
-
+<input type="hidden" id="size_get" >
+<input type="hidden" id="color_get" >
+<input type="hidden" id="product_id" name="product_id">
+<input type="hidden" id="pa_id" name="pa_id">
 <div class="aa-product-related-item">
     <h3>Related Products</h3>
     <ul class="aa-product-catg aa-related-item-slider">
@@ -334,61 +360,16 @@
 
 <!-- footer -->
 @include('frontend_component.footer')
-<script type="text/javascript">
-    var gaProperty = 'UA-120201777-1';
-    var disableStr = 'ga-disable-' + gaProperty;
-    if (document.cookie.indexOf(disableStr + '=true') > -1) {
-        window[disableStr] = true;
-    }
-
-    function gaOptout() {
-        document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2045 23:59:59 UTC; path=/';
-        window[disableStr] = true;
-        alert('Google Tracking has been deactivated');
-    }
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '{{ asset('frontend/js/analytics.js') }}', 'ga');
-    ga('create', 'UA-120201777-1', 'auto');
-    ga('set', 'anonymizeIp', true);
-    ga('send', 'pageview');
-
-
-    $("#clr").css("background", $("#clr").attr("data-color"));
-    $("#clr").css("border", '3px solid black');
-</script>
-<script>
-    $(".image2").mouseenter(function() {
-        var image2 = $(this).data('lens-image');
-        $('#img1').attr('src', image2);
-        $("#bigshow").attr('data-lens-image', image2);
-    });
-    $(".image3").mouseenter(function() {
-        var image3 = $(this).data('lens-image');
-        $('#img1').attr('src', image3);
-        $("#bigshow").attr('data-lens-image', image3);
-    });
-    $(".image4").mouseenter(function() {
-        var image4 = $(this).data('lens-image');
-        $('#img1').attr('src', image4);
-        $("#bigshow").attr('data-lens-image', image4);
-    });
-    $(".image1").mouseenter(function() {
-        var image1 = $(this).data('lens-image');
-        $('#img1').attr('src', image1);
-        $("#bigshow").attr('data-lens-image', image1);
-    });
-</script>
-<script>
-  function changeimage_color(img){
-    // console.log("welcome");
-    $('.simpleLens-big-image-container').html('<a  href="javascript:void(0)" id="bigshow" data-lens-image="'+img+'"class="simpleLens-lens-image"><img src=""id="'+img1+'" class="simpleLens-big-image"></a>')
-  }
-</script>
+(function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '{{asset('frontend/js/analytics.js') }}', 'ga');
+ga('create', 'UA-120201777-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');

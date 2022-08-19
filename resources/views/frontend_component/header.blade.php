@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
@@ -105,9 +106,9 @@
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
                   <li><a href="account.html">My Account</a></li>
-                  <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
-                  <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
-                  <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
+                  {{-- <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li> --}}
+                  <li class="hidden-xs"><a href="{{url('/cart')}}">My Cart</a></li>
+                  <li class="hidden-xs"><a href="{{url('/checkout')}}">Checkout</a></li>
                   <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
                 </ul>
               </div>
@@ -137,7 +138,7 @@
               <!-- / logo  -->
                <!-- cart box -->
               <div class="aa-cartbox">
-                <a class="aa-cart-link" href="#">
+                <a class="aa-cart-link" href="{{url('/cart')}}">
                   <span class="fa fa-shopping-basket"></span>
                   <span class="aa-cart-title">SHOPPING CART</span>
                   <span class="aa-cart-notify">2</span>
@@ -145,12 +146,12 @@
                 <div class="aa-cartbox-summary">
                   <ul>
                     <li>
-                      <a class="aa-cartbox-img" href="#"><img src="{{asset('frontend/img/woman-small-2.jpg')}}" alt="img"></a>
+                      <a class="aa-cartbox-img" href="javascript:void(0)"><img src="{{asset('frontend/img/woman-small-2.jpg')}}" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#">Product Name</a></h4>
                         <p>1 x $250</p>
                       </div>
-                      <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                      <a class="aa-remove-product" href="javascript:void(0)"><span class="fa fa-times"></span></a>
                     </li>
                     <li>
                       <a class="aa-cartbox-img" href="#"><img src="{{asset('frontend/img/woman-small-1.jpg')}}" alt="img"></a>
@@ -169,7 +170,7 @@
                       </span>
                     </li>
                   </ul>
-                  <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="{{url('/checkout')}}">Checkout</a>
                 </div>
               </div>
               <!-- / cart box -->

@@ -142,8 +142,8 @@
   <!-- SmartMenus jQuery Bootstrap Addon -->
   <script type="text/javascript" src="{{asset('frontend/js/jquery.smartmenus.bootstrap.js')}}"></script>  
   <!-- To Slider JS -->
-  <script src="{{asset('frontend/js/sequence.js')}}"></script>
-  <script src="{{asset('frontend/js/sequence-theme.modern-slide-in.js')}}"></script>  
+  
+  
   <!-- Product view slider -->
   <script type="text/javascript" src="{{asset('frontend/js/jquery.simpleGallery.js')}}"></script>
   <script type="text/javascript" src="{{asset('frontend/js/jquery.simpleLens.js')}}"></script>

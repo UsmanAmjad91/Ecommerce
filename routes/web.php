@@ -31,10 +31,15 @@ Route::get('/',[Front::class,'index'])->name('index');
 
 Route::get('/product{slug}',[Front::class,'product'])->name('product');
 
+Route::post('/addto_cart',[Front::class,'addto_cart'])->name('addto_cart');
+
+Route::get('/cart',[Front::class,'cart'])->name('cart');
 
 
 
+Route::get('/checkout',[Front::class,'checkout'])->name('checkout');
 
+///Admin Login ///
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
 
 Route::post('/admin/auth',[AdminController::class,'auth'])->name('admin/auth');

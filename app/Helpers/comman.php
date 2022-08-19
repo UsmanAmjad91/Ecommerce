@@ -1,5 +1,12 @@
 <?php
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Session;
+// use Symfony\Component\HttpFoundation\Session\Session;
+session_start();
+
 function menu(){
 
     $cate['parent_cat']=DB::table('categories')
@@ -39,6 +46,22 @@ function menu(){
         return $html;
 }
 
+     function getUserTempid(){
+     
+    if(session()->has('USER_TEMP_ID') == null){
+        // $rand = Rand(111111111,999999999);
+        // $rand = random_int(111111111,999999999);
+        $rand =   mt_rand(111111111,999999999);
+           Session()->put('USER_TEMP_ID',$rand);
+      // $_SESSION['USER_TEMP_ID'] = $rand;
+      
+      return $rand;
 
+    }else{
 
+      return session()->has('USER_TEMP_ID');
+    }
+    
+   }
+ 
 ?>
